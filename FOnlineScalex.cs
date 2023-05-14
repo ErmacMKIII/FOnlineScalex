@@ -59,7 +59,7 @@ namespace FOnlineScalex
                         foreach (Frame srcFrame in srcFrames)
                         {
                             Frame dstFrame;
-                            Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, 0.75);
+                            Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, 1.0);
                             dstFrames.Add(dstFrame);
                         }
 

@@ -11,20 +11,10 @@ namespace FOnlineScalex.Scalex
 {
     public static class Scalex
     {
-        //
-        // scaler_scalex.c
-        //
-
-        // ========================
-        //
-        // ScaleNx pixel art scaler
-        //
-        // See: https://www.scale2x.it/
-        // Also: https://web.archive.org/web/20140331104356/http://gimpscripts.com/2014/01/scale2x-plus/
-        //
-        // Adapted to C (was python) from : https://opengameart.org/forumtopic/pixelart-scaler-scalenx-and-eaglenx-for-gimp
-        //
-        // ========================
+        // --------------------------------
+        // Algorithm provided from:
+        // https://www.scale2x.it/algorithm
+        // --------------------------------
 
         public const uint BYTE_SIZE_RGBA_4BPP = 4; // RGBA 4BPP        
 
@@ -38,7 +28,7 @@ namespace FOnlineScalex.Scalex
         /// <param name="sx">Source Pixel px</param>
         /// <param name="sy">Source Pixel py</param>
         private static void PixelCopy(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
-        {
+        {            
             dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
         }
 
@@ -154,6 +144,41 @@ namespace FOnlineScalex.Scalex
             return true;
         }
 
+        /*
+            Starting from this pattern :
+            A	B	C
+            D	E	F
+            G	H	I
+            The central pixel E is expanded in 4 new pixels:
+
+            E0	E1
+            E2	E3
+            with these rules (in C language) :
+
+            E0 = D == B && B != F && D != H ? D : E;
+            E1 = B == F && B != D && F != H ? F : E;
+            E2 = D == H && D != B && H != F ? D : E;
+            E3 = H == F && D != H && B != F ? F : E;
+            which can be rewritten as :
+
+            E0 = D == B && B != H && D != F ? D : E;
+            E1 = B == F && B != H && D != F ? F : E;
+            E2 = D == H && B != H && D != F ? D : E;
+            E3 = H == F && B != H && D != F ? F : E;
+            and optimized as:
+
+            if (B != H && D != F) {
+	            E0 = D == B ? D : E;
+	            E1 = B == F ? F : E;
+	            E2 = D == H ? D : E;
+	            E3 = H == F ? F : E;
+            } else {
+	            E0 = E;
+	            E1 = E;
+	            E2 = E;
+	            E3 = E;
+            }
+        */
         /// <summary>
         /// Return adjacent pixel values for given pixel
         /// </summary>
@@ -174,61 +199,138 @@ namespace FOnlineScalex.Scalex
             if (py > 0) { yB = py - 1; } else { yB = 0; }
             if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
 
-            // calculating near pixels => A, B, C, D
-            uint Ax = px;
-            uint Ay = yT;
+            uint Bx = px;
+            uint By = yT;
 
-            uint Bx = xR;
-            uint By = py;
+            uint Dx = xR;
+            uint Dy = py;
 
-            uint Cx = xL;
-            uint Cy = py;
+            uint Fx = xL;
+            uint Fy = py;
 
-            uint Dx = px;
-            uint Dy = yT;
+            uint Hx = px;
+            uint Hy = yT;
+
+            uint Ex = px;
+            uint Ey = py;
 
             /*
-                1  2
-                3  4
-
-                1=P; 2=P; 3=P; 4=P;
-                IF C==A AND C!=D AND A!=B => 1=A
-                IF A==B AND A!=C AND B!=D => 2=B
-                IF D==C AND D!=B AND C!=A => 3=C
-                IF B==D AND B!=A AND D!=C => 4=D
+                  if (B != H && D != F) {
+	                E0 = D == B ? D : E;
+	                E1 = B == F ? F : E;
+	                E2 = D == H ? D : E;
+	                E3 = H == F ? F : E;
+                } else {
+	                E0 = E;
+	                E1 = E;
+	                E2 = E;
+	                E3 = E;
+                }
             */
-            PixelCopy(ref dst, xL, yT, src, px, py);
-            PixelCopy(ref dst, xR, yT, src, px, py);
-            PixelCopy(ref dst, xL, yB, src, px, py);
-            PixelCopy(ref dst, xR, yB, src, px, py);
 
-            if (PixelEqual(src, Cx, Cy, Ax, Ay, deviation) && !PixelEqual(src, Cx, Cy, Dx, Dy) && !PixelEqual(src, Ax, Ay, Bx, By))
-            {
-                PixelCopy(ref dst, xL, yT, src, Ax, Ay);
-            }
-            if (PixelEqual(src, Ax, Ay, Bx, By, deviation) && !PixelEqual(src, Ax, Ay, Cx, Cy) && !PixelEqual(src, Bx, By, Dx, Dy))
-            {
-                PixelCopy(ref dst, xR, yT, src, Bx, By);
-            }
-            if (PixelEqual(src, Dx, Dy, Cx, Cy, deviation) && !PixelEqual(src, Dx, Cy, Bx, By) && !PixelEqual(src, Cx, Cy, Ax, Ay))
-            {
-                PixelCopy(ref dst, xL, yB, src, Cx, Cy);
-            }
-            if (PixelEqual(src, Bx, By, Dx, Dy, deviation) && !PixelEqual(src, Bx, By, Ax, Ay) && !PixelEqual(src, Dx, Dy, Cx, Cy))
-            {
-                PixelCopy(ref dst, xL, yB, src, Dx, Dy);
-            }
+            /*
+               E0[xL,yT]  E1[xR,yT]
+               E2[xL,yB]  E3[xR,yB]
+            */
 
-        }
+            if (!PixelEqual(src, Bx, By, Hx, Hy) && !PixelEqual(src, Dx, Dy, Fx, Fy))
+            {
+               if (PixelEqual(src, Dx, Dy, Bx, By, deviation))
+               {
+                   PixelCopy(ref dst, xL, yT, src, Dx, Dy);
+               }
+               else
+               {
+                   PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+               }
 
-        /// <summary>
-        /// Return adjacent pixel values for given pixel
-        /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
-        /// <param name="px">Pixel x</param>
-        /// <param name="py">Pixel y</param>
-        private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double deviation)
+               if (PixelEqual(src, Bx, By, Fx, Fy, deviation))
+               {
+                   PixelCopy(ref dst, xR, yT, src, Fx, Fy);
+               }
+               else
+               {
+                   PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+               }
+
+               if (PixelEqual(src, Dx, Dy, Hx, Hy, deviation))
+               {
+                   PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+               }
+               else
+               {
+                   PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+               }
+
+               if (PixelEqual(src, Hx, Hy, Fx, Fy, deviation))
+               {
+                   PixelCopy(ref dst, xR, yB, src, Fx, Fy);
+               }
+               else
+               {
+                   PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+               }
+           }
+           else
+           {
+               PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+               PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+               PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+               PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+           }
+
+       }
+
+       /*
+           The central pixel E is expanded in 9 new pixels:
+
+           E0	E1	E2
+           E3	E4	E5
+           E6	E7	E8
+           with these rules (in C language) :
+
+           E0 = D == B && B != F && D != H ? D : E;
+           E1 = (D == B && B != F && D != H && E != C) || (B == F && B != D && F != H && E != A) ? B : E;
+           E2 = B == F && B != D && F != H ? F : E;
+           E3 = (D == B && B != F && D != H && E != G) || (D == H && D != B && H != F && E != A) ? D : E;
+           E4 = E
+           E5 = (B == F && B != D && F != H && E != I) || (H == F && D != H && B != F && E != C) ? F : E;
+           E6 = D == H && D != B && H != F ? D : E;
+           E7 = (D == H && D != B && H != F && E != I) || (H == F && D != H && B != F && E != G) ? H : E;
+           E8 = H == F && D != H && B != F ? F : E;
+           and optimized as:
+
+           if (B != H && D != F) {
+               E0 = D == B ? D : E;
+               E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
+               E2 = B == F ? F : E;
+               E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
+               E4 = E;
+               E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
+               E6 = D == H ? D : E;
+               E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
+               E8 = H == F ? F : E;
+           } else {
+               E0 = E;
+               E1 = E;
+               E2 = E;
+               E3 = E;
+               E4 = E;
+               E5 = E;
+               E6 = E;
+               E7 = E;
+               E8 = E;
+           }
+        */
+
+            /// <summary>
+            /// Return adjacent pixel values for given pixel
+            /// </summary>
+            /// <param name="src">Source Frame</param>
+            /// <param name="dst">Destination Frame</param>
+            /// <param name="px">Pixel x</param>
+            /// <param name="py">Pixel y</param>
+            private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double deviation)
         {
             uint xL, xR; // x-Left, x-Right
             uint yB, yT; // y-Bottom, y-Top            
@@ -249,7 +351,7 @@ namespace FOnlineScalex.Scalex
             uint By = yT;
 
             uint Cx = xR;
-            uint Cy = yT;            
+            uint Cy = yT;
 
             uint Dx = xL;
             uint Dy = py;
@@ -269,87 +371,138 @@ namespace FOnlineScalex.Scalex
             uint Ix = xR;
             uint Iy = yB;
             /*
-                 1 2 3
-                 4 5 6
-                 7 8 9
-             
-                 1=E; 2=E; 3=E; 4=E; 5=E; 6=E; 7=E; 8=E; 9=E;
-                 IF D==B AND D!=H AND B!=F => 1=D
-                 IF (D==B AND D!=H AND B!=F AND E!=C) OR (B==F AND B!=D AND F!=H AND E!=A) => 2=B
-                 IF B==F AND B!=D AND F!=H => 3=F
-                 IF (H==D AND H!=F AND D!=B AND E!=A) OR (D==B AND D!=H AND B!=F AND E!=G) => 4=D
-                 5=E
-                 IF (B==F AND B!=D AND F!=H AND E!=I) OR (F==H AND F!=B AND H!=D AND E!=C) => 6=F
-                 IF H==D AND H!=F AND D!=B => 7=D
-                 IF (F==H AND F!=B AND H!=D AND E!=G) OR (H==D AND H!=F AND D!=B AND E!=I) => 8=H
-                 IF F==H AND F!=B AND H!=D => 9=F
+                if (B != H && D != F) {
+	                E0 = D == B ? D : E;
+	                E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
+	                E2 = B == F ? F : E;
+	                E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
+	                E4 = E;
+	                E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
+	                E6 = D == H ? D : E;
+	                E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
+	                E8 = H == F ? F : E;
+                } else {
+	                E0 = E;
+	                E1 = E;
+	                E2 = E;
+	                E3 = E;
+	                E4 = E;
+	                E5 = E;
+	                E6 = E;
+	                E7 = E;
+	                E8 = E;
+                }
             */
-            PixelCopy(ref dst, xL, yT, src, px, py);
-            PixelCopy(ref dst, xR, yT, src, px, py);
-            PixelCopy(ref dst, xL, yB, src, px, py);
-            PixelCopy(ref dst, xR, yB, src, px, py);
-
-            PixelCopy(ref dst, px, py, src, px, py);
-
-            PixelCopy(ref dst, px, yB, src, px, py);
-            PixelCopy(ref dst, px, yT, src, px, py);
-            PixelCopy(ref dst, xL, py, src, px, py);
-            PixelCopy(ref dst, xR, py, src, px, py);
-            //      1 2 3
-            //      4 5 6
-            //      7 8 9
-
-            //      1[xL,yT] 2[x,yT] 3[xR, yT]
-            //      4[xL,y ] 5[x,y ] 6[xR, y ]
-            //      7[xL,yB] 8[x,yB] 9[xR, yB]
-            if (PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Dx, Dy, Hx, Hy) && !PixelEqual(src, Bx, By, Fx, Fy))
+            //      E0[xL,yT] E1[x,yT] E2[xR, yT]
+            //      E3[xL,y ] E4[x,y ] E5[xR, y ]
+            //      E6[xL,yB] E7[x,yB] E8[xR, yB]
+            if (!PixelEqual(src, Bx, By, Hx, Hy) && !PixelEqual(src, Dx, Dy, Fx, Fy))
             {
-                PixelCopy(ref dst, xL, yT, src, Dx, Dy);
-            }
+                // E0 = D == B ? D : E;
+                if (PixelEqual(src, Dx, Dy, Bx, By, deviation))
+                {
+                    PixelCopy(ref dst, xL, yT, src, Dx, Dy);
+                } 
+                else
+                {
+                    PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+                }
 
-            if ((PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Dx, Dy, Hx, Hy) && !PixelEqual(src, Bx, By, Fx, Fy) && !PixelEqual(src, Ex, Ey, Cx, Cy))
-                ||
-                (PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Bx, By, Dx, Dy) && !PixelEqual(src, Fx, Fy, Hx, Hy) && !PixelEqual(src, Ex, Ey, Ax, Ay)))
+                // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
+                if ((PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Ex, Ey, Cx, Cy))
+                    ||
+                    (PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Ax, Ay)))
+                {
+                    PixelCopy(ref dst, px, yT, src, Bx, By);
+                }
+                else
+                {
+                    PixelCopy(ref dst, px, yT, src, Ex, Ey);
+                }
+
+                // E2 = B == F ? F : E;
+                if (PixelEqual(src, Bx, By, Fx, Fy, deviation))
+                {
+                    PixelCopy(ref dst, xR, yT, src, Fx, Fy);
+                }
+                else
+                {
+                    PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+                }
+
+                // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
+                if ((PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Ex, Ey, Gx, Gy))
+                    ||
+                    (PixelEqual(src, Dx, Dy, Hx, Hy, deviation) && !PixelEqual(src, Ex, Ey, Ax, Ay)))
+                {
+                    PixelCopy(ref dst, xL, py, src, Dx, Dy);
+                }
+                else
+                {
+                    PixelCopy(ref dst, xL, py, src, Ex, Ey);
+                }
+
+                // E4 = E;
+                PixelCopy(ref dst, px, py, src, Ex, Ey);
+
+                // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
+                if ((PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Ix, Iy))
+                    ||
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Cx, Cy)))
+                {
+                    PixelCopy(ref dst, xR, py, src, Fx, Fy);
+                }
+                else
+                {
+                    PixelCopy(ref dst, xR, py, src, Ex, Ey);
+                }
+
+                // E6 = D == H ? D : E;
+                if (PixelEqual(src, Dx, Dy, Hx, Hy, deviation))
+                {
+                    PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+                }
+                else
+                {
+                    PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+                }
+
+                // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
+                if ((PixelEqual(src, Dx, Dy, Hx, Hy, deviation) && !PixelEqual(src, Ex, Ey, Ix, Iy))
+                    ||
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Gx, Gy)))
+                {
+                    PixelCopy(ref dst, px, yB, src, Hx, Hy);
+                }
+                else
+                {
+                    PixelCopy(ref dst, px, yB, src, Ex, Ey);
+                }
+
+                // E8 = H == F ? F : E;
+                if (PixelEqual(src, Hx, Hy, Fx, Fy, deviation))
+                {
+                    PixelCopy(ref dst, xR, yB, src, Fx, Fy);
+                } 
+                else
+                {
+                    PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                }
+
+            } 
+            else
             {
-                PixelCopy(ref dst, px, yT, src, Bx, By);
-            }
+                PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+                PixelCopy(ref dst, px, yT, src, Ex, Ey);
+                PixelCopy(ref dst, px, yT, src, Ex, Ey);
+                PixelCopy(ref dst, xR, yT, src, Ex, Ey);
 
-            if (PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Bx, By, Dx, Dy) && !PixelEqual(src, Fx, Fy, Hx, Hy))
-            {
-                PixelCopy(ref dst, xR, yT, src, Fx, Fy);
-            }
+                PixelCopy(ref dst, px, py, src, Ex, Ey);
 
-            if ((PixelEqual(src, Hx, Hy, Dx, Dy, deviation) && !PixelEqual(src, Hx, Hy, Fx, Fy) && !PixelEqual(src, Dx, Dy, Bx, By) && !PixelEqual(src, Ex, Ey, Ax, Ay))
-                ||
-                (PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Dx, Dy, Hx, Hy) && !PixelEqual(src, Bx, By, Fx, Fy) && !PixelEqual(src, Ex, Ey, Gx, Gy)))
-            {
-                PixelCopy(ref dst, px, yT, src, Bx, By);
-            }
-
-            PixelCopy(ref dst, px, py, src, Ex, Ey);
-
-            if ((PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Bx, By, Dx, Dy) && !PixelEqual(src, Fx, Fy, Hx, Hy) && !PixelEqual(src, Ex, Ey, Ix, Iy))
-                ||
-                (PixelEqual(src, Fx, Fy, Hx, Hy, deviation) && !PixelEqual(src, Fx, Fy, Bx, By) && !PixelEqual(src, Hx, Hy, Dx, Dy) && !PixelEqual(src, Ex, Ey, Cx, Cy)))
-            {
-                PixelCopy(ref dst, xR, py, src, Fx, Fy);
-            }
-
-            if (PixelEqual(src, Hx, Hy, Dx, Dy, deviation) && !PixelEqual(src, Hx, Hy, Fx, Fy) && !PixelEqual(src, Dx, Dy, Bx, By))
-            {
-                PixelCopy(ref dst, xL, yB, src, Dx, Dy);
-            }
-
-            if ((PixelEqual(src, Fx, Fy, Hx, Hy, deviation) && !PixelEqual(src, Fx, Fy, Bx, By) && !PixelEqual(src, Hx, Hy, Dx, Dy) && !PixelEqual(src, Ex, Ey, Gx, Gy))
-                ||
-                (PixelEqual(src, Hx, Hy, Dx, Dy, deviation) && !PixelEqual(src, Hx, Hy, Fx, Fy) && !PixelEqual(src, Dx, Dy, Bx, By) && !PixelEqual(src, Ex, Ey, Ix, Iy)))
-            {
-                PixelCopy(ref dst, px, yT, src, Bx, By);
-            }
-
-            if (PixelEqual(src, Fx, Fy, Hx, Hy, deviation) && !PixelEqual(src, Fx, Fy, Bx, By) && !PixelEqual(src, Hx, Hy, Dx, Dy))
-            {
-                PixelCopy(ref dst, xR, yB, src, Fx, Fy);
+                PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+                PixelCopy(ref dst, px, yB, src, Ex, Ey);
+                PixelCopy(ref dst, px, yB, src, Ex, Ey);
+                PixelCopy(ref dst, xR, yB, src, Ex, Ey);
             }
         }
         

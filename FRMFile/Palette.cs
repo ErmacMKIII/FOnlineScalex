@@ -13,6 +13,7 @@
 namespace FOnlineScalex.FRMFile
 {
     using global::FOnlineScalex.Properties;
+    using System;
     using System.Drawing;
     using System.IO;
 
@@ -71,6 +72,226 @@ namespace FOnlineScalex.FRMFile
                         + 0.114 * Math.Abs(otherCol.B - col.B) / 255.0;
             
             return deviation;
+        }
+
+        /// <summary>
+        /// Deviation (difference) between two values (colors)
+        /// </summary>
+        /// <param name="col">color</param>
+        /// <param name="otherCol">other color</param>
+        /// <returns>deviation (color difference)</returns>
+        public static double Deviation(Color col, Color otherCol)
+        {            
+            double deviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0
+                        + 0.587 * Math.Abs(otherCol.G - col.G) / 255.0
+                        + 0.114 * Math.Abs(otherCol.B - col.B) / 255.0;
+
+            return deviation;
+        }
+
+        public static Color ToPaletteColor(Color colTarget)
+        {
+            double minDeviation = 1.0;
+            int minIndex = 0;
+
+            for (int i = 0; i < 256; i++)
+            {
+                double deviation = Deviation(Palette.Colors[i], colTarget);
+                if (deviation < minDeviation)
+                {
+                    minDeviation = deviation;
+                    minIndex = i;
+                    if (deviation == 0.0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return Colors[(byte)minIndex];
+        }
+
+        public static byte ToPaletteIndex(Color colTarget)
+        {
+            double minDeviation = 1.0;
+            int minIndex = -1;
+
+            for (int i = 0; i < 256; i++)
+            {
+                double deviation = Deviation(Palette.Colors[i], colTarget);
+                if (deviation < minDeviation)
+                {
+                    minDeviation = deviation;
+                    minIndex = i;
+                    if (deviation == 0.0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return (byte)minIndex;
+        }
+
+        /// <summary>
+        /// Add two colors into result color
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="otherCol"></param>
+        /// <returns></returns>
+        public static Color ColorAdditionColor(Color col, Color otherCol)
+        {
+            int red = col.R + otherCol.R;
+            int green = col.G + otherCol.G;
+            int blue = col.B + otherCol.B;
+
+            Color colTarget = Color.FromArgb(Math.Clamp(red, 0, 255), Math.Clamp(green, 0, 255), Math.Clamp(blue, 0, 255));
+
+            Color result = ToPaletteColor(colTarget);
+
+            return result; 
+        }
+
+        /// <summary>
+        /// Add two colors into result color
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="otherCol"></param>
+        /// <returns></returns>
+        public static byte ColorAdditionIndex(Color col, Color otherCol)
+        {
+            int red = col.R + otherCol.R;
+            int green = col.G + otherCol.G;
+            int blue = col.B + otherCol.B;
+
+            Color colTarget = Color.FromArgb(Math.Clamp(red, 0, 255), Math.Clamp(green, 0, 255), Math.Clamp(blue, 0, 255));
+
+            byte index = ToPaletteIndex(colTarget);
+
+            return index;
+        }
+
+        /// <summary>
+        /// Multiply two colors into result color
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="otherCol"></param>
+        /// <returns></returns>
+        public static byte ColorMultiplicationIndex(Color col, Color otherCol)
+        {
+            int red = (int)Math.Round(col.R * otherCol.R / 255.0);
+            int green = (int)Math.Round(col.G * otherCol.G / 255.0);
+            int blue = (int)Math.Round(col.B * otherCol.B / 255.0);
+
+            Color colTarget = Color.FromArgb(Math.Clamp(red, 0, 255), Math.Clamp(green, 0, 255), Math.Clamp(blue, 0, 255));
+
+            byte index = ToPaletteIndex(colTarget);
+
+            return index;
+        }
+
+        /// <summary>
+        /// Multiply two colors into result color
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="otherCol"></param>
+        /// <returns></returns>
+        public static Color ColorMultiplicationColor(Color col, Color otherCol)
+        {
+            int red = (int)Math.Round(col.R * otherCol.R / 255.0);
+            int green = (int)Math.Round(col.G * otherCol.G / 255.0);
+            int blue = (int)Math.Round(col.B * otherCol.B / 255.0);
+
+            Color colTarget = Color.FromArgb(Math.Clamp(red, 0, 255), Math.Clamp(green, 0, 255), Math.Clamp(blue, 0, 255));
+
+            Color result = ToPaletteColor(colTarget);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Cast color to gray according to palette index
+        /// </summary>
+        /// <param name="value">palette index</param>
+        /// <returns>best matching gray</returns>
+        public static Color ColorToGrayColor(Color col)
+        {            
+            double gray = 0.299 * col.R / 255.0
+                        + 0.587 * col.G / 255.0
+                        + 0.114 * col.B / 255.0;
+            Color grayCol = Color.FromArgb((int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray));
+
+            Color result = ToPaletteColor(grayCol);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Cast color to gray according to palette index
+        /// </summary>
+        /// <param name="value">palette index</param>
+        /// <returns>best matching gray</returns>
+        public static Color ColorToGrayColor(byte value)
+        {
+            Color col = Colors[value];
+            double gray = 0.299 * col.R / 255.0
+                        + 0.587 * col.G / 255.0
+                        + 0.114 * col.B / 255.0;
+            Color grayCol = Color.FromArgb((int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray));
+
+            Color result = ToPaletteColor(grayCol);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Cast color to gray according to palette index
+        /// </summary>
+        /// <param name="value">palette index</param>
+        /// <returns>best matching gray</returns>
+        public static byte ColorToGrayIndex(byte value)
+        {
+            Color col = Colors[value];
+            double gray = 0.299 * col.R / 255.0
+                        + 0.587 * col.G / 255.0
+                        + 0.114 * col.B / 255.0;
+            Color grayCol = Color.FromArgb((int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray));
+
+            int index = ToPaletteIndex(grayCol);
+
+            return (byte)index;
+        }
+
+        /// <summary>
+        /// Cast color to gray according to palette index
+        /// </summary>
+        /// <param name="col">color</param>
+        /// <returns>best matching gray</returns>
+        public static byte ColorToGrayIndex(Color col)
+        {
+            double gray = 0.299 * col.R / 255.0
+                        + 0.587 * col.G / 255.0
+                        + 0.114 * col.B / 255.0;
+            Color grayCol = Color.FromArgb((int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray), (int)Math.Round(255.0 * gray));
+
+            double minDeviation = 1.0;
+            int minIndex = -1;
+
+            for (int i = 0; i < 256; i++)
+            {
+                double deviation = Deviation(Palette.Colors[i], grayCol);
+                if (deviation < minDeviation)
+                {
+                    minDeviation = deviation;
+                    minIndex = i;
+                    if (deviation == 0.0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return (byte)minIndex;
         }
 
     }

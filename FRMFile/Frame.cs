@@ -106,18 +106,16 @@ namespace FOnlineScalex.FRMFile
                     Color col = image.GetPixel(px, py);
                     if (col.A != 0)
                     {
-                        int minDeviation = 255 * 1000;
+                        double minDeviation = 1.0;
                         int minIndex = -1;
                         foreach (Color coli in Palette.Colors)
                         {
-                            int deviation = 299 * Math.Abs(col.R - coli.R)
-                                    + 587 * Math.Abs(col.G - coli.G)
-                                    + 114 * Math.Abs(col.B - coli.B);
+                            double deviation = Palette.Deviation(col, coli);
                             if (deviation < minDeviation)
                             {
                                 minDeviation = deviation;
                                 minIndex = index;
-                                if (deviation == 0)
+                                if (deviation == 0.0)
                                 {
                                     break;
                                 }
