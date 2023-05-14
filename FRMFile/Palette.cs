@@ -12,7 +12,7 @@
 
 namespace FOnlineScalex.FRMFile
 {
-    using FOnlineScalex.Properties;
+    using global::FOnlineScalex.Properties;
     using System.Drawing;
     using System.IO;
 

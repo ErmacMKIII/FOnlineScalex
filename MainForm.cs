@@ -51,7 +51,7 @@ namespace FOnlineScalex
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Performance.Work(inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger);
+            FOnlineScalex.Work(inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger);
         }
 
         private void btnSetInDir_Click(object sender, EventArgs e)

@@ -11,7 +11,7 @@ using FOnlineScalex.Logger;
 
 namespace FOnlineScalex
 {
-    public static class Performance
+    public static class FOnlineScalex
     {
         public static void Work(string inDir, string outDir, bool recursive, IFOSLogger logger)
         {
@@ -59,7 +59,7 @@ namespace FOnlineScalex
                         foreach (Frame srcFrame in srcFrames)
                         {
                             Frame dstFrame;
-                            Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, 0.5);
+                            Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, 0.75);
                             dstFrames.Add(dstFrame);
                         }
 
