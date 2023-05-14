@@ -60,6 +60,7 @@
             btnSetInDir.TabIndex = 1;
             btnSetInDir.Text = "Open...";
             btnSetInDir.UseVisualStyleBackColor = true;
+            btnSetInDir.Click += btnSetInDir_Click;
             // 
             // btnSetOutDir
             // 
@@ -70,6 +71,7 @@
             btnSetOutDir.TabIndex = 3;
             btnSetOutDir.Text = "Open...";
             btnSetOutDir.UseVisualStyleBackColor = true;
+            btnSetOutDir.Click += btnSetOutDir_Click;
             // 
             // tboxOutDir
             // 
@@ -131,6 +133,7 @@
             btnGo.TabIndex = 9;
             btnGo.Text = "GO";
             btnGo.UseVisualStyleBackColor = true;
+            btnGo.Click += btnGo_Click;
             // 
             // MainForm
             // 

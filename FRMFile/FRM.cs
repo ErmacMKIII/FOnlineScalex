@@ -17,6 +17,7 @@ namespace FOnlineScalex.FRMFile
     using System.Drawing;
     using System.IO;
     using System.Runtime.CompilerServices;
+    using System.Windows.Forms.Design;
 
     /// <summary>
     /// Defines the <see cref="FRM" />.
@@ -404,9 +405,12 @@ namespace FOnlineScalex.FRMFile
             if (File.Exists(file))
             {
                 File.Delete(file);
-            }             
+            }            
 
-            using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(file)))
+            Directory.CreateDirectory(Directory.GetParent(file).FullName);
+
+            var options = new FileStreamOptions() { Access = FileAccess.Write, Mode = FileMode.OpenOrCreate };
+            using (BinaryWriter bw = new BinaryWriter(new FileStream(file, options)))
             {
                 bw.Write(buffer, 0, pos);
             }            

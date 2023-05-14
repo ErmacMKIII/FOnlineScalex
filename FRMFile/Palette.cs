@@ -12,6 +12,7 @@
 
 namespace FOnlineScalex.FRMFile
 {
+    using FOnlineScalex.Properties;
     using System.Drawing;
     using System.IO;
 
@@ -28,7 +29,7 @@ namespace FOnlineScalex.FRMFile
         /// <summary>
         /// Gets the Colors.
         /// </summary>
-        public static Color[] Colors => colors;
+        public static Color[] Colors { get => colors; }
 
         /// <summary>
         /// Defines the buffer.
@@ -40,8 +41,8 @@ namespace FOnlineScalex.FRMFile
         /// </summary>
         public static void Init()
         {
-            buffer.Initialize();
-            using (var stream = File.Open("./Resources/Fallout_Palette.act", FileMode.Open))
+            buffer.Initialize();            
+            using (var stream = new MemoryStream(Resources.Fallout_Palette))
             {
                 using (var reader = new BinaryReader(stream))
                 {
@@ -54,5 +55,23 @@ namespace FOnlineScalex.FRMFile
                 colors[i] = Color.FromArgb(buffer[i * 3], buffer[i * 3 + 1], buffer[i * 3 + 2]);
             }
         }
+
+        /// <summary>
+        /// Deviation (difference) between two values (colors)
+        /// </summary>
+        /// <param name="value">palette entry (indexed color)</param>
+        /// <param name="otherValue">other pallete (indexed color) entry</param>
+        /// <returns>deviation (color difference)</returns>
+        public static double Deviation(byte value, byte otherValue)
+        {
+            Color col = Colors[value];
+            Color otherCol = Colors[otherValue];
+            double deviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0
+                        + 0.587 * Math.Abs(otherCol.G - col.G) / 255.0
+                        + 0.114 * Math.Abs(otherCol.B - col.B) / 255.0;
+            
+            return deviation;
+        }
+
     }
 }

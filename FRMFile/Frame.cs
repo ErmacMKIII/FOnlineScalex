@@ -146,6 +146,24 @@ namespace FOnlineScalex.FRMFile
         }
 
         /// <summary>
+        /// Gets pixel color (palette entry).
+        /// Safety to not get outside the bounds.
+        /// When outside the bound transparent color (blue) is returned
+        /// </summary>
+        /// <param name="px">x coord.</param>
+        /// <param name="py">y coord.</param>
+        /// <returns>Palette entry</returns>
+        public byte GetPixelSafe(uint px, uint py)
+        {
+            if (px >= 0 && px < width && py >= 0 && py < height)
+            {
+                uint e = width * py + px;
+                return data[e];
+            }
+            return 0;
+        }
+
+        /// <summary>
         /// Sets pixel color to one from the palette (to the entry).
         /// </summary>
         /// <param name="px">x coord.</param>
@@ -155,6 +173,22 @@ namespace FOnlineScalex.FRMFile
         {
             uint e = width * py + px;
             data[e] = val;
+        }
+
+        /// <summary>
+        /// Sets pixel color to one from the palette (to the entry).
+        /// When outside the bound do nothing.
+        /// </summary>
+        /// <param name="px">x coord.</param>
+        /// <param name="py">y coord.</param>
+        /// <param name="val">palette index to set.</param>
+        public void SetPixelSafe(uint px, uint py, byte val)
+        {
+            if (px >= 0 && px < width && py >= 0 && py < height && val >= 0 && val <= 255)
+            {
+                uint e = width * py + px;
+                data[e] = val;
+            }
         }
 
         /// <summary>

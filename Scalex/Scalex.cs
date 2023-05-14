@@ -42,17 +42,111 @@ namespace FOnlineScalex.Scalex
             dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
         }
 
+        /// <summary>
+        /// Copy a pixel from src to dst (safely)
+        /// </summary>
+        /// <param name="dst">Destination Frame</param>
+        /// <param name="dx">Destination Pixel px</param>
+        /// <param name="dy">Destination Pixel py</param>
+        /// <param name="src">Source Frame</param>
+        /// <param name="sx">Source Pixel px</param>
+        /// <param name="sy">Source Pixel py</param>
+        private static void PixelCopySafe(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
+        {
+            dst.SetPixelSafe(dx, dy, src.GetPixelSafe(sx, sy));
+        }
 
-        // Check if two pixels are equal
-        // TODO: RGBA Alpha handling, ignore Alpha byte?
+        /// <summary>
+        /// Check if two pixels are equal with some deviation [0..1]
+        /// </summary>
+        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="px">first pixel px</param>
+        /// <param name="py">first pixel py</param>
+        /// <param name="tx">other (target) pixel px</param>
+        /// <param name="ty">other (target) pixel py</param>        
+        /// <param name="deviation">deviation tolerance (pixel difference), in range [0,1]</param>
+        /// <returns></returns>
+        private static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        {
+            if (px == tx && py == ty)
+            {
+                return true;
+            }
+
+            if (Palette.Deviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two pixels are equal
+        /// </summary>
+        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="px">first pixel px</param>
+        /// <param name="py">first pixel py</param>
+        /// <param name="tx">other (target) pixel px</param>
+        /// <param name="ty">other (target) pixel py</param>
+        /// <returns></returns>
         private static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty)
         {
-            if (px == py && tx == ty)
+            if (px == tx && py == ty)
+            {
+                return true;
+            }
+
+            if (src.GetPixel(px, py) != src.GetPixel(tx, ty))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Check if two pixels are equal (safely)
+        /// </summary>
+        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="px">first pixel px</param>
+        /// <param name="py">first pixel py</param>
+        /// <param name="tx">other (target) pixel px</param>
+        /// <param name="ty">other (target) pixel py</param>
+        /// <returns></returns>
+        private static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty)
+        {
+            if (px == tx && py == ty)
             {
                 return true;
             }
             
-            if (src.GetPixel(px, py) != src.GetPixel(tx, ty))
+            if (src.GetPixelSafe(px, py) != src.GetPixelSafe(tx, ty))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if two pixels are equal (safely)
+        /// </summary>
+        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="px">first pixel px</param>
+        /// <param name="py">first pixel py</param>
+        /// <param name="tx">other (target) pixel px</param>
+        /// <param name="ty">other (target) pixel py</param>
+        /// <returns></returns>
+        private static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        {
+            if (px == tx && py == ty)
+            {
+                return true;
+            }
+
+            if (Palette.Deviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
             {
                 return false;
             }
@@ -67,41 +161,61 @@ namespace FOnlineScalex.Scalex
         /// <param name="dst">Destination Frame</param>
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
-        private static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py)
+        private static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py, double deviation)
         {
-            uint x0, x2;
-            uint y0, y2;
-            uint B, D, E, F, H;
+            uint xL, xR; // x-Left, x-Right
+            uint yB, yT; // y-Bottom, y-Top            
 
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;
 
-            if (px > 0) { x0 = px - 1; } else { x0 = 0; }
-            if (px < w - 1) { x2 = px + 1; } else { x2 = w - 1; }
-            if (py > 0) { y0 = py - 1; } else { y0 = 0; }
-            if (py < h - 1) { y2 = py + 1; } else { y2 = h - 1; }
+            if (px > 0) { xL = px - 1; } else { xL = 0; }
+            if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
+            if (py > 0) { yB = py - 1; } else { yB = 0; }
+            if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
 
-            B = (uint)(px + y0);
-            D = (uint)(x0 + py);
-            E = (uint)(px + py);
-            F = (uint)(x2 + py);
-            H = (uint)(px + y2);
+            // calculating near pixels => A, B, C, D
+            uint Ax = px;
+            uint Ay = yT;
 
-            if ((!PixelEqual(src, (uint)px, (uint)py, B, H)) && (!PixelEqual(src, (uint)px, (uint)py, D, F)))
+            uint Bx = xR;
+            uint By = py;
+
+            uint Cx = xL;
+            uint Cy = py;
+
+            uint Dx = px;
+            uint Dy = yT;
+
+            /*
+                1=P; 2=P; 3=P; 4=P;
+                IF C==A AND C!=D AND A!=B => 1=A
+                IF A==B AND A!=C AND B!=D => 2=B
+                IF D==C AND D!=B AND C!=A => 3=C
+                IF B==D AND B!=A AND D!=C => 4=D
+            */
+            PixelCopy(ref dst, xL, yT, src, px, py);
+            PixelCopy(ref dst, xR, yT, src, px, py);
+            PixelCopy(ref dst, xL, yB, src, px, py);
+            PixelCopy(ref dst, xL, yB, src, px, py);
+
+            if (PixelEqual(src, Cx, Cy, Ax, Ay, deviation) && !PixelEqual(src, Cx, Cy, Dx, Dy, deviation) && !PixelEqual(src, Ax, Ay, Bx, By, deviation))
             {
-
-                if (PixelEqual(src, (uint)px, (uint)py, B, D)) { dst.SetPixel((uint)(px - 1), (uint)(py - 1), (byte)D); } else { dst.SetPixel((uint)(px - 1), (uint)(py - 1), (byte)E); }
-                if (PixelEqual(src, (uint)px, (uint)py, B, F)) { dst.SetPixel((uint)(px + 1), (uint)(py - 1), (byte)F); } else { dst.SetPixel((uint)(px + 1), (uint)(py - 1), (byte)E); }
-                if (PixelEqual(src, (uint)px, (uint)py, H, D)) { dst.SetPixel((uint)(px - 1), (uint)(py + 1), (byte)D); } else { dst.SetPixel((uint)(px - 1), (uint)(py + 1), (byte)E); }
-                if (PixelEqual(src, (uint)px, (uint)py, H, F)) { dst.SetPixel((uint)(px + 1), (uint)(py + 1), (byte)F); } else { dst.SetPixel((uint)(px + 1), (uint)(py + 1), (byte)E); }
+                PixelCopy(ref dst, xL, yT, src, Ax, Ay);
             }
-            else
+            if (PixelEqual(src, Ax, Ay, Bx, By, deviation) && !PixelEqual(src, Ax, Ay, Cx, Cy, deviation) && !PixelEqual(src, Bx, By, Dx, Dy, deviation))
             {
-                dst.SetPixel((uint)(px - 1), (uint)(py - 1), (byte)E);
-                dst.SetPixel((uint)(px + 1), (uint)(py - 1), (byte)E);
-                dst.SetPixel((uint)(px - 1), (uint)(py + 1), (byte)E);
-                dst.SetPixel((uint)(px + 1), (uint)(py + 1), (byte)E);
+                PixelCopy(ref dst, xR, yT, src, Bx, By);
             }
+            if (PixelEqual(src, Dx, Dy, Cx, Cy, deviation) && !PixelEqual(src, Dx, Cy, Bx, By, deviation) && !PixelEqual(src, Cx, Cy, Ax, Ay, deviation))
+            {
+                PixelCopy(ref dst, xL, yB, src, Cx, Cy);
+            }
+            if (PixelEqual(src, Bx, By, Dx, Dy, deviation) && !PixelEqual(src, Bx, By, Ax, Ay, deviation) && !PixelEqual(src, Dx, Dy, Cx, Cy, deviation))
+            {
+                PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+            }
+
         }
 
         // ----------------------------------------------------------------------------------------
@@ -118,7 +232,8 @@ namespace FOnlineScalex.Scalex
         /// </summary>
         /// <param name="src">Source Frame</param>
         /// <param name="dst">Destination Frame</param>
-        public static void Scalex2x(Frame src, out Frame dst)
+        /// <param name="deviation">deviation tolerance (pixel difference), in range [0,1]</param>
+        public static void Scalex2x(Frame src, out Frame dst, double deviation)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;  
@@ -131,7 +246,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (px = 0; px < w; px++)
                 {
-                    Scalex2xHelper(src, ref dst, px, py);
+                    Scalex2xHelper(src, ref dst, px, py, deviation);                    
                 }
             }
         }

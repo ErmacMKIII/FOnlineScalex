@@ -59,5 +59,15 @@ namespace FOnlineScalex.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Fallout_Palette {
+            get {
+                object obj = ResourceManager.GetObject("Fallout_Palette", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using FOnlineScalex.Logger;
 using System.Windows.Forms;
 
 namespace FOnlineScalex
@@ -6,30 +7,34 @@ namespace FOnlineScalex
     {
         public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
-        protected string inDirPath = string.Empty;
-        protected string outDirPath = string.Empty;
+        protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
+        protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
+
+        protected IFOSLogger fOSLogger = new FOSLogger("FOnlineScalex.log", "./");
 
         private void SetInDirPath()
         {
-            using (FolderBrowserDialog openDirDialog = new FolderBrowserDialog())
+            using (FolderBrowserDialog openInDirDialog = new FolderBrowserDialog())
             {
-                if (openDirDialog.ShowDialog() == DialogResult.OK)
+                if (openInDirDialog.ShowDialog() == DialogResult.OK)
                 {
-                    inDirPath = openDirDialog.SelectedPath;
+                    inDirPath = openInDirDialog.SelectedPath;
+                    tboxInputDir.Text = inDirPath;
                 }
             }
         }
 
         private void SetOutDirPath()
         {
-            using (FolderBrowserDialog openDirDialog = new FolderBrowserDialog())
+            using (FolderBrowserDialog openOutDirDialog = new FolderBrowserDialog())
             {
-                if (openDirDialog.ShowDialog() == DialogResult.OK)
+                if (openOutDirDialog.ShowDialog() == DialogResult.OK)
                 {
-                    outDirPath = openDirDialog.SelectedPath;
+                    outDirPath = openOutDirDialog.SelectedPath;
+                    tboxOutDir.Text = outDirPath;
                 }
             }
         }
@@ -42,6 +47,21 @@ namespace FOnlineScalex
         private void tboxOutDir_TextChanged(object sender, EventArgs e)
         {
             outDirPath = tboxOutDir.Text;
+        }
+
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            Performance.Work(inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger);
+        }
+
+        private void btnSetInDir_Click(object sender, EventArgs e)
+        {
+            SetInDirPath();
+        }
+
+        private void btnSetOutDir_Click(object sender, EventArgs e)
+        {
+            SetOutDirPath();
         }
     }
 }

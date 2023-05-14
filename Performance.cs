@@ -33,15 +33,16 @@ namespace FOnlineScalex
             bool stopped = false;
 
             logger.Log("Starting Performance Work");
+            logger.Log($"Progress: {progress}");
             if (Directory.Exists(inDir))
             {
-                string[] fileArray = recursive ? BuildTree(inDir) : Directory.GetFiles(inDir);
+                string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*.FRM", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
 
                 foreach (string srcFile in fileArray)
                 {
                     if (stopped)
                     {
-                        logger.Log("Performance stopped!", null);
+                        logger.Log("Performance stopped!");
                         break;
                     }
 
@@ -58,7 +59,8 @@ namespace FOnlineScalex
                         foreach (Frame srcFrame in srcFrames)
                         {
                             Frame dstFrame;
-                            Scalex.Scalex.Scalex2x(srcFrame, out dstFrame);
+                            Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, 0.5);
+                            dstFrames.Add(dstFrame);
                         }
 
                         FRM dstFRM = new FRM(
@@ -74,20 +76,13 @@ namespace FOnlineScalex
                         string outFile;
                         if (recursive)
                         {
-                            string dirs = srcFile;
-                            StringBuilder sb = new StringBuilder();
-                            while (!dirs.Equals(inDir))
-                            {
-                                var dirsInfo = Directory.GetParent(dirs);
-                                dirs = dirsInfo.Name;
-                                sb.Insert(0, dirs);
-                                sb.Insert(0, Path.PathSeparator);
-                            }
-                            outFile = Path.Combine(outDir + Path.PathSeparator + sb.ToString() + Path.PathSeparator + Regex.Replace(srcFile, "[.][^.]+$", ".FRM"));
+                            var srcFileName = Path.GetFileName(srcFile);
+                            var relative = Path.GetRelativePath(inDir, srcFile).Replace(srcFileName, string.Empty);                            
+                            outFile = Path.Combine(outDir, relative, Regex.Replace(srcFileName, "[.][^.]+$", ".FRM"));
                         }
                         else
                         {
-                            outFile = Path.Combine(outDir + Path.PathSeparator + Regex.Replace(srcFile, "[.][^.]+$", ".FRM"));
+                            outFile = Path.Combine(outDir, Regex.Replace(Path.GetFileName(srcFile), "[.][^.]+$", ".FRM"));
                         }
 
                         if (File.Exists(outFile))
@@ -96,47 +91,22 @@ namespace FOnlineScalex
                         }
 
                         Directory.CreateDirectory(outDir);
-
+                        logger.Log(outFile);
                         dstFRM.Export(outFile);
-                        progress += 100.0f / fileArray.Length;
+                        progress += 100.0f / (float)fileArray.Length;
+                        logger.Log($"Progress: {progress}");
                         //firePropertyChange("progress", oldProgress, progress);
                     }
 
-                    logger.Log("Performance work finished!", null);
-                    progress = 100.0f;
-                    //firePropertyChange("progress", oldProgress, progress);
                 }
-
                 
             }
+            
+            logger.Log("Performance work finished!");
+            progress = 100.0f;
+            logger.Log($"Progress: {progress}");
+            //firePropertyChange("progress", oldProgress, progress);
         }
-
-        private static string[] BuildTree(string inDir)
-        {
-            List<string> result = new List<string>();
-
-            Stack<string> stack = new Stack<string>();
-            stack.Push(inDir);
-
-            while (stack.Count != 0)
-            {
-                string file = stack.Pop();
-                if (Directory.Exists(file))
-                {
-                    string[] list = Directory.GetFiles(file);
-                    for (int i = list.Length - 1; i >= 0; i--)
-                    {
-                        string chldFile = list[i];
-                        stack.Push(chldFile);
-                    }
-                }
-                else
-                {
-                    result.Add(file);
-                }
-            }
-
-            return result.ToArray();
-        }
+        
     }
 }

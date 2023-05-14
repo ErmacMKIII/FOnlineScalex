@@ -1,3 +1,5 @@
+using FOnlineScalex.FRMFile;
+
 namespace FOnlineScalex
 {
     internal static class Program
@@ -8,6 +10,8 @@ namespace FOnlineScalex
         [STAThread]
         static void Main()
         {
+            Palette.Init();
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
