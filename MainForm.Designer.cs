@@ -36,10 +36,12 @@
             howToUseToolStripMenuItem = new ToolStripMenuItem();
             btnStop = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            btnSetInDir = new Button();
-            tboxInputDir = new TextBox();
             btnSetOutDir = new Button();
+            btnSetInDir = new Button();
             tboxOutDir = new TextBox();
+            tboxInputDir = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
             cboxRecursive = new CheckBox();
             gboxMain = new GroupBox();
             tableLayoutPanel3 = new TableLayoutPanel();
@@ -49,9 +51,8 @@
             pboxCurrentFrame = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnGo = new Button();
-            comboBox1 = new ComboBox();
-            label1 = new Label();
-            label2 = new Label();
+            cboxAlgo = new ComboBox();
+            label3 = new Label();
             menuStripMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             gboxMain.SuspendLayout();
@@ -103,14 +104,15 @@
             // 
             // btnStop
             // 
-            btnStop.Dock = DockStyle.Fill;
+            btnStop.Image = Properties.Resources.stop;
+            btnStop.ImageAlign = ContentAlignment.MiddleLeft;
             btnStop.Location = new Point(479, 32);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(136, 23);
             btnStop.TabIndex = 9;
             btnStop.Text = "Stop";
             btnStop.UseVisualStyleBackColor = true;
-            btnStop.Click += btnGo_Click;
+            btnStop.Click += btnStop_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -135,30 +137,11 @@
             tableLayoutPanel1.Size = new Size(618, 78);
             tableLayoutPanel1.TabIndex = 13;
             // 
-            // btnSetInDir
-            // 
-            btnSetInDir.Dock = DockStyle.Fill;
-            btnSetInDir.Location = new Point(479, 42);
-            btnSetInDir.Name = "btnSetInDir";
-            btnSetInDir.Size = new Size(136, 33);
-            btnSetInDir.TabIndex = 1;
-            btnSetInDir.Text = "Open...";
-            btnSetInDir.UseVisualStyleBackColor = true;
-            btnSetInDir.Click += btnSetInDir_Click;
-            // 
-            // tboxInputDir
-            // 
-            tboxInputDir.Dock = DockStyle.Fill;
-            tboxInputDir.Location = new Point(121, 42);
-            tboxInputDir.Name = "tboxInputDir";
-            tboxInputDir.ReadOnly = true;
-            tboxInputDir.Size = new Size(352, 23);
-            tboxInputDir.TabIndex = 0;
-            tboxInputDir.TextChanged += tboxInputDir_TextChanged;
-            // 
             // btnSetOutDir
             // 
             btnSetOutDir.Dock = DockStyle.Fill;
+            btnSetOutDir.Image = Properties.Resources.dir_icon_opened;
+            btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
             btnSetOutDir.Location = new Point(479, 3);
             btnSetOutDir.Name = "btnSetOutDir";
             btnSetOutDir.Size = new Size(136, 33);
@@ -166,6 +149,19 @@
             btnSetOutDir.Text = "Open...";
             btnSetOutDir.UseVisualStyleBackColor = true;
             btnSetOutDir.Click += btnSetOutDir_Click;
+            // 
+            // btnSetInDir
+            // 
+            btnSetInDir.Dock = DockStyle.Fill;
+            btnSetInDir.Image = Properties.Resources.dir_icon_opened;
+            btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSetInDir.Location = new Point(479, 42);
+            btnSetInDir.Name = "btnSetInDir";
+            btnSetInDir.Size = new Size(136, 33);
+            btnSetInDir.TabIndex = 1;
+            btnSetInDir.Text = "Open...";
+            btnSetInDir.UseVisualStyleBackColor = true;
+            btnSetInDir.Click += btnSetInDir_Click;
             // 
             // tboxOutDir
             // 
@@ -177,14 +173,42 @@
             tboxOutDir.TabIndex = 2;
             tboxOutDir.TextChanged += tboxOutDir_TextChanged;
             // 
+            // tboxInputDir
+            // 
+            tboxInputDir.Dock = DockStyle.Fill;
+            tboxInputDir.Location = new Point(121, 42);
+            tboxInputDir.Name = "tboxInputDir";
+            tboxInputDir.ReadOnly = true;
+            tboxInputDir.Size = new Size(352, 23);
+            tboxInputDir.TabIndex = 0;
+            tboxInputDir.TextChanged += tboxInputDir_TextChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Fill;
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(112, 39);
+            label1.TabIndex = 4;
+            label1.Text = "Input Directory:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Location = new Point(3, 39);
+            label2.Name = "label2";
+            label2.Size = new Size(112, 39);
+            label2.TabIndex = 5;
+            label2.Text = "Output Directory:";
+            // 
             // cboxRecursive
             // 
-            cboxRecursive.AutoCheck = false;
             cboxRecursive.AutoSize = true;
-            cboxRecursive.Dock = DockStyle.Fill;
             cboxRecursive.Location = new Point(3, 32);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(470, 23);
+            cboxRecursive.Size = new Size(158, 19);
             cboxRecursive.TabIndex = 4;
             cboxRecursive.Text = "Recurse through child directories";
             cboxRecursive.UseVisualStyleBackColor = true;
@@ -200,7 +224,6 @@
             gboxMain.Size = new Size(624, 448);
             gboxMain.TabIndex = 13;
             gboxMain.TabStop = false;
-            gboxMain.Enter += groupBox5_Enter;
             // 
             // tableLayoutPanel3
             // 
@@ -259,13 +282,15 @@
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.AutoSize = true;
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.16535F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.8346462F));
-            tableLayoutPanel2.Controls.Add(btnStop, 1, 1);
-            tableLayoutPanel2.Controls.Add(btnGo, 1, 0);
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34.5058632F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65.49414F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
+            tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
+            tableLayoutPanel2.Controls.Add(cboxAlgo, 1, 0);
+            tableLayoutPanel2.Controls.Add(btnStop, 2, 1);
+            tableLayoutPanel2.Controls.Add(label3, 0, 0);
             tableLayoutPanel2.Controls.Add(cboxRecursive, 0, 1);
-            tableLayoutPanel2.Controls.Add(comboBox1, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Top;
             tableLayoutPanel2.Location = new Point(3, 97);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -277,42 +302,33 @@
             // 
             // btnGo
             // 
-            btnGo.Dock = DockStyle.Fill;
+            btnGo.Image = Properties.Resources.gatling;
+            btnGo.ImageAlign = ContentAlignment.MiddleLeft;
             btnGo.Location = new Point(479, 3);
             btnGo.Name = "btnGo";
             btnGo.Size = new Size(136, 23);
             btnGo.TabIndex = 10;
             btnGo.Text = "GO";
             btnGo.UseVisualStyleBackColor = true;
+            btnGo.Click += btnGo_Click;
             // 
-            // comboBox1
+            // cboxAlgo
             // 
-            comboBox1.Dock = DockStyle.Fill;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 3);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(470, 23);
-            comboBox1.TabIndex = 11;
+            cboxAlgo.FormattingEnabled = true;
+            cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x" });
+            cboxAlgo.Location = new Point(167, 3);
+            cboxAlgo.Name = "cboxAlgo";
+            cboxAlgo.Size = new Size(306, 23);
+            cboxAlgo.TabIndex = 11;
             // 
-            // label1
+            // label3
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(3, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(112, 39);
-            label1.TabIndex = 4;
-            label1.Text = "Input Directory:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(3, 39);
-            label2.Name = "label2";
-            label2.Size = new Size(112, 39);
-            label2.TabIndex = 5;
-            label2.Text = "Output Directory:";
+            label3.AutoSize = true;
+            label3.Location = new Point(3, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(64, 15);
+            label3.TabIndex = 12;
+            label3.Text = "Algorithm:";
             // 
             // MainForm
             // 
@@ -356,7 +372,7 @@
         private GroupBox gboxMain;
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnGo;
-        private ComboBox comboBox1;
+        private ComboBox cboxAlgo;
         private TableLayoutPanel tableLayoutPanel3;
         private Label lblCurrProc;
         private TextBox tboxCurrProc;
@@ -364,5 +380,6 @@
         private PictureBox pboxCurrentFrame;
         private Label label1;
         private Label label2;
+        private Label label3;
     }
 }

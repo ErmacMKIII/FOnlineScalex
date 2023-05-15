@@ -197,7 +197,7 @@ namespace FOnlineScalex.FRMFile
         public string ErrorMessage { get => errorMessage; }
 
         /// <summary>
-        /// Defines the progress.
+        /// Defines the Progress.
         /// </summary>
         private double progress = 0.0;
 

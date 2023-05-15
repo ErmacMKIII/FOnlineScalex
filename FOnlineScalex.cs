@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11,17 +12,37 @@ using FOnlineScalex.Logger;
 
 namespace FOnlineScalex
 {
-    public static class FOnlineScalex
+    public class FOnlineScalex
     {
-        public static void Work(string inDir, string outDir, bool recursive, IFOSLogger logger)
+        public float Progress { get; private set; }
+
+        /// <summary>
+        /// The ProgressUpdate.
+        /// </summary>
+        /// <param name="progress">The value<see cref="int"/>.</param>
+        public delegate void ProgressUpdate(int progress);
+
+        /// <summary>
+        /// Defines the OnProgressUpdate.
+        /// </summary>
+        public event ProgressUpdate OnProgressUpdate;
+
+        public FOnlineScalex()
         {
-            float oldProgress = 0.0f, progress = 0.0f;
-            progress = 0.0f;
+            
+        }
+
+        public void Work(string inDir, string outDir, bool recursive, IFOSLogger logger)
+        {
+            Progress = 0.0f;
 
             if (!Directory.Exists(inDir))
             {
-                progress = 100.0f;
-                //firePropertyChange("progress", oldProgress, progress);
+                Progress = 100.0f;
+                if (OnProgressUpdate != null)
+                {
+                    OnProgressUpdate((int)Math.Round(Progress));
+                }
                 return;
             }
 
@@ -32,8 +53,8 @@ namespace FOnlineScalex
 
             bool stopped = false;
 
-            logger.Log("Starting Performance Work");
-            logger.Log($"Progress: {progress}");
+            logger.Log("Starting FOnlineScalex Work");
+            logger.Log($"Progress: {Progress}");
             if (Directory.Exists(inDir))
             {
                 string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*.FRM", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
@@ -42,7 +63,7 @@ namespace FOnlineScalex
                 {
                     if (stopped)
                     {
-                        logger.Log("Performance stopped!");
+                        logger.Log("FOnlineScalex stopped!");
                         break;
                     }
 
@@ -93,19 +114,25 @@ namespace FOnlineScalex
                         Directory.CreateDirectory(outDir);
                         logger.Log(outFile);
                         dstFRM.Export(outFile);
-                        progress += 100.0f / (float)fileArray.Length;
-                        logger.Log($"Progress: {progress}");
-                        //firePropertyChange("progress", oldProgress, progress);
+                        Progress += 100.0f / (float)fileArray.Length;
+                        logger.Log($"Progress: {Progress}");
+                        if (OnProgressUpdate != null)
+                        {
+                            OnProgressUpdate((int)Math.Round(Progress));
+                        }
                     }
 
                 }
                 
             }
             
-            logger.Log("Performance work finished!");
-            progress = 100.0f;
-            logger.Log($"Progress: {progress}");
-            //firePropertyChange("progress", oldProgress, progress);
+            logger.Log("FOnlineScalex work finished!");
+            Progress = 100.0f;
+            logger.Log($"Progress: {Progress}");
+            if (OnProgressUpdate != null)
+            {
+                OnProgressUpdate((int)Math.Round(Progress));
+            }
         }
         
     }

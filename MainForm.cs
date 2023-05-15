@@ -1,5 +1,7 @@
 using FOnlineScalex.Logger;
+using System.ComponentModel;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace FOnlineScalex
 {
@@ -15,14 +17,50 @@ namespace FOnlineScalex
         /// </summary>
         public static readonly Color DarkForeground = Color.FromArgb(0xFF, 0x50, 0x7F);
 
+        protected readonly BackgroundWorker backgroundWorker = new BackgroundWorker();
+
+        protected readonly FOnlineScalex fOnlineScalex = new FOnlineScalex();
+
+        protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
+        protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
+
         public MainForm()
         {
             InitializeComponent();
             InitDarkTheme(this);
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+
+            fOnlineScalex.OnProgressUpdate += FOnlineScalex_OnProgressUpdate;
         }
 
-        protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
-        protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
+        private void FOnlineScalex_OnProgressUpdate(int progress)
+        {
+            base.Invoke(() => { BackgroundWorker_ProgressChanged(this, new ProgressChangedEventArgs((int)Math.Round(fOnlineScalex.Progress), null)); });
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            this.progBar.Value = e.ProgressPercentage;
+            this.progBar.Update();
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            btnGo.Enabled = true;
+        }
+
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            object[] args = (object[])e.Argument;
+            if (args != null && args.Length == 4)
+            {
+                fOnlineScalex.Work((string)args[0], (string)args[1], (bool)args[2], (IFOSLogger)args[3]);
+            }
+        }
 
         protected IFOSLogger fOSLogger = new FOSLogger("FOnlineScalex.log", "./");
 
@@ -70,9 +108,9 @@ namespace FOnlineScalex
             outDirPath = tboxOutDir.Text;
         }
 
-        private void btnGo_Click(object sender, EventArgs e)
+        private void btnStop_Click(object sender, EventArgs e)
         {
-            FOnlineScalex.Work(inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger);
+
         }
 
         private void btnSetInDir_Click(object sender, EventArgs e)
@@ -85,18 +123,11 @@ namespace FOnlineScalex
             SetOutDirPath();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void btnGo_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void groupBox5_Enter(object sender, EventArgs e)
-        {
-
+            btnGo.Enabled = false;
+            object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger };
+            backgroundWorker.RunWorkerAsync(args);
         }
     }
 }
