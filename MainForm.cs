@@ -5,15 +5,36 @@ namespace FOnlineScalex
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Defines the DarkBackground.
+        /// </summary>
+        public static readonly Color DarkBackground = Color.FromArgb(0x1E, 0x1E, 0x1E);
+
+        /// <summary>
+        /// Defines the DarkForeground.
+        /// </summary>
+        public static readonly Color DarkForeground = Color.FromArgb(0xFF, 0x50, 0x7F);
+
         public MainForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            InitDarkTheme(this);
         }
 
         protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
         protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
 
         protected IFOSLogger fOSLogger = new FOSLogger("FOnlineScalex.log", "./");
+
+        public static void InitDarkTheme(Control root)
+        {
+            root.BackColor = DarkBackground;
+            root.ForeColor = DarkForeground;
+            foreach (Control ctrl in root.Controls)
+            {
+                InitDarkTheme(ctrl);
+            }
+        }
 
         private void SetInDirPath()
         {
@@ -62,6 +83,20 @@ namespace FOnlineScalex
         private void btnSetOutDir_Click(object sender, EventArgs e)
         {
             SetOutDirPath();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
