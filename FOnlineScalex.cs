@@ -14,26 +14,36 @@ namespace FOnlineScalex
 {
     public class FOnlineScalex
     {
+        public string? ProcessingFile { get; private set; }
+
         public float Progress { get; private set; }
+
+        public Frame? Frame { get; private set; }
+
+        public bool Cancelled { get; private set; }        
 
         /// <summary>
         /// The ProgressUpdate.
         /// </summary>
         /// <param name="progress">The value<see cref="int"/>.</param>
-        public delegate void ProgressUpdate(int progress);
+        public delegate void ProgressUpdate(int progress, string? file, Frame? frame);
 
         /// <summary>
         /// Defines the OnProgressUpdate.
         /// </summary>
         public event ProgressUpdate OnProgressUpdate;
 
+        public event Cancel OnCancel;
+        public delegate void Cancel();
+
         public FOnlineScalex()
         {
             
         }
 
-        public void Work(string inDir, string outDir, bool recursive, IFOSLogger logger)
+        public void DoWork(string inDir, string outDir, bool recursive, IFOSLogger logger)
         {
+            Cancelled = false;
             Progress = 0.0f;
 
             if (!Directory.Exists(inDir))
@@ -41,7 +51,7 @@ namespace FOnlineScalex
                 Progress = 100.0f;
                 if (OnProgressUpdate != null)
                 {
-                    OnProgressUpdate((int)Math.Round(Progress));
+                    OnProgressUpdate((int)Math.Round(Progress), null, null);
                 }
                 return;
             }
@@ -53,7 +63,7 @@ namespace FOnlineScalex
 
             bool stopped = false;
 
-            logger.Log("Starting FOnlineScalex Work");
+            logger.Log("Starting FOnlineScalex DoWork");
             logger.Log($"Progress: {Progress}");
             if (Directory.Exists(inDir))
             {
@@ -69,7 +79,7 @@ namespace FOnlineScalex
 
                     // if it's png or FRM file
                     // get extensionless filename
-                    string extLessFilename = Regex.Replace(srcFile, "[.][^.]+$", string.Empty);
+                    // string extLessFilename = Regex.Replace(srcFile, "[.][^.]+$", string.Empty);
                     //----------------------------------------------------------
                     if (srcFile.ToLower().EndsWith(".frm"))
                     {
@@ -118,10 +128,21 @@ namespace FOnlineScalex
                         logger.Log($"Progress: {Progress}");
                         if (OnProgressUpdate != null)
                         {
-                            OnProgressUpdate((int)Math.Round(Progress));
+                            ProcessingFile = outFile;
+                            Frame = dstFrames.FirstOrDefault();
+                            OnProgressUpdate((int)Math.Round(Progress), outFile, dstFrames.FirstOrDefault());
                         }
+
+                        
                     }
 
+                    // can be cancelled externally
+                    if (Cancelled && OnCancel != null)
+                    {
+                        OnCancel();
+                        logger.Log("FOnlineScalex cancelled by user!");
+                        break;
+                    }
                 }
                 
             }
@@ -131,9 +152,16 @@ namespace FOnlineScalex
             logger.Log($"Progress: {Progress}");
             if (OnProgressUpdate != null)
             {
-                OnProgressUpdate((int)Math.Round(Progress));
+                ProcessingFile = string.Empty;
+                Frame = null;
+                OnProgressUpdate((int)Math.Round(Progress), null, null);
             }
         }
         
+        public void CancelWork()
+        {
+            Cancelled = true;
+        }
+
     }
 }

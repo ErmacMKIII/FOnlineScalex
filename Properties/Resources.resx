@@ -127,8 +127,14 @@
   <data name="Fallout_Palette" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fallout_Palette.act;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FOnlineScalex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FOnlineScalex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gatling" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gatling.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gplv3_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gplv3_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

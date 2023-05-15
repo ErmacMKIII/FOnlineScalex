@@ -93,9 +93,29 @@ namespace FOnlineScalex.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FOnlineScalex {
+            get {
+                object obj = ResourceManager.GetObject("FOnlineScalex", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gatling {
             get {
                 object obj = ResourceManager.GetObject("gatling", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gplv3_logo {
+            get {
+                object obj = ResourceManager.GetObject("gplv3_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

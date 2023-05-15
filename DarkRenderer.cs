@@ -18,7 +18,7 @@ namespace FOnlineScalex
     /// <summary>
     /// Defines the <see cref="DarkRenderer" />.
     /// </summary>
-    internal class DarkRenderer : ToolStripRenderer
+    public class DarkRenderer : ToolStripRenderer
     {
         /// <summary>
         /// The OnRenderItemText.

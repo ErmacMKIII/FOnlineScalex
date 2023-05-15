@@ -10,6 +10,7 @@ namespace FOnlineScalex
         [STAThread]
         static void Main()
         {
+            // Init Palette (or not work)
             Palette.Init();
 
             // To customize application configuration such as set high DPI settings or default font,

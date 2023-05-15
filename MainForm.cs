@@ -2,6 +2,8 @@ using FOnlineScalex.Logger;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Linq;
+using FOnlineScalex.FRMFile;
+using FOnlineScalex.Properties;
 
 namespace FOnlineScalex
 {
@@ -24,10 +26,15 @@ namespace FOnlineScalex
         protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
         protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
 
+        protected DarkRenderer darkRenderer = new DarkRenderer();
+
         public MainForm()
         {
             InitializeComponent();
             InitDarkTheme(this);
+
+            this.MainMenuStrip.Renderer = darkRenderer;
+
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
             backgroundWorker.WorkerReportsProgress = true;
             backgroundWorker.WorkerSupportsCancellation = true;
@@ -35,11 +42,30 @@ namespace FOnlineScalex
             backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
 
             fOnlineScalex.OnProgressUpdate += FOnlineScalex_OnProgressUpdate;
+            fOnlineScalex.OnCancel += FOnlineScalex_OnCancel;
         }
 
-        private void FOnlineScalex_OnProgressUpdate(int progress)
+        private void FOnlineScalex_OnCancel()
         {
-            base.Invoke(() => { BackgroundWorker_ProgressChanged(this, new ProgressChangedEventArgs((int)Math.Round(fOnlineScalex.Progress), null)); });
+            backgroundWorker.CancelAsync();
+            base.Invoke(() =>
+            {
+                btnGo.Enabled = true;
+                btnStop.Enabled = true;
+                this.pboxCurrentFrame.Update();
+                this.fOnlineScalex.CancelWork();
+            });
+
+        }
+
+        private void FOnlineScalex_OnProgressUpdate(int progress, string? file, Frame? frame)
+        {
+            base.Invoke(() =>
+            {
+                BackgroundWorker_ProgressChanged(this, new ProgressChangedEventArgs((int)Math.Round(fOnlineScalex.Progress), null));
+                this.tboxCurrProc.Text = fOnlineScalex.ProcessingFile;
+                this.pboxCurrentFrame.Image = fOnlineScalex.Frame?.ToBitmap();
+            });
         }
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -50,7 +76,18 @@ namespace FOnlineScalex
 
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
+            // Display Error Message
+            if (e.Cancelled)
+            {
+                MessageBox.Show("App work cancelled by user!", "FOnlineScalex", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("App work finished!", "FOnlineScalex", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             btnGo.Enabled = true;
+            btnStop.Enabled = false;
+            progBar.Value = 0;
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
@@ -58,7 +95,7 @@ namespace FOnlineScalex
             object[] args = (object[])e.Argument;
             if (args != null && args.Length == 4)
             {
-                fOnlineScalex.Work((string)args[0], (string)args[1], (bool)args[2], (IFOSLogger)args[3]);
+                fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2], (IFOSLogger)args[3]);
             }
         }
 
@@ -110,7 +147,8 @@ namespace FOnlineScalex
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-
+            btnStop.Enabled = false;
+            fOnlineScalex.CancelWork();
         }
 
         private void btnSetInDir_Click(object sender, EventArgs e)
@@ -126,8 +164,27 @@ namespace FOnlineScalex
         private void btnGo_Click(object sender, EventArgs e)
         {
             btnGo.Enabled = false;
+            btnStop.Enabled = true;
             object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger };
             backgroundWorker.RunWorkerAsync(args);
+        }
+
+        private void lblCurrProc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tboxCurrProc_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void pboxCurrentFrame_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
