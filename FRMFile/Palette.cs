@@ -102,25 +102,8 @@ namespace FOnlineScalex.FRMFile
 
             double alphaDeviation = Math.Abs(otherCol.A - col.A) / 255.0;
 
-            return (colorDeviation + alphaDeviation) / 2.0;
-        }
-
-        /// <summary>
-        /// RGBDeviation (difference) between two values (colors)
-        /// </summary>
-        /// <param name="col">color</param>
-        /// <param name="otherCol">other color</param>
-        /// <returns>colorDeviation (color difference)</returns>
-        public static double RGBARoundDeviation(Color col, Color otherCol)
-        {
-            double colorDeviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0
-                        + 0.587 * Math.Abs(otherCol.G - col.G) / 255.0
-                        + 0.114 * Math.Abs(otherCol.B - col.B) / 255.0;
-
-            double alphaDeviation = Math.Abs(otherCol.A - col.A) / 255.0;
-
-            return Math.Round((colorDeviation + alphaDeviation) / 2.0);
-        }
+            return Math.Sqrt(colorDeviation * colorDeviation + alphaDeviation * alphaDeviation);
+        }        
 
         public static Color ToPaletteColor(Color colTarget)
         {

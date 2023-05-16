@@ -162,8 +162,10 @@ namespace FOnlineScalex
         {
             btnGo.Enabled = false;
             btnStop.Enabled = true;
+            FOnlineScalex.Algorithm algorithm;
+            Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
             object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, this.eqDifference, this.neqDifference,
-                Enum.Parse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText), cboxAlpha.Checked, fOSLogger };
+                algorithm, cboxAlpha.Checked, fOSLogger };
             backgroundWorker.RunWorkerAsync(args);
         }
 
@@ -210,7 +212,7 @@ namespace FOnlineScalex
             StringBuilder sb = new StringBuilder();
             sb.Append("VERSION v0.1 - ARCTIC - ALPHA\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-05-16 at 12:30).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-05-16 at 23:30).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -232,20 +234,22 @@ namespace FOnlineScalex
             sb.Append("- FOR THE PURPOSE ABOUT THIS PROGRAM, \n");
             sb.Append("check About. Make sure that you checked it first.\n");
             sb.Append("\n");
-            sb.Append("1) Set input filepath - directory with files\n");
+            sb.Append("To build your own result perform these steps:");
             sb.Append("\n");
-            sb.Append("2) Set output filepath - directory with files to write to\n");
+            sb.Append("1) Set input filepath - directory with files.\n");
             sb.Append("\n");
-            sb.Append("3) Recursive detects directories of input recursively\n");
+            sb.Append("2) Set output filepath - directory with files to write to.\n");
+            sb.Append("\n");
+            sb.Append("3) Recursive detects directories of input recursively (optionall).\n");
             sb.Append("\n");
             sb.Append("4) Choosing algorithm from preset. Scalex 2x default.");
             sb.Append("\n");
-            sb.Append("5) Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1\n");
+            sb.Append("5) Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1 (both inclusive).\n");
             sb.Append("\n");
-            sb.Append("6) Include alpha in difference\n");
+            sb.Append("6) Include alpha in difference (optional).\n");
             sb.Append("\n");
-            sb.Append("7) GO Let the app go\n");
-            sb.Append("8) STOPS stops the App\n");
+            sb.Append("7) GO Let the app go.\n");
+            sb.Append("8) STOPS stops the app.\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

@@ -26,7 +26,7 @@ namespace FOnlineScalex.Scalex
         /// <param name="sx">Source Pixel px</param>
         /// <param name="sy">Source Pixel py</param>
         private static void PixelCopy(ref Bitmap dst, int dx, int dy, Bitmap src, int sx, int sy)
-        {            
+        {
             dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
         }       
 
