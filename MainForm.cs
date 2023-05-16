@@ -232,18 +232,20 @@ namespace FOnlineScalex
             sb.Append("- FOR THE PURPOSE ABOUT THIS PROGRAM, \n");
             sb.Append("check About. Make sure that you checked it first.\n");
             sb.Append("\n");
-            sb.Append("- Set input filepath\n");
+            sb.Append("1) Set input filepath - directory with files\n");
             sb.Append("\n");
-            sb.Append("- Set output filepath\n");
+            sb.Append("2) Set output filepath - directory with files to write to\n");
             sb.Append("\n");
-            sb.Append("- Choosing algorithm");
+            sb.Append("3) Recursive detects directories of input recursively\n");
             sb.Append("\n");
-            sb.Append("- Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1\n");
+            sb.Append("4) Choosing algorithm from preset. Scalex 2x default.");
             sb.Append("\n");
-            sb.Append("- Include alpha in difference\n");
+            sb.Append("5) Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1\n");
             sb.Append("\n");
-            sb.Append("- GO Let the app go\n");
-            sb.Append("- STOPS stops the App\n");
+            sb.Append("6) Include alpha in difference\n");
+            sb.Append("\n");
+            sb.Append("7) GO Let the app go\n");
+            sb.Append("8) STOPS stops the App\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

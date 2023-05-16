@@ -57,7 +57,7 @@ namespace FOnlineScalex
         /// <param name="logger">output logger to console (or file)</param>
         public void DoWork(string inDir, string outDir, bool recursive, double eqDiff, double neqDiff, Algorithm? algorithm, bool includeAlpha, IFOSLogger logger)
         {
-            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEW:{neqDiff}, ALPHA:{includeAlpha}");
+            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEQ:{neqDiff}, ALPHA:{includeAlpha}");
             Cancelled = false;
             Progress = 0.0f;
 

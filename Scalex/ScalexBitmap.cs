@@ -835,7 +835,7 @@ namespace FOnlineScalex.Scalex
         }
 
         /// <summary>
-        /// Scales image with Scale4x
+        /// Scales image with Scale3x
         /// </summary>
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
@@ -860,7 +860,7 @@ namespace FOnlineScalex.Scalex
         }
 
         /// <summary>
-        /// Scales image in *src up by 2x into *dst
+        /// Scales image with Scale4x
         /// </summary>
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
