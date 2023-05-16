@@ -21,7 +21,7 @@ namespace FOnlineScalex
 
         public float Progress { get; private set; }
 
-        public Frame? Frame { get; private set; }
+        public Bitmap? Frame { get; private set; }
 
         public bool Cancelled { get; private set; }        
 
@@ -29,7 +29,7 @@ namespace FOnlineScalex
         /// The ProgressUpdate.
         /// </summary>
         /// <param name="progress">The value<see cref="int"/>.</param>
-        public delegate void ProgressUpdate(int progress, string? file, Frame? frame);
+        public delegate void ProgressUpdate(int progress, string? file, Bitmap? frame);
 
         /// <summary>
         /// Defines the OnProgressUpdate.
@@ -70,9 +70,6 @@ namespace FOnlineScalex
             if (Directory.Exists(inDir))
             {
                 string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
-
-                List<Frame>? srcFrames = null;
-                List<Frame>? dstFrames = null;
                 string outFile = string.Empty;
                 foreach (string srcFile in fileArray)
                 {                    
@@ -82,6 +79,9 @@ namespace FOnlineScalex
                     //----------------------------------------------------------
                     if (srcFile.ToLower().EndsWith(".frm"))
                     {
+                        List<Frame>? srcFrames = null;
+                        List<Frame>? dstFrames = null;
+
                         FRM srcFRM = new FRM(srcFile);
                         //-----------------------------------------------------
                         srcFrames = srcFRM.Frames;
@@ -135,33 +135,36 @@ namespace FOnlineScalex
 
                         Directory.CreateDirectory(outDir);
                         dstFRM.Export(outFile);
+
+                        logger.Log(outFile);
+                        Progress += 100.0f / (float)fileArray.Length;
+                        logger.Log($"Progress: {Progress}");
+                        if (OnProgressUpdate != null)
+                        {
+                            ProcessingFile = outFile;
+                            Frame = dstFrames?.FirstOrDefault()?.ToBitmap();
+                            OnProgressUpdate((int)Math.Floor(Progress), outFile, dstFrames?.FirstOrDefault()?.ToBitmap());
+                        }
                     }
                     else if (srcFile.ToLower().EndsWith(".bmp") || srcFile.ToLower().EndsWith(".png"))
                     {
                         //-----------------------------------------------------
-                        Frame framex = new Frame((Bitmap)Bitmap.FromFile(srcFile), 0, 0);
-                        srcFrames = new List<Frame>() { framex };
-                        dstFrames = new List<Frame>();
-                        foreach (Frame srcFrame in srcFrames)
+                        Bitmap inPic = (Bitmap)Bitmap.FromFile(srcFile);
+                        Bitmap outPic;
+
+                        switch (algorithm)
                         {
-                            Frame dstFrame;
-                            switch (algorithm)
-                            {
-                                case Algorithm.Scalex2x:
-                                default:
-                                    Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, eqDiff, neqDiff);
-                                    break;
-                                case Algorithm.Scalex3x:
-                                    Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, eqDiff, neqDiff);
-                                    break;
-                                case Algorithm.Scalex4x:
-                                    Scalex.Scalex.Scalex4x(srcFrame, out dstFrame, eqDiff, neqDiff);
-                                    break;
-                            }
-
-                            dstFrames.Add(dstFrame);
+                            case Algorithm.Scalex2x:
+                            default:
+                                Scalex.ScalexBitmap.Scalex2x(inPic, out outPic, eqDiff, neqDiff);
+                                break;
+                            case Algorithm.Scalex3x:
+                                Scalex.ScalexBitmap.Scalex3x(inPic, out outPic, eqDiff, neqDiff);
+                                break;
+                            case Algorithm.Scalex4x:
+                                Scalex.ScalexBitmap.Scalex4x(inPic, out outPic, eqDiff, neqDiff);
+                                break;
                         }
-
                         string extension = Path.GetExtension(srcFile).ToLower();
                         if (recursive)
                         {
@@ -179,28 +182,35 @@ namespace FOnlineScalex
                         }
 
                         Directory.CreateDirectory(outDir);
-                        foreach (var frame in dstFrames) {
-                            Image image = frame.ToBitmap();
-                            if (extension.Equals(".png"))
-                            {
-                                image.Save(outFile, ImageFormat.Png);
-                            } 
-                            else if (extension.Equals(".bmp"))
-                            {
-                                image.Save(outFile, ImageFormat.Bmp);
-                            }
-                        }
-                    }
 
-                    logger.Log(outFile);
-                    Progress += 100.0f / (float)fileArray.Length;
-                    logger.Log($"Progress: {Progress}");
-                    if (OnProgressUpdate != null)
-                    {
-                        ProcessingFile = outFile;
-                        Frame = dstFrames?.FirstOrDefault();
-                        OnProgressUpdate((int)Math.Floor(Progress), outFile, dstFrames?.FirstOrDefault());
-                    }
+                        if (extension.Equals(".png"))
+                        {
+                            outPic.Save(outFile, ImageFormat.Png);
+                        } 
+                        else if (extension.Equals(".bmp"))
+                        {
+                            outPic.Save(outFile, ImageFormat.Bmp);
+                        }
+
+                        logger.Log(outFile);
+                        Progress += 100.0f / (float)fileArray.Length;
+                        logger.Log($"Progress: {Progress}");
+                        if (OnProgressUpdate != null)
+                        {
+                            ProcessingFile = outFile;
+                            Frame = outPic;
+                            OnProgressUpdate((int)Math.Floor(Progress), outFile, outPic);
+                        }
+                    }                    
+                    //logger.Log(outFile);
+                    //Progress += 100.0f / (float)fileArray.Length;
+                    //logger.Log($"Progress: {Progress}");
+                    //if (OnProgressUpdate != null)
+                    //{
+                    //    ProcessingFile = outFile;
+                    //    Frame = dstFrames?.FirstOrDefault();
+                    //    OnProgressUpdate((int)Math.Floor(Progress), outFile, dstFrames?.FirstOrDefault());
+                    //}
 
                     // can be cancelled externally
                     if (Cancelled && OnCancel != null)

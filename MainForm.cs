@@ -61,13 +61,13 @@ namespace FOnlineScalex
 
         }
 
-        private void FOnlineScalex_OnProgressUpdate(int progress, string? file, Frame? frame)
+        private void FOnlineScalex_OnProgressUpdate(int progress, string? file, Bitmap? frame)
         {
             base.Invoke(() =>
             {
                 BackgroundWorker_ProgressChanged(this, new ProgressChangedEventArgs((int)Math.Round(fOnlineScalex.Progress), null));
                 this.tboxCurrProc.Text = fOnlineScalex.ProcessingFile;
-                this.pboxCurrentFrame.Image = fOnlineScalex.Frame?.ToBitmap();
+                this.pboxCurrentFrame.Image = fOnlineScalex.Frame;
             });
         }
 

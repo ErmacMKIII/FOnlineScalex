@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FOnlineScalex.Scalex
 {
-    public static class Scalex
+    public static class ScalexBitmap
     {
         // --------------------------------
         // Algorithm provided from:
@@ -19,42 +19,28 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Copy a pixel from src to dst
         /// </summary>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="dx">Destination Pixel px</param>
         /// <param name="dy">Destination Pixel py</param>
-        /// <param name="src">Source Frame</param>
+        /// <param name="src">Source Bitmap</param>
         /// <param name="sx">Source Pixel px</param>
         /// <param name="sy">Source Pixel py</param>
-        private static void PixelCopy(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
+        private static void PixelCopy(ref Bitmap dst, int dx, int dy, Bitmap src, int sx, int sy)
         {            
             dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
-        }
-
-        /// <summary>
-        /// Copy a pixel from src to dst (safely)
-        /// </summary>
-        /// <param name="dst">Destination Frame</param>
-        /// <param name="dx">Destination Pixel px</param>
-        /// <param name="dy">Destination Pixel py</param>
-        /// <param name="src">Source Frame</param>
-        /// <param name="sx">Source Pixel px</param>
-        /// <param name="sy">Source Pixel py</param>
-        private static void PixelCopySafe(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
-        {
-            dst.SetPixelSafe(dx, dy, src.GetPixelSafe(sx, sy));
-        }
+        }       
 
         /// <summary>
         /// Check if two pixels are equal with some eqDiff [0..1]
         /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="src">Source Bitmap (where comparison is being performed)</param>
         /// <param name="px">first pixel px</param>
         /// <param name="py">first pixel py</param>
         /// <param name="tx">other (target) pixel px</param>
         /// <param name="ty">other (target) pixel py</param>        
         /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
         /// <returns></returns>
-        private static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        private static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
         {
             if (px == tx && py == ty)
             {
@@ -72,13 +58,13 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Check if two pixels are equal
         /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="src">Source Bitmap (where comparison is being performed)</param>
         /// <param name="px">first pixel px</param>
         /// <param name="py">first pixel py</param>
         /// <param name="tx">other (target) pixel px</param>
         /// <param name="ty">other (target) pixel py</param>
         /// <returns></returns>
-        private static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty)
+        private static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty)
         {
             if (px == tx && py == ty)
             {
@@ -91,43 +77,18 @@ namespace FOnlineScalex.Scalex
             }
 
             return true;
-        }
-
+        }        
 
         /// <summary>
         /// Check if two pixels are equal (safely)
         /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
+        /// <param name="src">Source Bitmap (where comparison is being performed)</param>
         /// <param name="px">first pixel px</param>
         /// <param name="py">first pixel py</param>
         /// <param name="tx">other (target) pixel px</param>
         /// <param name="ty">other (target) pixel py</param>
         /// <returns></returns>
-        private static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty)
-        {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-            
-            if (src.GetPixelSafe(px, py) != src.GetPixelSafe(tx, ty))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Check if two pixels are equal (safely)
-        /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
-        /// <param name="px">first pixel px</param>
-        /// <param name="py">first pixel py</param>
-        /// <param name="tx">other (target) pixel px</param>
-        /// <param name="ty">other (target) pixel py</param>
-        /// <returns></returns>
-        private static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        private static bool PixelEqualSafe(Bitmap src, int px, int py, int tx, int ty, double deviation)
         {
             if (px == tx && py == ty)
             {
@@ -180,39 +141,39 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Return adjacent pixel values for given pixel
         /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="src">Source Bitmap</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
         /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff, double neqDiff)
+        private static void Scalex2xHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
         {
-            uint xL, xR; // x-Left, x-Right
-            uint yB, yT; // y-Bottom, y-Top            
+            int xL, xR; // x-Left, x-Right
+            int yB, yT; // y-Bottom, y-Top            
 
-            uint w = (uint)src.Width;
-            uint h = (uint)src.Height;
+            int w = (int)src.Width;
+            int h = (int)src.Height;
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
             if (py > 0) { yB = py - 1; } else { yB = 0; }
             if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
 
-            uint Bx = px;
-            uint By = yT;
+            int Bx = px;
+            int By = yT;
 
-            uint Dx = xR;
-            uint Dy = py;
+            int Dx = xR;
+            int Dy = py;
 
-            uint Fx = xL;
-            uint Fy = py;
+            int Fx = xL;
+            int Fy = py;
 
-            uint Hx = px;
-            uint Hy = yT;
+            int Hx = px;
+            int Hy = yT;
 
-            uint Ex = px;
-            uint Ey = py;
+            int Ex = px;
+            int Ey = py;
 
             /*
                   if (B != H && D != F) {
@@ -326,19 +287,19 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Return adjacent pixel values for given pixel
         /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="src">Source Bitmap</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
         /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff, double neqDiff)
+        private static void Scalex3xHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
         {
-            uint xL, xR; // x-Left, x-Right
-            uint yB, yT; // y-Bottom, y-Top            
+            int xL, xR; // x-Left, x-Right
+            int yB, yT; // y-Bottom, y-Top            
 
-            uint w = (uint)src.Width;
-            uint h = (uint)src.Height;
+            int w = (int)src.Width;
+            int h = (int)src.Height;
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
@@ -346,32 +307,32 @@ namespace FOnlineScalex.Scalex
             if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
 
             // calculating near pixels => A, B, C, D, E, F, G, H, I
-            uint Ax = xL;
-            uint Ay = yT;
+            int Ax = xL;
+            int Ay = yT;
 
-            uint Bx = px;
-            uint By = yT;
+            int Bx = px;
+            int By = yT;
 
-            uint Cx = xR;
-            uint Cy = yT;
+            int Cx = xR;
+            int Cy = yT;
 
-            uint Dx = xL;
-            uint Dy = py;
+            int Dx = xL;
+            int Dy = py;
 
-            uint Ex = px;
-            uint Ey = py;
+            int Ex = px;
+            int Ey = py;
 
-            uint Fx = xR;
-            uint Fy = py;
+            int Fx = xR;
+            int Fy = py;
 
-            uint Gx = xL;
-            uint Gy = yB;
+            int Gx = xL;
+            int Gy = yB;
 
-            uint Hx = px;
-            uint Hy = yB;
+            int Hx = px;
+            int Hy = yB;
 
-            uint Ix = xR;
-            uint Iy = yB;
+            int Ix = xR;
+            int Iy = yB;
             /*
                 if (B != H && D != F) {
 	                E0 = D == B ? D : E;
@@ -511,18 +472,18 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Scales image with Scale2x
         /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="src">Source Bitmap</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
         /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex2x(Frame src, out Frame dst, double eqDiff, double neqDiff)
+        public static void Scalex2x(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
         {
-            uint w = (uint)src.Width;
-            uint h = (uint)src.Height;  
+            int w = (int)src.Width;
+            int h = (int)src.Height;  
 
-            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
+            dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            uint px, py;
+            int px, py;
 
             for (px = 0; px < w; px++)               
             {
@@ -536,18 +497,18 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Scales image with Scale4x
         /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="src">Source Bitmap</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
         /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex3x(Frame src, out Frame dst, double eqDiff, double neqDiff)
+        public static void Scalex3x(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
         {
-            uint w = (uint)src.Width;
-            uint h = (uint)src.Height;
+            int w = (int)src.Width;
+            int h = (int)src.Height;
 
-            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
+            dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            uint px, py;
+            int px, py;
             
             for (px = 0; px < w; px++)
             {
@@ -561,18 +522,18 @@ namespace FOnlineScalex.Scalex
         /// <summary>
         /// Scales image in *src up by 2x into *dst
         /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
+        /// <param name="src">Source Bitmap</param>
+        /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
         /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex4x(Frame src, out Frame dst, double eqDiff, double neqDiff)
+        public static void Scalex4x(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
         {
-            uint w = (uint)src.Width;
-            uint h = (uint)src.Height;
+            int w = (int)src.Width;
+            int h = (int)src.Height;
 
-            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
+            dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            uint px, py;
+            int px, py;
 
             for (px = 0; px < w; px++)
             {
