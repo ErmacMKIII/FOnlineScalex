@@ -44,9 +44,20 @@ namespace FOnlineScalex
             
         }
 
-        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff, double neqDiff, Algorithm? algorithm, IFOSLogger logger)
+        /// <summary>
+        /// Perform pixel art on the images {BMP, PNG, FRM} in input directories and write to output directories
+        /// </summary>
+        /// <param name="inDir">input directory</param>
+        /// <param name="outDir">output directory</param>
+        /// <param name="recursive">discover directories recursively</param>
+        /// <param name="eqDiff">difference when equal</param>
+        /// <param name="neqDiff">difference when not equal</param>
+        /// <param name="algorithm">pixel art scaling algorithm</param>
+        /// <param name="includeAlpha">include alpha with difference</param>
+        /// <param name="logger">output logger to console (or file)</param>
+        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff, double neqDiff, Algorithm? algorithm, bool includeAlpha, IFOSLogger logger)
         {
-            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEW:{neqDiff}");
+            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEW:{neqDiff}, ALPHA:{includeAlpha}");
             Cancelled = false;
             Progress = 0.0f;
 
@@ -152,18 +163,37 @@ namespace FOnlineScalex
                         Bitmap inPic = (Bitmap)Bitmap.FromFile(srcFile);
                         Bitmap outPic;
 
-                        switch (algorithm)
+                        if (includeAlpha)
                         {
-                            case Algorithm.Scalex2x:
-                            default:
-                                Scalex.ScalexBitmap.Scalex2x(inPic, out outPic, eqDiff, neqDiff);
-                                break;
-                            case Algorithm.Scalex3x:
-                                Scalex.ScalexBitmap.Scalex3x(inPic, out outPic, eqDiff, neqDiff);
-                                break;
-                            case Algorithm.Scalex4x:
-                                Scalex.ScalexBitmap.Scalex4x(inPic, out outPic, eqDiff, neqDiff);
-                                break;
+                            switch (algorithm)
+                            {
+                                case Algorithm.Scalex2x:
+                                default:
+                                    Scalex.ScalexBitmap.Scalex2xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex3x:
+                                    Scalex.ScalexBitmap.Scalex3xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex4x:
+                                    Scalex.ScalexBitmap.Scalex4xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                            }
+                        } 
+                        else
+                        {
+                            switch (algorithm)
+                            {
+                                case Algorithm.Scalex2x:
+                                default:
+                                    Scalex.ScalexBitmap.Scalex2xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex3x:
+                                    Scalex.ScalexBitmap.Scalex3xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex4x:
+                                    Scalex.ScalexBitmap.Scalex4xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    break;
+                            }
                         }
                         string extension = Path.GetExtension(srcFile).ToLower();
                         if (recursive)

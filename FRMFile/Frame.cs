@@ -110,7 +110,7 @@ namespace FOnlineScalex.FRMFile
                         int minIndex = -1;
                         foreach (Color coli in Palette.Colors)
                         {
-                            double deviation = Palette.Deviation(col, coli);
+                            double deviation = Palette.RGBDeviation(col, coli);
                             if (deviation < minDeviation)
                             {
                                 minDeviation = deviation;

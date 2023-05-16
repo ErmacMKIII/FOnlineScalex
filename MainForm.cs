@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Linq;
 using FOnlineScalex.FRMFile;
 using FOnlineScalex.Properties;
+using System.Text;
 
 namespace FOnlineScalex
 {
@@ -96,10 +97,10 @@ namespace FOnlineScalex
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             object[] args = (object[])e.Argument;
-            if (args != null && args.Length == 7)
+            if (args != null && args.Length == 8)
             {
                 fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
-                    (double)args[3], (double)args[4], (FOnlineScalex.Algorithm)args[5], (IFOSLogger)args[6]);
+                    (double)args[3], (double)args[4], (FOnlineScalex.Algorithm)args[5], (bool)args[6], (IFOSLogger)args[7]);
             }
         }
 
@@ -162,7 +163,7 @@ namespace FOnlineScalex
             btnGo.Enabled = false;
             btnStop.Enabled = true;
             object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, this.eqDifference, this.neqDifference,
-                Enum.Parse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText), fOSLogger };
+                Enum.Parse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText), cboxAlpha.Checked, fOSLogger };
             backgroundWorker.RunWorkerAsync(args);
         }
 
@@ -202,6 +203,48 @@ namespace FOnlineScalex
         private void tboxOutputDir_TextChanged(object sender, EventArgs e)
         {
             outDirPath = this.tboxOutputDir.Text;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("VERSION v0.1 - ARCTIC - ALPHA\n");
+            sb.Append("\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-05-16 at 12:30).\n");
+            sb.Append("This software is free software.\n");
+            sb.Append("Licensed under GNU General Public License (GPL).\n");
+            sb.Append("\n");
+            sb.Append("\n");
+            sb.Append("Purpose:\n");
+            sb.Append("FOnline Pixel Art Scalex adapted to FRM formats.\n");
+            sb.Append("\n");
+            sb.Append("\n");
+            sb.Append("Copyright © 2023\n");
+            sb.Append("Alexander \"Ermac\" Stojanovich\n");
+            sb.Append("\n");
+
+            MessageBox.Show(sb.ToString(), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("- FOR THE PURPOSE ABOUT THIS PROGRAM, \n");
+            sb.Append("check About. Make sure that you checked it first.\n");
+            sb.Append("\n");
+            sb.Append("- Set input filepath\n");
+            sb.Append("\n");
+            sb.Append("- Set output filepath\n");
+            sb.Append("\n");
+            sb.Append("- Choosing algorithm");
+            sb.Append("\n");
+            sb.Append("- Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1\n");
+            sb.Append("\n");
+            sb.Append("- Include alpha in difference\n");
+            sb.Append("\n");
+            sb.Append("- GO Let the app go\n");
+            sb.Append("- STOPS stops the App\n");
+            MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

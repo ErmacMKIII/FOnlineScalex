@@ -51,13 +51,14 @@
             pboxCurrentFrame = new PictureBox();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            label1 = new Label();
-            lblPrecision = new Label();
-            btnGo = new Button();
+            lblNeqDiff = new Label();
+            lblEqDiff = new Label();
             cboxAlgo = new ComboBox();
             lblAlgo = new Label();
             numericEqualDifference = new NumericUpDown();
             numericNequalDifference = new NumericUpDown();
+            btnGo = new Button();
+            cboxAlpha = new CheckBox();
             progBar = new ProgressBar();
             menuStripMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -75,7 +76,7 @@
             menuStripMain.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, infoToolStripMenuItem });
             menuStripMain.Location = new Point(0, 0);
             menuStripMain.Name = "menuStripMain";
-            menuStripMain.Size = new Size(540, 24);
+            menuStripMain.Size = new Size(580, 24);
             menuStripMain.TabIndex = 11;
             menuStripMain.Text = "menuStrip1";
             // 
@@ -103,14 +104,16 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(136, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // howToUseToolStripMenuItem
             // 
             howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            howToUseToolStripMenuItem.Size = new Size(136, 22);
+            howToUseToolStripMenuItem.Size = new Size(180, 22);
             howToUseToolStripMenuItem.Text = "How To Use";
+            howToUseToolStripMenuItem.Click += howToUseToolStripMenuItem_Click;
             // 
             // btnStop
             // 
@@ -118,11 +121,13 @@
             btnStop.Enabled = false;
             btnStop.Image = Properties.Resources.stop;
             btnStop.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStop.Location = new Point(260, 32);
+            btnStop.Location = new Point(276, 61);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(271, 23);
+            btnStop.Size = new Size(295, 23);
             btnStop.TabIndex = 9;
             btnStop.Text = "Stop";
+            btnStop.TextAlign = ContentAlignment.MiddleRight;
+            btnStop.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnStop.UseVisualStyleBackColor = true;
             btnStop.Click += btnStop_Click;
             // 
@@ -147,7 +152,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(534, 78);
+            tableLayoutPanel1.Size = new Size(574, 78);
             tableLayoutPanel1.TabIndex = 13;
             // 
             // btnSetOutDir
@@ -157,9 +162,10 @@
             btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
             btnSetOutDir.Location = new Point(373, 42);
             btnSetOutDir.Name = "btnSetOutDir";
-            btnSetOutDir.Size = new Size(158, 33);
+            btnSetOutDir.Size = new Size(198, 33);
             btnSetOutDir.TabIndex = 3;
             btnSetOutDir.Text = "Open...";
+            btnSetOutDir.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnSetOutDir.UseVisualStyleBackColor = true;
             btnSetOutDir.Click += btnSetOutDir_Click;
             // 
@@ -170,9 +176,10 @@
             btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
             btnSetInDir.Location = new Point(373, 3);
             btnSetInDir.Name = "btnSetInDir";
-            btnSetInDir.Size = new Size(158, 33);
+            btnSetInDir.Size = new Size(198, 33);
             btnSetInDir.TabIndex = 1;
             btnSetInDir.Text = "Open...";
+            btnSetInDir.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnSetInDir.UseVisualStyleBackColor = true;
             btnSetInDir.Click += btnSetInDir_Click;
             // 
@@ -220,9 +227,9 @@
             // 
             cboxRecursive.AutoSize = true;
             cboxRecursive.Dock = DockStyle.Fill;
-            cboxRecursive.Location = new Point(260, 61);
+            cboxRecursive.Location = new Point(276, 90);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(271, 23);
+            cboxRecursive.Size = new Size(295, 19);
             cboxRecursive.TabIndex = 4;
             cboxRecursive.Text = "Recurse through child directories";
             cboxRecursive.UseVisualStyleBackColor = true;
@@ -236,7 +243,7 @@
             gboxMain.Dock = DockStyle.Fill;
             gboxMain.Location = new Point(0, 24);
             gboxMain.Name = "gboxMain";
-            gboxMain.Size = new Size(540, 353);
+            gboxMain.Size = new Size(580, 413);
             gboxMain.TabIndex = 13;
             gboxMain.TabStop = false;
             // 
@@ -244,19 +251,19 @@
             // 
             tableLayoutPanel3.AutoSize = true;
             tableLayoutPanel3.ColumnCount = 2;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2672062F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.7327957F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel3.Controls.Add(lblCurrProc, 0, 0);
             tableLayoutPanel3.Controls.Add(tboxCurrProc, 1, 0);
             tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 0, 1);
             tableLayoutPanel3.Controls.Add(pictureBox1, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 184);
+            tableLayoutPanel3.Location = new Point(3, 209);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20.5882359F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 79.4117661F));
-            tableLayoutPanel3.Size = new Size(534, 136);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle());
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(574, 171);
             tableLayoutPanel3.TabIndex = 15;
             // 
             // lblCurrProc
@@ -265,7 +272,7 @@
             lblCurrProc.Dock = DockStyle.Fill;
             lblCurrProc.Location = new Point(3, 0);
             lblCurrProc.Name = "lblCurrProc";
-            lblCurrProc.Size = new Size(112, 28);
+            lblCurrProc.Size = new Size(112, 29);
             lblCurrProc.TabIndex = 0;
             lblCurrProc.Text = "Processing:";
             lblCurrProc.TextAlign = ContentAlignment.MiddleRight;
@@ -276,16 +283,16 @@
             tboxCurrProc.Dock = DockStyle.Fill;
             tboxCurrProc.Location = new Point(121, 3);
             tboxCurrProc.Name = "tboxCurrProc";
-            tboxCurrProc.Size = new Size(410, 23);
+            tboxCurrProc.Size = new Size(450, 23);
             tboxCurrProc.TabIndex = 1;
             tboxCurrProc.TextChanged += tboxCurrProc_TextChanged;
             // 
             // pboxCurrentFrame
             // 
             pboxCurrentFrame.Dock = DockStyle.Fill;
-            pboxCurrentFrame.Location = new Point(3, 31);
+            pboxCurrentFrame.Location = new Point(3, 32);
             pboxCurrentFrame.Name = "pboxCurrentFrame";
-            pboxCurrentFrame.Size = new Size(112, 102);
+            pboxCurrentFrame.Size = new Size(112, 136);
             pboxCurrentFrame.TabIndex = 3;
             pboxCurrentFrame.TabStop = false;
             pboxCurrentFrame.Click += pboxCurrentFrame_Click;
@@ -294,9 +301,9 @@
             // 
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = Properties.Resources.gplv3_logo;
-            pictureBox1.Location = new Point(121, 31);
+            pictureBox1.Location = new Point(121, 32);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(410, 102);
+            pictureBox1.Size = new Size(450, 136);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
@@ -308,59 +315,48 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel2.Controls.Add(label1, 0, 2);
-            tableLayoutPanel2.Controls.Add(lblPrecision, 0, 1);
-            tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
+            tableLayoutPanel2.Controls.Add(lblNeqDiff, 0, 2);
+            tableLayoutPanel2.Controls.Add(lblEqDiff, 0, 1);
             tableLayoutPanel2.Controls.Add(cboxAlgo, 1, 0);
-            tableLayoutPanel2.Controls.Add(btnStop, 2, 1);
             tableLayoutPanel2.Controls.Add(lblAlgo, 0, 0);
             tableLayoutPanel2.Controls.Add(numericEqualDifference, 1, 1);
-            tableLayoutPanel2.Controls.Add(cboxRecursive, 2, 2);
             tableLayoutPanel2.Controls.Add(numericNequalDifference, 1, 2);
+            tableLayoutPanel2.Controls.Add(cboxRecursive, 2, 3);
+            tableLayoutPanel2.Controls.Add(btnStop, 2, 2);
+            tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
+            tableLayoutPanel2.Controls.Add(cboxAlpha, 1, 3);
             tableLayoutPanel2.Dock = DockStyle.Top;
             tableLayoutPanel2.Location = new Point(3, 97);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
+            tableLayoutPanel2.RowCount = 4;
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.Size = new Size(534, 87);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(574, 112);
             tableLayoutPanel2.TabIndex = 14;
             // 
-            // label1
+            // lblNeqDiff
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(3, 58);
-            label1.Name = "label1";
-            label1.Size = new Size(105, 29);
-            label1.TabIndex = 16;
-            label1.Text = "Nequal Difference:";
-            label1.TextAlign = ContentAlignment.MiddleRight;
+            lblNeqDiff.AutoSize = true;
+            lblNeqDiff.Dock = DockStyle.Fill;
+            lblNeqDiff.Location = new Point(3, 58);
+            lblNeqDiff.Name = "lblNeqDiff";
+            lblNeqDiff.Size = new Size(105, 29);
+            lblNeqDiff.TabIndex = 16;
+            lblNeqDiff.Text = "Nequal Difference:";
+            lblNeqDiff.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // lblPrecision
+            // lblEqDiff
             // 
-            lblPrecision.AutoSize = true;
-            lblPrecision.Dock = DockStyle.Fill;
-            lblPrecision.Location = new Point(3, 29);
-            lblPrecision.Name = "lblPrecision";
-            lblPrecision.Size = new Size(105, 29);
-            lblPrecision.TabIndex = 14;
-            lblPrecision.Text = "Equal Difference:";
-            lblPrecision.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // btnGo
-            // 
-            btnGo.Dock = DockStyle.Fill;
-            btnGo.Image = Properties.Resources.gatling;
-            btnGo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGo.Location = new Point(260, 3);
-            btnGo.Name = "btnGo";
-            btnGo.Size = new Size(271, 23);
-            btnGo.TabIndex = 10;
-            btnGo.Text = "GO";
-            btnGo.UseVisualStyleBackColor = true;
-            btnGo.Click += btnGo_Click;
+            lblEqDiff.AutoSize = true;
+            lblEqDiff.Dock = DockStyle.Fill;
+            lblEqDiff.Location = new Point(3, 29);
+            lblEqDiff.Name = "lblEqDiff";
+            lblEqDiff.Size = new Size(105, 29);
+            lblEqDiff.TabIndex = 14;
+            lblEqDiff.Text = "Equal Difference:";
+            lblEqDiff.TextAlign = ContentAlignment.MiddleRight;
             // 
             // cboxAlgo
             // 
@@ -369,7 +365,7 @@
             cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x" });
             cboxAlgo.Location = new Point(114, 3);
             cboxAlgo.Name = "cboxAlgo";
-            cboxAlgo.Size = new Size(140, 23);
+            cboxAlgo.Size = new Size(156, 23);
             cboxAlgo.TabIndex = 11;
             // 
             // lblAlgo
@@ -391,7 +387,7 @@
             numericEqualDifference.Location = new Point(114, 32);
             numericEqualDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             numericEqualDifference.Name = "numericEqualDifference";
-            numericEqualDifference.Size = new Size(140, 23);
+            numericEqualDifference.Size = new Size(156, 23);
             numericEqualDifference.TabIndex = 13;
             numericEqualDifference.ValueChanged += numericEqualDifference_ValueChanged;
             // 
@@ -403,16 +399,41 @@
             numericNequalDifference.Location = new Point(114, 61);
             numericNequalDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             numericNequalDifference.Name = "numericNequalDifference";
-            numericNequalDifference.Size = new Size(140, 23);
+            numericNequalDifference.Size = new Size(156, 23);
             numericNequalDifference.TabIndex = 15;
             numericNequalDifference.ValueChanged += numericNequalDifference_ValueChanged;
+            // 
+            // btnGo
+            // 
+            btnGo.Dock = DockStyle.Fill;
+            btnGo.Image = Properties.Resources.gatling;
+            btnGo.Location = new Point(276, 3);
+            btnGo.Name = "btnGo";
+            tableLayoutPanel2.SetRowSpan(btnGo, 2);
+            btnGo.Size = new Size(295, 52);
+            btnGo.TabIndex = 10;
+            btnGo.Text = "GO";
+            btnGo.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnGo.UseVisualStyleBackColor = true;
+            btnGo.Click += btnGo_Click;
+            // 
+            // cboxAlpha
+            // 
+            cboxAlpha.AutoSize = true;
+            cboxAlpha.Dock = DockStyle.Fill;
+            cboxAlpha.Location = new Point(114, 90);
+            cboxAlpha.Name = "cboxAlpha";
+            cboxAlpha.Size = new Size(156, 19);
+            cboxAlpha.TabIndex = 17;
+            cboxAlpha.Text = "Include Alpha Difference";
+            cboxAlpha.UseVisualStyleBackColor = true;
             // 
             // progBar
             // 
             progBar.Dock = DockStyle.Bottom;
-            progBar.Location = new Point(3, 320);
+            progBar.Location = new Point(3, 380);
             progBar.Name = "progBar";
-            progBar.Size = new Size(534, 30);
+            progBar.Size = new Size(574, 30);
             progBar.TabIndex = 2;
             // 
             // MainForm
@@ -420,7 +441,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(540, 377);
+            ClientSize = new Size(580, 437);
             Controls.Add(gboxMain);
             Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -474,9 +495,10 @@
         private Label lblOutDir;
         private Label lblAlgo;
         private PictureBox pictureBox1;
-        private Label lblPrecision;
+        private Label lblEqDiff;
         private NumericUpDown numericEqualDifference;
-        private Label label1;
+        private Label lblNeqDiff;
         private NumericUpDown numericNequalDifference;
+        private CheckBox cboxAlpha;
     }
 }

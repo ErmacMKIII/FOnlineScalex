@@ -61,7 +61,7 @@ namespace FOnlineScalex.Scalex
                 return true;
             }
 
-            if (Palette.Deviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            if (Palette.RGBDeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
             {
                 return false;
             }
@@ -134,7 +134,7 @@ namespace FOnlineScalex.Scalex
                 return true;
             }
 
-            if (Palette.Deviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            if (Palette.RGBDeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
             {
                 return false;
             }
