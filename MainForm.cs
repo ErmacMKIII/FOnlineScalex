@@ -23,8 +23,11 @@ namespace FOnlineScalex
 
         protected readonly FOnlineScalex fOnlineScalex = new FOnlineScalex();
 
-        protected string inDirPath = @"C:\Users\coas9\Desktop\INPUT";
-        protected string outDirPath = @"C:\Users\coas9\Desktop\OUTPUT";
+        protected string inDirPath = string.Empty;
+        protected string outDirPath = string.Empty;
+
+        protected double eqDifference = 0.0;
+        protected double neqDifference = 0.0;
 
         protected DarkRenderer darkRenderer = new DarkRenderer();
 
@@ -93,9 +96,10 @@ namespace FOnlineScalex
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             object[] args = (object[])e.Argument;
-            if (args != null && args.Length == 4)
+            if (args != null && args.Length == 7)
             {
-                fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2], (IFOSLogger)args[3]);
+                fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
+                    (double)args[3], (double)args[4], (FOnlineScalex.Algorithm)args[5], (IFOSLogger)args[6]);
             }
         }
 
@@ -130,20 +134,12 @@ namespace FOnlineScalex
                 if (openOutDirDialog.ShowDialog() == DialogResult.OK)
                 {
                     outDirPath = openOutDirDialog.SelectedPath;
-                    tboxOutDir.Text = outDirPath;
+                    tboxOutputDir.Text = outDirPath;
                 }
             }
         }
 
-        private void tboxInputDir_TextChanged(object sender, EventArgs e)
-        {
-            inDirPath = tboxInputDir.Text;
-        }
 
-        private void tboxOutDir_TextChanged(object sender, EventArgs e)
-        {
-            outDirPath = tboxOutDir.Text;
-        }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
@@ -165,7 +161,8 @@ namespace FOnlineScalex
         {
             btnGo.Enabled = false;
             btnStop.Enabled = true;
-            object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, fOSLogger };
+            object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, this.eqDifference, this.neqDifference,
+                Enum.Parse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText), fOSLogger };
             backgroundWorker.RunWorkerAsync(args);
         }
 
@@ -180,11 +177,31 @@ namespace FOnlineScalex
 
         private void pboxCurrentFrame_Click(object sender, EventArgs e)
         {
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void numericEqualDifference_ValueChanged(object sender, EventArgs e)
+        {
+            this.eqDifference = (double)this.numericEqualDifference.Value;
+        }
+
+        private void numericNequalDifference_ValueChanged(object sender, EventArgs e)
+        {
+            this.neqDifference = (double)this.numericNequalDifference.Value;
+        }
+        private void tboxInputDir_TextChanged(object sender, EventArgs e)
+        {
+            inDirPath = tboxInputDir.Text;
+        }
+
+        private void tboxOutputDir_TextChanged(object sender, EventArgs e)
+        {
+            outDirPath = this.tboxOutputDir.Text;
         }
     }
 }

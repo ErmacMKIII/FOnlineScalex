@@ -47,14 +47,14 @@ namespace FOnlineScalex.Scalex
         }
 
         /// <summary>
-        /// Check if two pixels are equal with some deviation [0..1]
+        /// Check if two pixels are equal with some eqDiff [0..1]
         /// </summary>
         /// <param name="src">Source Frame (where comparison is being performed)</param>
         /// <param name="px">first pixel px</param>
         /// <param name="py">first pixel py</param>
         /// <param name="tx">other (target) pixel px</param>
         /// <param name="ty">other (target) pixel py</param>        
-        /// <param name="deviation">deviation tolerance (pixel difference), in range [0,1]</param>
+        /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
         /// <returns></returns>
         private static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
         {
@@ -186,7 +186,9 @@ namespace FOnlineScalex.Scalex
         /// <param name="dst">Destination Frame</param>
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
-        private static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py, double deviation)
+        /// <param name="eqDiff">difference when equal</param>
+        /// <param name="neqDiff">difference when not equal</param>
+        private static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff, double neqDiff)
         {
             uint xL, xR; // x-Left, x-Right
             uint yB, yT; // y-Bottom, y-Top            
@@ -233,9 +235,9 @@ namespace FOnlineScalex.Scalex
                E2[xL,yB]  E3[xR,yB]
             */
 
-            if (!PixelEqual(src, Bx, By, Hx, Hy) && !PixelEqual(src, Dx, Dy, Fx, Fy))
+            if (!PixelEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, neqDiff))
             {
-               if (PixelEqual(src, Dx, Dy, Bx, By, deviation))
+               if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                {
                    PixelCopy(ref dst, xL, yT, src, Dx, Dy);
                }
@@ -244,7 +246,7 @@ namespace FOnlineScalex.Scalex
                    PixelCopy(ref dst, xL, yT, src, Ex, Ey);
                }
 
-               if (PixelEqual(src, Bx, By, Fx, Fy, deviation))
+               if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
                {
                    PixelCopy(ref dst, xR, yT, src, Fx, Fy);
                }
@@ -253,7 +255,7 @@ namespace FOnlineScalex.Scalex
                    PixelCopy(ref dst, xR, yT, src, Ex, Ey);
                }
 
-               if (PixelEqual(src, Dx, Dy, Hx, Hy, deviation))
+               if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                {
                    PixelCopy(ref dst, xL, yB, src, Dx, Dy);
                }
@@ -262,7 +264,7 @@ namespace FOnlineScalex.Scalex
                    PixelCopy(ref dst, xL, yB, src, Ex, Ey);
                }
 
-               if (PixelEqual(src, Hx, Hy, Fx, Fy, deviation))
+               if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                {
                    PixelCopy(ref dst, xR, yB, src, Fx, Fy);
                }
@@ -281,56 +283,58 @@ namespace FOnlineScalex.Scalex
 
        }
 
-       /*
-           The central pixel E is expanded in 9 new pixels:
+        /*
+            The central pixel E is expanded in 9 new pixels:
 
-           E0	E1	E2
-           E3	E4	E5
-           E6	E7	E8
-           with these rules (in C language) :
+            E0	E1	E2
+            E3	E4	E5
+            E6	E7	E8
+            with these rules (in C language) :
 
-           E0 = D == B && B != F && D != H ? D : E;
-           E1 = (D == B && B != F && D != H && E != C) || (B == F && B != D && F != H && E != A) ? B : E;
-           E2 = B == F && B != D && F != H ? F : E;
-           E3 = (D == B && B != F && D != H && E != G) || (D == H && D != B && H != F && E != A) ? D : E;
-           E4 = E
-           E5 = (B == F && B != D && F != H && E != I) || (H == F && D != H && B != F && E != C) ? F : E;
-           E6 = D == H && D != B && H != F ? D : E;
-           E7 = (D == H && D != B && H != F && E != I) || (H == F && D != H && B != F && E != G) ? H : E;
-           E8 = H == F && D != H && B != F ? F : E;
-           and optimized as:
+            E0 = D == B && B != F && D != H ? D : E;
+            E1 = (D == B && B != F && D != H && E != C) || (B == F && B != D && F != H && E != A) ? B : E;
+            E2 = B == F && B != D && F != H ? F : E;
+            E3 = (D == B && B != F && D != H && E != G) || (D == H && D != B && H != F && E != A) ? D : E;
+            E4 = E
+            E5 = (B == F && B != D && F != H && E != I) || (H == F && D != H && B != F && E != C) ? F : E;
+            E6 = D == H && D != B && H != F ? D : E;
+            E7 = (D == H && D != B && H != F && E != I) || (H == F && D != H && B != F && E != G) ? H : E;
+            E8 = H == F && D != H && B != F ? F : E;
+            and optimized as:
 
-           if (B != H && D != F) {
-               E0 = D == B ? D : E;
-               E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-               E2 = B == F ? F : E;
-               E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-               E4 = E;
-               E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-               E6 = D == H ? D : E;
-               E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-               E8 = H == F ? F : E;
-           } else {
-               E0 = E;
-               E1 = E;
-               E2 = E;
-               E3 = E;
-               E4 = E;
-               E5 = E;
-               E6 = E;
-               E7 = E;
-               E8 = E;
-           }
-        */
+            if (B != H && D != F) {
+                E0 = D == B ? D : E;
+                E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
+                E2 = B == F ? F : E;
+                E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
+                E4 = E;
+                E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
+                E6 = D == H ? D : E;
+                E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
+                E8 = H == F ? F : E;
+            } else {
+                E0 = E;
+                E1 = E;
+                E2 = E;
+                E3 = E;
+                E4 = E;
+                E5 = E;
+                E6 = E;
+                E7 = E;
+                E8 = E;
+            }
+         */
 
-            /// <summary>
-            /// Return adjacent pixel values for given pixel
-            /// </summary>
-            /// <param name="src">Source Frame</param>
-            /// <param name="dst">Destination Frame</param>
-            /// <param name="px">Pixel x</param>
-            /// <param name="py">Pixel y</param>
-            private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double deviation)
+        /// <summary>
+        /// Return adjacent pixel values for given pixel
+        /// </summary>
+        /// <param name="src">Source Frame</param>
+        /// <param name="dst">Destination Frame</param>
+        /// <param name="px">Pixel x</param>
+        /// <param name="py">Pixel y</param>
+        /// <param name="eqDiff">difference when equal</param>
+        /// <param name="neqDiff">difference when not equal</param>
+        private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff, double neqDiff)
         {
             uint xL, xR; // x-Left, x-Right
             uint yB, yT; // y-Bottom, y-Top            
@@ -396,10 +400,10 @@ namespace FOnlineScalex.Scalex
             //      E0[xL,yT] E1[x,yT] E2[xR, yT]
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]
-            if (!PixelEqual(src, Bx, By, Hx, Hy) && !PixelEqual(src, Dx, Dy, Fx, Fy))
+            if (!PixelEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, neqDiff))
             {
                 // E0 = D == B ? D : E;
-                if (PixelEqual(src, Dx, Dy, Bx, By, deviation))
+                if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
                     PixelCopy(ref dst, xL, yT, src, Dx, Dy);
                 } 
@@ -409,9 +413,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Ex, Ey, Cx, Cy))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, neqDiff))
                     ||
-                    (PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Ax, Ay)))
+                    (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
                 {
                     PixelCopy(ref dst, px, yT, src, Bx, By);
                 }
@@ -421,7 +425,7 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E2 = B == F ? F : E;
-                if (PixelEqual(src, Bx, By, Fx, Fy, deviation))
+                if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
                 {
                     PixelCopy(ref dst, xR, yT, src, Fx, Fy);
                 }
@@ -431,9 +435,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, deviation) && !PixelEqual(src, Ex, Ey, Gx, Gy))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, neqDiff))
                     ||
-                    (PixelEqual(src, Dx, Dy, Hx, Hy, deviation) && !PixelEqual(src, Ex, Ey, Ax, Ay)))
+                    (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
                 {
                     PixelCopy(ref dst, xL, py, src, Dx, Dy);
                 }
@@ -446,9 +450,9 @@ namespace FOnlineScalex.Scalex
                 PixelCopy(ref dst, px, py, src, Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-                if ((PixelEqual(src, Bx, By, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Ix, Iy))
+                if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, neqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Cx, Cy)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, neqDiff)))
                 {
                     PixelCopy(ref dst, xR, py, src, Fx, Fy);
                 }
@@ -458,7 +462,7 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E6 = D == H ? D : E;
-                if (PixelEqual(src, Dx, Dy, Hx, Hy, deviation))
+                if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                 {
                     PixelCopy(ref dst, xL, yB, src, Dx, Dy);
                 }
@@ -468,9 +472,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-                if ((PixelEqual(src, Dx, Dy, Hx, Hy, deviation) && !PixelEqual(src, Ex, Ey, Ix, Iy))
+                if ((PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, neqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, deviation) && !PixelEqual(src, Ex, Ey, Gx, Gy)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, neqDiff)))
                 {
                     PixelCopy(ref dst, px, yB, src, Hx, Hy);
                 }
@@ -480,7 +484,7 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E8 = H == F ? F : E;
-                if (PixelEqual(src, Hx, Hy, Fx, Fy, deviation))
+                if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                 {
                     PixelCopy(ref dst, xR, yB, src, Fx, Fy);
                 } 
@@ -505,14 +509,15 @@ namespace FOnlineScalex.Scalex
                 PixelCopy(ref dst, xR, yB, src, Ex, Ey);
             }
         }
-        
+
         /// <summary>
-        /// Scales image in *src up by 2x into *dst
+        /// Scales image with Scale2x
         /// </summary>
         /// <param name="src">Source Frame</param>
         /// <param name="dst">Destination Frame</param>
-        /// <param name="deviation">deviation tolerance (pixel difference), in range [0,1]</param>
-        public static void Scalex2x(Frame src, out Frame dst, double deviation)
+        /// <param name="eqDiff">difference when equal [0..1]</param>
+        /// <param name="neqDiff">difference when not equal [0..1</param>
+        public static void Scalex2x(Frame src, out Frame dst, double eqDiff, double neqDiff)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;  
@@ -525,18 +530,19 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++) 
                 { 
-                    Scalex2xHelper(src, ref dst, px, py, deviation);                    
+                    Scalex2xHelper(src, ref dst, px, py, eqDiff, neqDiff);                    
                 }
             }
         }
 
         /// <summary>
-        /// Scales image in *src up by 2x into *dst
+        /// Scales image with Scale4x
         /// </summary>
         /// <param name="src">Source Frame</param>
         /// <param name="dst">Destination Frame</param>
-        /// <param name="deviation">deviation tolerance (pixel difference), in range [0,1]</param>
-        public static void Scalex3x(Frame src, out Frame dst, double deviation)
+        /// <param name="eqDiff">difference when equal [0..1]</param>
+        /// <param name="neqDiff">difference when not equal [0..1</param>
+        public static void Scalex3x(Frame src, out Frame dst, double eqDiff, double neqDiff)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;
@@ -549,7 +555,40 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex3xHelper(src, ref dst, px, py, deviation);
+                    Scalex3xHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Scales image in *src up by 2x into *dst
+        /// </summary>
+        /// <param name="src">Source Frame</param>
+        /// <param name="dst">Destination Frame</param>
+        /// <param name="eqDiff">difference when equal [0..1]</param>
+        /// <param name="neqDiff">difference when not equal [0..1</param>
+        public static void Scalex4x(Frame src, out Frame dst, double eqDiff, double neqDiff)
+        {
+            uint w = (uint)src.Width;
+            uint h = (uint)src.Height;
+
+            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
+
+            uint px, py;
+
+            for (px = 0; px < w; px++)
+            {
+                for (py = 0; py < h; py++)
+                {
+                    Scalex2xHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                }
+            }
+
+            for (px = 0; px < w; px++)
+            {
+                for (py = 0; py < h; py++)
+                {
+                    Scalex2xHelper(src, ref dst, px, py, eqDiff, neqDiff);
                 }
             }
         }

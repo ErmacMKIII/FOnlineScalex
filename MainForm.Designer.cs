@@ -39,8 +39,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             btnSetOutDir = new Button();
             btnSetInDir = new Button();
-            tboxOutDir = new TextBox();
             tboxInputDir = new TextBox();
+            tboxOutputDir = new TextBox();
             lblInDir = new Label();
             lblOutDir = new Label();
             cboxRecursive = new CheckBox();
@@ -51,11 +51,13 @@
             pboxCurrentFrame = new PictureBox();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            label1 = new Label();
             lblPrecision = new Label();
             btnGo = new Button();
             cboxAlgo = new ComboBox();
             lblAlgo = new Label();
-            numericPrecision = new NumericUpDown();
+            numericEqualDifference = new NumericUpDown();
+            numericNequalDifference = new NumericUpDown();
             progBar = new ProgressBar();
             menuStripMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -64,7 +66,8 @@
             ((System.ComponentModel.ISupportInitialize)pboxCurrentFrame).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericPrecision).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericEqualDifference).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericNequalDifference).BeginInit();
             SuspendLayout();
             // 
             // menuStripMain
@@ -72,7 +75,7 @@
             menuStripMain.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, infoToolStripMenuItem });
             menuStripMain.Location = new Point(0, 0);
             menuStripMain.Name = "menuStripMain";
-            menuStripMain.Size = new Size(500, 24);
+            menuStripMain.Size = new Size(540, 24);
             menuStripMain.TabIndex = 11;
             menuStripMain.Text = "menuStrip1";
             // 
@@ -111,12 +114,13 @@
             // 
             // btnStop
             // 
+            btnStop.Dock = DockStyle.Fill;
             btnStop.Enabled = false;
             btnStop.Image = Properties.Resources.stop;
             btnStop.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStop.Location = new Point(355, 32);
+            btnStop.Location = new Point(260, 32);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(136, 23);
+            btnStop.Size = new Size(271, 23);
             btnStop.TabIndex = 9;
             btnStop.Text = "Stop";
             btnStop.UseVisualStyleBackColor = true;
@@ -127,32 +131,33 @@
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.81884F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75.18116F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
-            tableLayoutPanel1.Controls.Add(btnSetOutDir, 2, 0);
-            tableLayoutPanel1.Controls.Add(btnSetInDir, 2, 1);
-            tableLayoutPanel1.Controls.Add(tboxOutDir, 1, 0);
-            tableLayoutPanel1.Controls.Add(tboxInputDir, 1, 1);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.Controls.Add(btnSetOutDir, 2, 1);
+            tableLayoutPanel1.Controls.Add(btnSetInDir, 2, 0);
+            tableLayoutPanel1.Controls.Add(tboxInputDir, 1, 0);
+            tableLayoutPanel1.Controls.Add(tboxOutputDir, 1, 1);
             tableLayoutPanel1.Controls.Add(lblInDir, 0, 0);
             tableLayoutPanel1.Controls.Add(lblOutDir, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(3, 19);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(494, 78);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(534, 78);
             tableLayoutPanel1.TabIndex = 13;
             // 
             // btnSetOutDir
             // 
             btnSetOutDir.Dock = DockStyle.Fill;
-            btnSetOutDir.Image = Properties.Resources.dir_icon_opened;
+            btnSetOutDir.Image = Properties.Resources.dir_icon_opened2;
             btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetOutDir.Location = new Point(355, 3);
+            btnSetOutDir.Location = new Point(373, 42);
             btnSetOutDir.Name = "btnSetOutDir";
-            btnSetOutDir.Size = new Size(136, 33);
+            btnSetOutDir.Size = new Size(158, 33);
             btnSetOutDir.TabIndex = 3;
             btnSetOutDir.Text = "Open...";
             btnSetOutDir.UseVisualStyleBackColor = true;
@@ -163,33 +168,33 @@
             btnSetInDir.Dock = DockStyle.Fill;
             btnSetInDir.Image = Properties.Resources.dir_icon_opened;
             btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetInDir.Location = new Point(355, 42);
+            btnSetInDir.Location = new Point(373, 3);
             btnSetInDir.Name = "btnSetInDir";
-            btnSetInDir.Size = new Size(136, 33);
+            btnSetInDir.Size = new Size(158, 33);
             btnSetInDir.TabIndex = 1;
             btnSetInDir.Text = "Open...";
             btnSetInDir.UseVisualStyleBackColor = true;
             btnSetInDir.Click += btnSetInDir_Click;
             // 
-            // tboxOutDir
-            // 
-            tboxOutDir.Dock = DockStyle.Fill;
-            tboxOutDir.Location = new Point(90, 3);
-            tboxOutDir.Name = "tboxOutDir";
-            tboxOutDir.ReadOnly = true;
-            tboxOutDir.Size = new Size(259, 23);
-            tboxOutDir.TabIndex = 2;
-            tboxOutDir.TextChanged += tboxOutDir_TextChanged;
-            // 
             // tboxInputDir
             // 
             tboxInputDir.Dock = DockStyle.Fill;
-            tboxInputDir.Location = new Point(90, 42);
+            tboxInputDir.Location = new Point(108, 3);
             tboxInputDir.Name = "tboxInputDir";
             tboxInputDir.ReadOnly = true;
             tboxInputDir.Size = new Size(259, 23);
-            tboxInputDir.TabIndex = 0;
+            tboxInputDir.TabIndex = 2;
             tboxInputDir.TextChanged += tboxInputDir_TextChanged;
+            // 
+            // tboxOutputDir
+            // 
+            tboxOutputDir.Dock = DockStyle.Fill;
+            tboxOutputDir.Location = new Point(108, 42);
+            tboxOutputDir.Name = "tboxOutputDir";
+            tboxOutputDir.ReadOnly = true;
+            tboxOutputDir.Size = new Size(259, 23);
+            tboxOutputDir.TabIndex = 0;
+            tboxOutputDir.TextChanged += tboxOutputDir_TextChanged;
             // 
             // lblInDir
             // 
@@ -197,7 +202,7 @@
             lblInDir.Dock = DockStyle.Fill;
             lblInDir.Location = new Point(3, 0);
             lblInDir.Name = "lblInDir";
-            lblInDir.Size = new Size(81, 39);
+            lblInDir.Size = new Size(99, 39);
             lblInDir.TabIndex = 4;
             lblInDir.Text = "Input Directory:";
             // 
@@ -207,7 +212,7 @@
             lblOutDir.Dock = DockStyle.Fill;
             lblOutDir.Location = new Point(3, 39);
             lblOutDir.Name = "lblOutDir";
-            lblOutDir.Size = new Size(81, 39);
+            lblOutDir.Size = new Size(99, 39);
             lblOutDir.TabIndex = 5;
             lblOutDir.Text = "Output Directory:";
             // 
@@ -215,9 +220,9 @@
             // 
             cboxRecursive.AutoSize = true;
             cboxRecursive.Dock = DockStyle.Fill;
-            cboxRecursive.Location = new Point(139, 61);
+            cboxRecursive.Location = new Point(260, 61);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(210, 22);
+            cboxRecursive.Size = new Size(271, 23);
             cboxRecursive.TabIndex = 4;
             cboxRecursive.Text = "Recurse through child directories";
             cboxRecursive.UseVisualStyleBackColor = true;
@@ -231,7 +236,7 @@
             gboxMain.Dock = DockStyle.Fill;
             gboxMain.Location = new Point(0, 24);
             gboxMain.Name = "gboxMain";
-            gboxMain.Size = new Size(500, 333);
+            gboxMain.Size = new Size(540, 353);
             gboxMain.TabIndex = 13;
             gboxMain.TabStop = false;
             // 
@@ -239,19 +244,19 @@
             // 
             tableLayoutPanel3.AutoSize = true;
             tableLayoutPanel3.ColumnCount = 2;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.6375542F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 73.36244F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2672062F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.7327957F));
             tableLayoutPanel3.Controls.Add(lblCurrProc, 0, 0);
             tableLayoutPanel3.Controls.Add(tboxCurrProc, 1, 0);
             tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 0, 1);
             tableLayoutPanel3.Controls.Add(pictureBox1, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 183);
+            tableLayoutPanel3.Location = new Point(3, 184);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25.6880741F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 74.31193F));
-            tableLayoutPanel3.Size = new Size(494, 117);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20.5882359F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 79.4117661F));
+            tableLayoutPanel3.Size = new Size(534, 136);
             tableLayoutPanel3.TabIndex = 15;
             // 
             // lblCurrProc
@@ -260,7 +265,7 @@
             lblCurrProc.Dock = DockStyle.Fill;
             lblCurrProc.Location = new Point(3, 0);
             lblCurrProc.Name = "lblCurrProc";
-            lblCurrProc.Size = new Size(125, 30);
+            lblCurrProc.Size = new Size(112, 28);
             lblCurrProc.TabIndex = 0;
             lblCurrProc.Text = "Processing:";
             lblCurrProc.TextAlign = ContentAlignment.MiddleRight;
@@ -269,18 +274,18 @@
             // tboxCurrProc
             // 
             tboxCurrProc.Dock = DockStyle.Fill;
-            tboxCurrProc.Location = new Point(134, 3);
+            tboxCurrProc.Location = new Point(121, 3);
             tboxCurrProc.Name = "tboxCurrProc";
-            tboxCurrProc.Size = new Size(357, 23);
+            tboxCurrProc.Size = new Size(410, 23);
             tboxCurrProc.TabIndex = 1;
             tboxCurrProc.TextChanged += tboxCurrProc_TextChanged;
             // 
             // pboxCurrentFrame
             // 
             pboxCurrentFrame.Dock = DockStyle.Fill;
-            pboxCurrentFrame.Location = new Point(3, 33);
+            pboxCurrentFrame.Location = new Point(3, 31);
             pboxCurrentFrame.Name = "pboxCurrentFrame";
-            pboxCurrentFrame.Size = new Size(125, 81);
+            pboxCurrentFrame.Size = new Size(112, 102);
             pboxCurrentFrame.TabIndex = 3;
             pboxCurrentFrame.TabStop = false;
             pboxCurrentFrame.Click += pboxCurrentFrame_Click;
@@ -289,9 +294,9 @@
             // 
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = Properties.Resources.gplv3_logo;
-            pictureBox1.Location = new Point(134, 33);
+            pictureBox1.Location = new Point(121, 31);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(357, 81);
+            pictureBox1.Size = new Size(410, 102);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
@@ -300,25 +305,38 @@
             // 
             tableLayoutPanel2.AutoSize = true;
             tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38.65546F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 61.34454F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.Controls.Add(label1, 0, 2);
             tableLayoutPanel2.Controls.Add(lblPrecision, 0, 1);
             tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
             tableLayoutPanel2.Controls.Add(cboxAlgo, 1, 0);
             tableLayoutPanel2.Controls.Add(btnStop, 2, 1);
             tableLayoutPanel2.Controls.Add(lblAlgo, 0, 0);
-            tableLayoutPanel2.Controls.Add(cboxRecursive, 1, 2);
-            tableLayoutPanel2.Controls.Add(numericPrecision, 1, 1);
+            tableLayoutPanel2.Controls.Add(numericEqualDifference, 1, 1);
+            tableLayoutPanel2.Controls.Add(cboxRecursive, 2, 2);
+            tableLayoutPanel2.Controls.Add(numericNequalDifference, 1, 2);
             tableLayoutPanel2.Dock = DockStyle.Top;
             tableLayoutPanel2.Location = new Point(3, 97);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F));
-            tableLayoutPanel2.Size = new Size(494, 86);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(534, 87);
             tableLayoutPanel2.TabIndex = 14;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Fill;
+            label1.Location = new Point(3, 58);
+            label1.Name = "label1";
+            label1.Size = new Size(105, 29);
+            label1.TabIndex = 16;
+            label1.Text = "Nequal Difference:";
+            label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblPrecision
             // 
@@ -326,18 +344,19 @@
             lblPrecision.Dock = DockStyle.Fill;
             lblPrecision.Location = new Point(3, 29);
             lblPrecision.Name = "lblPrecision";
-            lblPrecision.Size = new Size(130, 29);
+            lblPrecision.Size = new Size(105, 29);
             lblPrecision.TabIndex = 14;
-            lblPrecision.Text = "Precision:";
+            lblPrecision.Text = "Equal Difference:";
             lblPrecision.TextAlign = ContentAlignment.MiddleRight;
             // 
             // btnGo
             // 
+            btnGo.Dock = DockStyle.Fill;
             btnGo.Image = Properties.Resources.gatling;
             btnGo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGo.Location = new Point(355, 3);
+            btnGo.Location = new Point(260, 3);
             btnGo.Name = "btnGo";
-            btnGo.Size = new Size(136, 23);
+            btnGo.Size = new Size(271, 23);
             btnGo.TabIndex = 10;
             btnGo.Text = "GO";
             btnGo.UseVisualStyleBackColor = true;
@@ -348,9 +367,9 @@
             cboxAlgo.Dock = DockStyle.Fill;
             cboxAlgo.FormattingEnabled = true;
             cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x" });
-            cboxAlgo.Location = new Point(139, 3);
+            cboxAlgo.Location = new Point(114, 3);
             cboxAlgo.Name = "cboxAlgo";
-            cboxAlgo.Size = new Size(210, 23);
+            cboxAlgo.Size = new Size(140, 23);
             cboxAlgo.TabIndex = 11;
             // 
             // lblAlgo
@@ -359,28 +378,41 @@
             lblAlgo.Dock = DockStyle.Fill;
             lblAlgo.Location = new Point(3, 0);
             lblAlgo.Name = "lblAlgo";
-            lblAlgo.Size = new Size(130, 29);
+            lblAlgo.Size = new Size(105, 29);
             lblAlgo.TabIndex = 12;
             lblAlgo.Text = "Algorithm:";
             lblAlgo.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // numericPrecision
+            // numericEqualDifference
             // 
-            numericPrecision.DecimalPlaces = 2;
-            numericPrecision.Dock = DockStyle.Fill;
-            numericPrecision.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-            numericPrecision.Location = new Point(139, 32);
-            numericPrecision.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericPrecision.Name = "numericPrecision";
-            numericPrecision.Size = new Size(210, 23);
-            numericPrecision.TabIndex = 13;
+            numericEqualDifference.DecimalPlaces = 2;
+            numericEqualDifference.Dock = DockStyle.Fill;
+            numericEqualDifference.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
+            numericEqualDifference.Location = new Point(114, 32);
+            numericEqualDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericEqualDifference.Name = "numericEqualDifference";
+            numericEqualDifference.Size = new Size(140, 23);
+            numericEqualDifference.TabIndex = 13;
+            numericEqualDifference.ValueChanged += numericEqualDifference_ValueChanged;
+            // 
+            // numericNequalDifference
+            // 
+            numericNequalDifference.DecimalPlaces = 2;
+            numericNequalDifference.Dock = DockStyle.Fill;
+            numericNequalDifference.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
+            numericNequalDifference.Location = new Point(114, 61);
+            numericNequalDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericNequalDifference.Name = "numericNequalDifference";
+            numericNequalDifference.Size = new Size(140, 23);
+            numericNequalDifference.TabIndex = 15;
+            numericNequalDifference.ValueChanged += numericNequalDifference_ValueChanged;
             // 
             // progBar
             // 
             progBar.Dock = DockStyle.Bottom;
-            progBar.Location = new Point(3, 300);
+            progBar.Location = new Point(3, 320);
             progBar.Name = "progBar";
-            progBar.Size = new Size(494, 30);
+            progBar.Size = new Size(534, 30);
             progBar.TabIndex = 2;
             // 
             // MainForm
@@ -388,7 +420,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(500, 357);
+            ClientSize = new Size(540, 377);
             Controls.Add(gboxMain);
             Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -409,7 +441,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericPrecision).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericEqualDifference).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericNequalDifference).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -424,9 +457,9 @@
         private Button btnStop;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnSetInDir;
-        private TextBox tboxInputDir;
+        private TextBox tboxOutputDir;
         private Button btnSetOutDir;
-        private TextBox tboxOutDir;
+        private TextBox tboxInputDir;
         private CheckBox cboxRecursive;
         private GroupBox gboxMain;
         private TableLayoutPanel tableLayoutPanel2;
@@ -442,6 +475,8 @@
         private Label lblAlgo;
         private PictureBox pictureBox1;
         private Label lblPrecision;
-        private NumericUpDown numericPrecision;
+        private NumericUpDown numericEqualDifference;
+        private Label label1;
+        private NumericUpDown numericNequalDifference;
     }
 }

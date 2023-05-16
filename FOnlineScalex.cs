@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +15,8 @@ namespace FOnlineScalex
 {
     public class FOnlineScalex
     {
+        public enum Algorithm { Scalex2x, Scalex3x, Scalex4x }
+
         public string? ProcessingFile { get; private set; }
 
         public float Progress { get; private set; }
@@ -31,9 +34,9 @@ namespace FOnlineScalex
         /// <summary>
         /// Defines the OnProgressUpdate.
         /// </summary>
-        public event ProgressUpdate OnProgressUpdate;
+        public event ProgressUpdate? OnProgressUpdate;
 
-        public event Cancel OnCancel;
+        public event Cancel? OnCancel;
         public delegate void Cancel();
 
         public FOnlineScalex()
@@ -41,8 +44,9 @@ namespace FOnlineScalex
             
         }
 
-        public void DoWork(string inDir, string outDir, bool recursive, IFOSLogger logger)
+        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff, double neqDiff, Algorithm? algorithm, IFOSLogger logger)
         {
+            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEW:{neqDiff}");
             Cancelled = false;
             Progress = 0.0f;
 
@@ -51,7 +55,7 @@ namespace FOnlineScalex
                 Progress = 100.0f;
                 if (OnProgressUpdate != null)
                 {
-                    OnProgressUpdate((int)Math.Round(Progress), null, null);
+                    OnProgressUpdate((int)Math.Floor(Progress), null, null);
                 }
                 return;
             }
@@ -61,22 +65,17 @@ namespace FOnlineScalex
                 Directory.CreateDirectory(outDir);
             }
 
-            bool stopped = false;
-
             logger.Log("Starting FOnlineScalex DoWork");
             logger.Log($"Progress: {Progress}");
             if (Directory.Exists(inDir))
             {
-                string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*.FRM", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
+                string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
 
+                List<Frame>? srcFrames = null;
+                List<Frame>? dstFrames = null;
+                string outFile = string.Empty;
                 foreach (string srcFile in fileArray)
-                {
-                    if (stopped)
-                    {
-                        logger.Log("FOnlineScalex stopped!");
-                        break;
-                    }
-
+                {                    
                     // if it's png or FRM file
                     // get extensionless filename
                     // string extLessFilename = Regex.Replace(srcFile, "[.][^.]+$", string.Empty);
@@ -85,13 +84,27 @@ namespace FOnlineScalex
                     {
                         FRM srcFRM = new FRM(srcFile);
                         //-----------------------------------------------------
-                        List<Frame> srcFrames = srcFRM.Frames;
-                        List<Frame> dstFrames = new List<Frame>();                        
+                        srcFrames = srcFRM.Frames;
+                        dstFrames = new List<Frame>();
                         foreach (Frame srcFrame in srcFrames)
                         {
                             Frame dstFrame;
-                            Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, 1.0);
+                            switch (algorithm)
+                            {
+                                case Algorithm.Scalex2x:
+                                default:
+                                    Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex3x:
+                                    Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex4x:
+                                    Scalex.Scalex.Scalex4x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                            }
+
                             dstFrames.Add(dstFrame);
+
                         }
 
                         FRM dstFRM = new FRM(
@@ -104,11 +117,10 @@ namespace FOnlineScalex
                                 dstFrames
                         );
 
-                        string outFile;
                         if (recursive)
                         {
                             var srcFileName = Path.GetFileName(srcFile);
-                            var relative = Path.GetRelativePath(inDir, srcFile).Replace(srcFileName, string.Empty);                            
+                            var relative = Path.GetRelativePath(inDir, srcFile).Replace(srcFileName, string.Empty);
                             outFile = Path.Combine(outDir, relative, Regex.Replace(srcFileName, "[.][^.]+$", ".FRM"));
                         }
                         else
@@ -122,18 +134,72 @@ namespace FOnlineScalex
                         }
 
                         Directory.CreateDirectory(outDir);
-                        logger.Log(outFile);
                         dstFRM.Export(outFile);
-                        Progress += 100.0f / (float)fileArray.Length;
-                        logger.Log($"Progress: {Progress}");
-                        if (OnProgressUpdate != null)
+                    }
+                    else if (srcFile.ToLower().EndsWith(".bmp") || srcFile.ToLower().EndsWith(".png"))
+                    {
+                        //-----------------------------------------------------
+                        Frame framex = new Frame((Bitmap)Bitmap.FromFile(srcFile), 0, 0);
+                        srcFrames = new List<Frame>() { framex };
+                        dstFrames = new List<Frame>();
+                        foreach (Frame srcFrame in srcFrames)
                         {
-                            ProcessingFile = outFile;
-                            Frame = dstFrames.FirstOrDefault();
-                            OnProgressUpdate((int)Math.Round(Progress), outFile, dstFrames.FirstOrDefault());
+                            Frame dstFrame;
+                            switch (algorithm)
+                            {
+                                case Algorithm.Scalex2x:
+                                default:
+                                    Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex3x:
+                                    Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                                case Algorithm.Scalex4x:
+                                    Scalex.Scalex.Scalex4x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    break;
+                            }
+
+                            dstFrames.Add(dstFrame);
                         }
 
-                        
+                        string extension = Path.GetExtension(srcFile).ToLower();
+                        if (recursive)
+                        {
+                            var srcFileName = Path.GetFileName(srcFile);
+                            var relative = Path.GetRelativePath(inDir, srcFile).Replace(srcFileName, string.Empty);
+                            outFile = Path.Combine(outDir, relative, Regex.Replace(srcFileName, "[.][^.]+$", extension.ToUpper()));
+                        }
+                        else
+                        {
+                            outFile = Path.Combine(outDir, Regex.Replace(Path.GetFileName(srcFile), "[.][^.]+$", extension.ToUpper()));
+                        }
+                        if (File.Exists(outFile))
+                        {
+                            File.Delete(outFile);
+                        }
+
+                        Directory.CreateDirectory(outDir);
+                        foreach (var frame in dstFrames) {
+                            Image image = frame.ToBitmap();
+                            if (extension.Equals(".png"))
+                            {
+                                image.Save(outFile, ImageFormat.Png);
+                            } 
+                            else if (extension.Equals(".bmp"))
+                            {
+                                image.Save(outFile, ImageFormat.Bmp);
+                            }
+                        }
+                    }
+
+                    logger.Log(outFile);
+                    Progress += 100.0f / (float)fileArray.Length;
+                    logger.Log($"Progress: {Progress}");
+                    if (OnProgressUpdate != null)
+                    {
+                        ProcessingFile = outFile;
+                        Frame = dstFrames?.FirstOrDefault();
+                        OnProgressUpdate((int)Math.Floor(Progress), outFile, dstFrames?.FirstOrDefault());
                     }
 
                     // can be cancelled externally
@@ -143,7 +209,9 @@ namespace FOnlineScalex
                         logger.Log("FOnlineScalex cancelled by user!");
                         break;
                     }
+
                 }
+
                 
             }
             
@@ -154,10 +222,10 @@ namespace FOnlineScalex
             {
                 ProcessingFile = string.Empty;
                 Frame = null;
-                OnProgressUpdate((int)Math.Round(Progress), null, null);
+                OnProgressUpdate((int)Math.Floor(Progress), null, null);
             }
         }
-        
+
         public void CancelWork()
         {
             Cancelled = true;
