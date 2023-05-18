@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>FOnlineScalex.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Fallout_Palette.act" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FOnlineScalex.ico" />
   </ItemGroup>
 
   <ItemGroup>
