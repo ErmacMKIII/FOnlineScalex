@@ -51,12 +51,11 @@
             pboxCurrentFrame = new PictureBox();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            lblNeqDiff = new Label();
+            cboxPostProc = new CheckBox();
             lblEqDiff = new Label();
             cboxAlgo = new ComboBox();
             lblAlgo = new Label();
-            numericEqualDifference = new NumericUpDown();
-            numericNequalDifference = new NumericUpDown();
+            numericAccuracy = new NumericUpDown();
             btnGo = new Button();
             cboxAlpha = new CheckBox();
             progBar = new ProgressBar();
@@ -67,8 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)pboxCurrentFrame).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericEqualDifference).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericNequalDifference).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericAccuracy).BeginInit();
             SuspendLayout();
             // 
             // menuStripMain
@@ -121,9 +119,10 @@
             btnStop.Enabled = false;
             btnStop.Image = Properties.Resources.stop;
             btnStop.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStop.Location = new Point(276, 61);
+            btnStop.Location = new Point(279, 61);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(295, 23);
+            tableLayoutPanel2.SetRowSpan(btnStop, 2);
+            btnStop.Size = new Size(295, 44);
             btnStop.TabIndex = 9;
             btnStop.Text = "Stop";
             btnStop.TextAlign = ContentAlignment.MiddleRight;
@@ -145,14 +144,15 @@
             tableLayoutPanel1.Controls.Add(tboxOutputDir, 1, 1);
             tableLayoutPanel1.Controls.Add(lblInDir, 0, 0);
             tableLayoutPanel1.Controls.Add(lblOutDir, 0, 1);
+            tableLayoutPanel1.Controls.Add(cboxRecursive, 2, 2);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(3, 19);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(574, 78);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.Size = new Size(574, 103);
             tableLayoutPanel1.TabIndex = 13;
             // 
             // btnSetOutDir
@@ -227,11 +227,11 @@
             // 
             cboxRecursive.AutoSize = true;
             cboxRecursive.Dock = DockStyle.Fill;
-            cboxRecursive.Location = new Point(276, 90);
+            cboxRecursive.Location = new Point(373, 81);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(295, 19);
+            cboxRecursive.Size = new Size(198, 19);
             cboxRecursive.TabIndex = 4;
-            cboxRecursive.Text = "Recurse through child directories";
+            cboxRecursive.Text = "Recurse Through";
             cboxRecursive.UseVisualStyleBackColor = true;
             // 
             // gboxMain
@@ -258,12 +258,12 @@
             tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 0, 1);
             tableLayoutPanel3.Controls.Add(pictureBox1, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 209);
+            tableLayoutPanel3.Location = new Point(3, 230);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new RowStyle());
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(574, 171);
+            tableLayoutPanel3.Size = new Size(574, 150);
             tableLayoutPanel3.TabIndex = 15;
             // 
             // lblCurrProc
@@ -292,7 +292,7 @@
             pboxCurrentFrame.Dock = DockStyle.Fill;
             pboxCurrentFrame.Location = new Point(3, 32);
             pboxCurrentFrame.Name = "pboxCurrentFrame";
-            pboxCurrentFrame.Size = new Size(112, 136);
+            pboxCurrentFrame.Size = new Size(112, 115);
             pboxCurrentFrame.TabIndex = 3;
             pboxCurrentFrame.TabStop = false;
             pboxCurrentFrame.Click += pboxCurrentFrame_Click;
@@ -303,7 +303,7 @@
             pictureBox1.Image = Properties.Resources.gplv3_logo;
             pictureBox1.Location = new Point(121, 32);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(450, 136);
+            pictureBox1.Size = new Size(450, 115);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
@@ -315,37 +315,36 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel2.Controls.Add(lblNeqDiff, 0, 2);
+            tableLayoutPanel2.Controls.Add(cboxPostProc, 0, 3);
             tableLayoutPanel2.Controls.Add(lblEqDiff, 0, 1);
             tableLayoutPanel2.Controls.Add(cboxAlgo, 1, 0);
             tableLayoutPanel2.Controls.Add(lblAlgo, 0, 0);
-            tableLayoutPanel2.Controls.Add(numericEqualDifference, 1, 1);
-            tableLayoutPanel2.Controls.Add(numericNequalDifference, 1, 2);
-            tableLayoutPanel2.Controls.Add(cboxRecursive, 2, 3);
+            tableLayoutPanel2.Controls.Add(numericAccuracy, 1, 1);
             tableLayoutPanel2.Controls.Add(btnStop, 2, 2);
             tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
-            tableLayoutPanel2.Controls.Add(cboxAlpha, 1, 3);
+            tableLayoutPanel2.Controls.Add(cboxAlpha, 0, 2);
             tableLayoutPanel2.Dock = DockStyle.Top;
-            tableLayoutPanel2.Location = new Point(3, 97);
+            tableLayoutPanel2.Location = new Point(3, 122);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 4;
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.Size = new Size(574, 112);
+            tableLayoutPanel2.Size = new Size(574, 108);
             tableLayoutPanel2.TabIndex = 14;
             // 
-            // lblNeqDiff
+            // cboxPostProc
             // 
-            lblNeqDiff.AutoSize = true;
-            lblNeqDiff.Dock = DockStyle.Fill;
-            lblNeqDiff.Location = new Point(3, 58);
-            lblNeqDiff.Name = "lblNeqDiff";
-            lblNeqDiff.Size = new Size(105, 29);
-            lblNeqDiff.TabIndex = 16;
-            lblNeqDiff.Text = "Nequal Difference:";
-            lblNeqDiff.TextAlign = ContentAlignment.MiddleRight;
+            cboxPostProc.AutoSize = true;
+            tableLayoutPanel2.SetColumnSpan(cboxPostProc, 2);
+            cboxPostProc.Dock = DockStyle.Fill;
+            cboxPostProc.Location = new Point(3, 86);
+            cboxPostProc.Name = "cboxPostProc";
+            cboxPostProc.Size = new Size(270, 19);
+            cboxPostProc.TabIndex = 18;
+            cboxPostProc.Text = "Post Processing (.PNG, .BMP)";
+            cboxPostProc.UseVisualStyleBackColor = true;
             // 
             // lblEqDiff
             // 
@@ -353,9 +352,9 @@
             lblEqDiff.Dock = DockStyle.Fill;
             lblEqDiff.Location = new Point(3, 29);
             lblEqDiff.Name = "lblEqDiff";
-            lblEqDiff.Size = new Size(105, 29);
+            lblEqDiff.Size = new Size(64, 29);
             lblEqDiff.TabIndex = 14;
-            lblEqDiff.Text = "Equal Difference:";
+            lblEqDiff.Text = "Accuracy:";
             lblEqDiff.TextAlign = ContentAlignment.MiddleRight;
             // 
             // cboxAlgo
@@ -363,9 +362,9 @@
             cboxAlgo.Dock = DockStyle.Fill;
             cboxAlgo.FormattingEnabled = true;
             cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x" });
-            cboxAlgo.Location = new Point(114, 3);
+            cboxAlgo.Location = new Point(73, 3);
             cboxAlgo.Name = "cboxAlgo";
-            cboxAlgo.Size = new Size(156, 23);
+            cboxAlgo.Size = new Size(200, 23);
             cboxAlgo.TabIndex = 11;
             // 
             // lblAlgo
@@ -374,40 +373,29 @@
             lblAlgo.Dock = DockStyle.Fill;
             lblAlgo.Location = new Point(3, 0);
             lblAlgo.Name = "lblAlgo";
-            lblAlgo.Size = new Size(105, 29);
+            lblAlgo.Size = new Size(64, 29);
             lblAlgo.TabIndex = 12;
             lblAlgo.Text = "Algorithm:";
             lblAlgo.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // numericEqualDifference
+            // numericAccuracy
             // 
-            numericEqualDifference.DecimalPlaces = 2;
-            numericEqualDifference.Dock = DockStyle.Fill;
-            numericEqualDifference.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-            numericEqualDifference.Location = new Point(114, 32);
-            numericEqualDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericEqualDifference.Name = "numericEqualDifference";
-            numericEqualDifference.Size = new Size(156, 23);
-            numericEqualDifference.TabIndex = 13;
-            numericEqualDifference.ValueChanged += numericEqualDifference_ValueChanged;
-            // 
-            // numericNequalDifference
-            // 
-            numericNequalDifference.DecimalPlaces = 2;
-            numericNequalDifference.Dock = DockStyle.Fill;
-            numericNequalDifference.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-            numericNequalDifference.Location = new Point(114, 61);
-            numericNequalDifference.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericNequalDifference.Name = "numericNequalDifference";
-            numericNequalDifference.Size = new Size(156, 23);
-            numericNequalDifference.TabIndex = 15;
-            numericNequalDifference.ValueChanged += numericNequalDifference_ValueChanged;
+            numericAccuracy.DecimalPlaces = 2;
+            numericAccuracy.Dock = DockStyle.Fill;
+            numericAccuracy.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
+            numericAccuracy.Location = new Point(73, 32);
+            numericAccuracy.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericAccuracy.Name = "numericAccuracy";
+            numericAccuracy.Size = new Size(200, 23);
+            numericAccuracy.TabIndex = 13;
+            numericAccuracy.Value = new decimal(new int[] { 95, 0, 0, 131072 });
+            numericAccuracy.ValueChanged += numericAccuracy_ValueChanged;
             // 
             // btnGo
             // 
             btnGo.Dock = DockStyle.Fill;
             btnGo.Image = Properties.Resources.gatling;
-            btnGo.Location = new Point(276, 3);
+            btnGo.Location = new Point(279, 3);
             btnGo.Name = "btnGo";
             tableLayoutPanel2.SetRowSpan(btnGo, 2);
             btnGo.Size = new Size(295, 52);
@@ -420,12 +408,13 @@
             // cboxAlpha
             // 
             cboxAlpha.AutoSize = true;
+            tableLayoutPanel2.SetColumnSpan(cboxAlpha, 2);
             cboxAlpha.Dock = DockStyle.Fill;
-            cboxAlpha.Location = new Point(114, 90);
+            cboxAlpha.Location = new Point(3, 61);
             cboxAlpha.Name = "cboxAlpha";
-            cboxAlpha.Size = new Size(156, 19);
+            cboxAlpha.Size = new Size(270, 19);
             cboxAlpha.TabIndex = 17;
-            cboxAlpha.Text = "Include Alpha Difference";
+            cboxAlpha.Text = "Include Alpha";
             cboxAlpha.UseVisualStyleBackColor = true;
             // 
             // progBar
@@ -447,6 +436,7 @@
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStripMain;
+            MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FOnlineScalex";
@@ -462,8 +452,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericEqualDifference).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericNequalDifference).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericAccuracy).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -496,9 +485,8 @@
         private Label lblAlgo;
         private PictureBox pictureBox1;
         private Label lblEqDiff;
-        private NumericUpDown numericEqualDifference;
-        private Label lblNeqDiff;
-        private NumericUpDown numericNequalDifference;
+        private NumericUpDown numericAccuracy;
         private CheckBox cboxAlpha;
+        private CheckBox cboxPostProc;
     }
 }

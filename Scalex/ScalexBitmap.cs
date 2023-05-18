@@ -147,8 +147,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex2xRGBHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal</param>
+        private static void Scalex2xRGBHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
         {
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
@@ -195,7 +195,7 @@ namespace FOnlineScalex.Scalex
                E2[xL,yB]  E3[xR,yB]
             */
 
-            if (!PixelRGBEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelRGBEqual(src, Dx, Dy, Fx, Fy, neqDiff))
+            if (!PixelRGBEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                if (PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff))
                {
@@ -251,8 +251,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex2xRGBAHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal</param>
+        private static void Scalex2xRGBAHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
         {
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
@@ -299,7 +299,7 @@ namespace FOnlineScalex.Scalex
                E2[xL,yB]  E3[xR,yB]
             */
 
-            if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, neqDiff))
+            if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 if (PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
@@ -397,8 +397,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex3xRGBHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal</param>
+        private static void Scalex3xRGBHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
         {
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
@@ -464,7 +464,7 @@ namespace FOnlineScalex.Scalex
             //      E0[xL,yT] E1[x,yT] E2[xR, yT]
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]
-            if (!PixelRGBEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelRGBEqual(src, Dx, Dy, Fx, Fy, neqDiff))
+            if (!PixelRGBEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff))
@@ -477,9 +477,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-                if ((PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Cx, Cy, neqDiff))
+                if ((PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Cx, Cy, eqDiff))
                     ||
-                    (PixelRGBEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
+                    (PixelRGBEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     PixelCopy(ref dst, px, yT, src, Bx, By);
                 }
@@ -499,9 +499,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-                if ((PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Gx, Gy, neqDiff))
+                if ((PixelRGBEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Gx, Gy, eqDiff))
                     ||
-                    (PixelRGBEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
+                    (PixelRGBEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     PixelCopy(ref dst, xL, py, src, Dx, Dy);
                 }
@@ -514,9 +514,9 @@ namespace FOnlineScalex.Scalex
                 PixelCopy(ref dst, px, py, src, Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-                if ((PixelRGBEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ix, Iy, neqDiff))
+                if ((PixelRGBEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelRGBEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Cx, Cy, neqDiff)))
+                    (PixelRGBEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
                     PixelCopy(ref dst, xR, py, src, Fx, Fy);
                 }
@@ -536,9 +536,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-                if ((PixelRGBEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ix, Iy, neqDiff))
+                if ((PixelRGBEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelRGBEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Gx, Gy, neqDiff)))
+                    (PixelRGBEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
                     PixelCopy(ref dst, px, yB, src, Hx, Hy);
                 }
@@ -582,8 +582,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="neqDiff">difference when not equal</param>
-        private static void Scalex3xRGBAHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal</param>
+        private static void Scalex3xRGBAHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
         {
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
@@ -649,7 +649,7 @@ namespace FOnlineScalex.Scalex
             //      E0[xL,yT] E1[x,yT] E2[xR, yT]
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]
-            if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, neqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, neqDiff))
+            if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff))
@@ -662,9 +662,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-                if ((PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Cx, Cy, neqDiff))
+                if ((PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Cx, Cy, eqDiff))
                     ||
-                    (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
+                    (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     PixelCopy(ref dst, px, yT, src, Bx, By);
                 }
@@ -684,9 +684,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-                if ((PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Gx, Gy, neqDiff))
+                if ((PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Gx, Gy, eqDiff))
                     ||
-                    (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, neqDiff)))
+                    (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     PixelCopy(ref dst, xL, py, src, Dx, Dy);
                 }
@@ -699,9 +699,9 @@ namespace FOnlineScalex.Scalex
                 PixelCopy(ref dst, px, py, src, Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-                if ((PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ix, Iy, neqDiff))
+                if ((PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Cx, Cy, neqDiff)))
+                    (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
                     PixelCopy(ref dst, xR, py, src, Fx, Fy);
                 }
@@ -721,9 +721,9 @@ namespace FOnlineScalex.Scalex
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-                if ((PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ix, Iy, neqDiff))
+                if ((PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Gx, Gy, neqDiff)))
+                    (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
                     PixelCopy(ref dst, px, yB, src, Hx, Hy);
                 }
@@ -765,8 +765,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex2xRGB(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex2xRGB(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;  
@@ -779,7 +779,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++) 
                 { 
-                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff, neqDiff);                    
+                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff);                    
                 }
             }
         }
@@ -790,8 +790,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex2xRGBA(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex2xRGBA(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -804,7 +804,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff);
                 }
             }
         }
@@ -815,8 +815,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex3xRGB(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex3xRGB(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -829,7 +829,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex3xRGBHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex3xRGBHelper(src, ref dst, px, py, eqDiff);
                 }
             }
         }
@@ -840,8 +840,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex3xRGBA(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex3xRGBA(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -853,8 +853,8 @@ namespace FOnlineScalex.Scalex
             for (px = 0; px < w; px++)
             {
                 for (py = 0; py < h; py++)
-                {
-                    Scalex3xRGBAHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                {                    
+                    Scalex3xRGBAHelper(src, ref dst, px, py, eqDiff);                                        
                 }
             }
         }
@@ -865,8 +865,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex4xRGB(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex4xRGB(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -879,7 +879,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff);
                 }
             }
 
@@ -887,7 +887,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex2xRGBHelper(src, ref dst, px, py, eqDiff);
                 }
             }
         }
@@ -898,8 +898,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="src">Source Bitmap</param>
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="neqDiff">difference when not equal [0..1</param>
-        public static void Scalex4xRGBA(Bitmap src, out Bitmap dst, double eqDiff, double neqDiff)
+        /// <param name="eqDiff">difference when not equal [0..1</param>
+        public static void Scalex4xRGBA(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -912,7 +912,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff);
                 }
             }
 
@@ -920,7 +920,7 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff, neqDiff);
+                    Scalex2xRGBAHelper(src, ref dst, px, py, eqDiff);
                 }
             }
         }

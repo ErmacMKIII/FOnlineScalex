@@ -27,14 +27,15 @@ namespace FOnlineScalex
         protected string inDirPath = string.Empty;
         protected string outDirPath = string.Empty;
 
-        protected double eqDifference = 0.0;
-        protected double neqDifference = 0.0;
+        protected double eqAccuracy = 0.95;
 
         protected DarkRenderer darkRenderer = new DarkRenderer();
 
         public MainForm()
         {
             InitializeComponent();
+
+            InitToolTip();
             InitDarkTheme(this);
 
             this.MainMenuStrip.Renderer = darkRenderer;
@@ -100,7 +101,7 @@ namespace FOnlineScalex
             if (args != null && args.Length == 8)
             {
                 fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
-                    (double)args[3], (double)args[4], (FOnlineScalex.Algorithm)args[5], (bool)args[6], (IFOSLogger)args[7]);
+                    (double)args[3], (FOnlineScalex.Algorithm)args[4], (bool)args[5], (bool)args[6], (IFOSLogger)args[7]);
             }
         }
 
@@ -114,6 +115,34 @@ namespace FOnlineScalex
             {
                 InitDarkTheme(ctrl);
             }
+        }
+
+        private void InitToolTip()
+        {
+            ToolTip toolTip = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip.ShowAlways = true;
+
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTip.SetToolTip(this.tboxInputDir, "Input directory path(s)");
+            toolTip.SetToolTip(this.tboxOutputDir, "Output directory path(s)");
+            toolTip.SetToolTip(this.btnSetInDir, "Set input directory path(s)");
+            toolTip.SetToolTip(this.btnSetOutDir, "Set output directory path(s)");
+            toolTip.SetToolTip(this.cboxRecursive, "Recurse through input dir & make same dirs on output");
+
+            toolTip.SetToolTip(this.cboxAlgo, "Choose algorithm for pixel manipulation");
+            toolTip.SetToolTip(this.cboxPostProc, "Post process alpha images (.BMP, .PNG). Remove artifacts etc.");
+
+            toolTip.SetToolTip(this.btnGo, "Commence processing");
+            toolTip.SetToolTip(this.btnStop, "Interrupt processing");
+
+            toolTip.SetToolTip(this.tboxCurrProc, "Currently processing file");
+            toolTip.SetToolTip(this.progBar, "Progress of the processing");
         }
 
         private void SetInDirPath()
@@ -160,13 +189,37 @@ namespace FOnlineScalex
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            btnGo.Enabled = false;
-            btnStop.Enabled = true;
-            FOnlineScalex.Algorithm algorithm;
-            Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
-            object[] args = { inDirPath, outDirPath, cboxRecursive.Checked, this.eqDifference, this.neqDifference,
-                algorithm, cboxAlpha.Checked, fOSLogger };
-            backgroundWorker.RunWorkerAsync(args);
+            if (string.IsNullOrEmpty(this.inDirPath) || string.IsNullOrEmpty(this.outDirPath))
+            {
+                MessageBox.Show("Directory paths cannot be empty!", "FOnlineScalex", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (this.inDirPath.Equals(this.outDirPath))
+                {
+                    DialogResult dialogResult = MessageBox.Show("Input & output directories are same, it will result in overwriting files.\nAre you sure you want to continue?", "FOnlineScalex", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        btnGo.Enabled = false;
+                        btnStop.Enabled = true;
+                        FOnlineScalex.Algorithm algorithm;
+                        Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
+                        object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
+                        1.0 - this.eqAccuracy, algorithm, cboxAlpha.Checked, cboxPostProc.Checked,fOSLogger };
+                        backgroundWorker.RunWorkerAsync(args);
+                    }
+                }
+                else
+                {
+                    btnGo.Enabled = false;
+                    btnStop.Enabled = true;
+                    FOnlineScalex.Algorithm algorithm;
+                    Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
+                    object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
+                        1.0 - this.eqAccuracy, algorithm, cboxAlpha.Checked, cboxPostProc.Checked,fOSLogger };
+                    backgroundWorker.RunWorkerAsync(args);
+                }
+            }
         }
 
         private void lblCurrProc_Click(object sender, EventArgs e)
@@ -188,15 +241,11 @@ namespace FOnlineScalex
             Application.Exit();
         }
 
-        private void numericEqualDifference_ValueChanged(object sender, EventArgs e)
+        private void numericAccuracy_ValueChanged(object sender, EventArgs e)
         {
-            this.eqDifference = (double)this.numericEqualDifference.Value;
+            this.eqAccuracy = (double)this.numericAccuracy.Value;
         }
 
-        private void numericNequalDifference_ValueChanged(object sender, EventArgs e)
-        {
-            this.neqDifference = (double)this.numericNequalDifference.Value;
-        }
         private void tboxInputDir_TextChanged(object sender, EventArgs e)
         {
             inDirPath = tboxInputDir.Text;
@@ -240,16 +289,20 @@ namespace FOnlineScalex
             sb.Append("\n");
             sb.Append("2) Set output filepath - directory with files to write to.\n");
             sb.Append("\n");
-            sb.Append("3) Recursive detects directories of input recursively (optionall).\n");
+            sb.Append("3) Recursive detects directories of input recursively (optional).\n");
             sb.Append("\n");
             sb.Append("4) Choosing algorithm from preset. Scalex 2x default.");
             sb.Append("\n");
-            sb.Append("5) Choosing difference (tolerance) for Equal and Not Equal in range 0 to 1 (both inclusive).\n");
+            sb.Append("5) Choosing accuracy for algorithm. Values in range [0,1].\n");
             sb.Append("\n");
             sb.Append("6) Include alpha in difference (optional).\n");
             sb.Append("\n");
-            sb.Append("7) GO Let the app go.\n");
-            sb.Append("8) STOPS stops the app.\n");
+            sb.Append("7) Post processing for .BMP & .PNG formats (optional).\n");
+            sb.Append("\n");
+            sb.Append("8) GO Let the app go.\n");
+            sb.Append("\n");
+            sb.Append("9) STOPS stops the app.\n");
+            sb.Append("(App can be interrupted anytime during it's processing)\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

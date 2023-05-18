@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FOnlineScalex.FRMFile;
 using FOnlineScalex.Logger;
+using FOnlineScalex.Scalex;
 
 namespace FOnlineScalex
 {
@@ -51,13 +52,13 @@ namespace FOnlineScalex
         /// <param name="outDir">output directory</param>
         /// <param name="recursive">discover directories recursively</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="neqDiff">difference when not equal</param>
         /// <param name="algorithm">pixel art scaling algorithm</param>
         /// <param name="includeAlpha">include alpha with difference</param>
+        /// <param name="postProcessing">post processing</param>
         /// <param name="logger">output logger to console (or file)</param>
-        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff, double neqDiff, Algorithm? algorithm, bool includeAlpha, IFOSLogger logger)
+        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff,  Algorithm? algorithm, bool includeAlpha, bool postProcessing, IFOSLogger logger)
         {
-            logger.Log($"App started work with parameters: ALGO:{algorithm}, EQ:{eqDiff}, NEQ:{neqDiff}, ALPHA:{includeAlpha}");
+            logger.Log($"App started work with parameters: ALGO:{algorithm}, DIFF:{eqDiff}, ALPHA:{includeAlpha}, POSTPROC:{postProcessing}");
             Cancelled = false;
             Progress = 0.0f;
 
@@ -83,7 +84,7 @@ namespace FOnlineScalex
                 string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
                 string outFile = string.Empty;
                 foreach (string srcFile in fileArray)
-                {                    
+                {
                     // if it's png or FRM file
                     // get extensionless filename
                     // string extLessFilename = Regex.Replace(srcFile, "[.][^.]+$", string.Empty);
@@ -104,13 +105,13 @@ namespace FOnlineScalex
                             {
                                 case Algorithm.Scalex2x:
                                 default:
-                                    Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    Scalex.Scalex.Scalex2x(srcFrame, out dstFrame, eqDiff);
                                     break;
                                 case Algorithm.Scalex3x:
-                                    Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    Scalex.Scalex.Scalex3x(srcFrame, out dstFrame, eqDiff);
                                     break;
                                 case Algorithm.Scalex4x:
-                                    Scalex.Scalex.Scalex4x(srcFrame, out dstFrame, eqDiff, neqDiff);
+                                    Scalex.Scalex.Scalex4x(srcFrame, out dstFrame, eqDiff);
                                     break;
                             }
 
@@ -169,29 +170,29 @@ namespace FOnlineScalex
                             {
                                 case Algorithm.Scalex2x:
                                 default:
-                                    Scalex.ScalexBitmap.Scalex2xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex2xRGBA(inPic, out outPic, eqDiff);
                                     break;
                                 case Algorithm.Scalex3x:
-                                    Scalex.ScalexBitmap.Scalex3xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex3xRGBA(inPic, out outPic, eqDiff);
                                     break;
                                 case Algorithm.Scalex4x:
-                                    Scalex.ScalexBitmap.Scalex4xRGBA(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex4xRGBA(inPic, out outPic, eqDiff);
                                     break;
                             }
-                        } 
+                        }
                         else
                         {
                             switch (algorithm)
                             {
                                 case Algorithm.Scalex2x:
                                 default:
-                                    Scalex.ScalexBitmap.Scalex2xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex2xRGB(inPic, out outPic, eqDiff);
                                     break;
                                 case Algorithm.Scalex3x:
-                                    Scalex.ScalexBitmap.Scalex3xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex3xRGB(inPic, out outPic, eqDiff);
                                     break;
                                 case Algorithm.Scalex4x:
-                                    Scalex.ScalexBitmap.Scalex4xRGB(inPic, out outPic, eqDiff, neqDiff);
+                                    Scalex.ScalexBitmap.Scalex4xRGB(inPic, out outPic, eqDiff);
                                     break;
                             }
                         }
@@ -212,6 +213,13 @@ namespace FOnlineScalex
                         }
 
                         Directory.CreateDirectory(outDir);
+
+                        if (postProcessing) 
+                        { 
+                            Bitmap finalOutPic;
+                            PostProcessor.Process(outPic, out finalOutPic);
+                            outPic = finalOutPic;
+                        }
 
                         if (extension.Equals(".png"))
                         {
