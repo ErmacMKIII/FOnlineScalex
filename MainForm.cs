@@ -5,6 +5,9 @@ using System.Linq;
 using FOnlineScalex.FRMFile;
 using FOnlineScalex.Properties;
 using System.Text;
+using FOnlineScalex.ScalexFamily;
+using FOnlineScalex.Algorithm;
+using FOnlineScalex.Algorithm.HqxFamily;
 
 namespace FOnlineScalex
 {
@@ -101,7 +104,7 @@ namespace FOnlineScalex
             if (args != null && args.Length == 8)
             {
                 fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
-                    (double)args[3], (FOnlineScalex.Algorithm)args[4], (bool)args[5], (bool)args[6], (IFOSLogger)args[7]);
+                    (double)args[3], (IAlgorithm.AlgorithmId)args[4], (bool)args[5], (bool)args[6], (IFOSLogger)args[7]);
             }
         }
 
@@ -202,10 +205,10 @@ namespace FOnlineScalex
                     {
                         btnGo.Enabled = false;
                         btnStop.Enabled = true;
-                        FOnlineScalex.Algorithm algorithm;
-                        Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
+                        IAlgorithm.AlgorithmId algorithm;
+                        Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                         object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                        1.0 - this.eqAccuracy, algorithm, cboxAlpha.Checked, cboxPostProc.Checked,fOSLogger };
+                        1.0 - this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
                         backgroundWorker.RunWorkerAsync(args);
                     }
                 }
@@ -213,10 +216,10 @@ namespace FOnlineScalex
                 {
                     btnGo.Enabled = false;
                     btnStop.Enabled = true;
-                    FOnlineScalex.Algorithm algorithm;
-                    Enum.TryParse<FOnlineScalex.Algorithm>(this.cboxAlgo.SelectedText, false, out algorithm);
+                    IAlgorithm.AlgorithmId algorithm;
+                    Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                     object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                        1.0 - this.eqAccuracy, algorithm, cboxAlpha.Checked, cboxPostProc.Checked,fOSLogger };
+                        1.0 - this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
                     backgroundWorker.RunWorkerAsync(args);
                 }
             }
@@ -244,6 +247,7 @@ namespace FOnlineScalex
         private void numericAccuracy_ValueChanged(object sender, EventArgs e)
         {
             this.eqAccuracy = (double)this.numericAccuracy.Value;
+            GeneratePreview();
         }
 
         private void tboxInputDir_TextChanged(object sender, EventArgs e)
@@ -304,6 +308,52 @@ namespace FOnlineScalex
             sb.Append("9) STOPS stops the app.\n");
             sb.Append("(App can be interrupted anytime during it's processing)\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void GeneratePreview()
+        {
+            IAlgorithm.AlgorithmId algoId;
+            Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algoId);
+            IAlgorithm? algorithm = null;
+            Bitmap srcBitmap = Resources.FOnlineScalex;
+            Bitmap? dstBitmap = null;
+            switch (algoId)
+            {
+                default:
+                    algorithm = null;
+                    break;
+                case IAlgorithm.AlgorithmId.Scalex2x:
+                    algorithm = new Scalex2x();
+                    break;
+                case IAlgorithm.AlgorithmId.Scalex3x:
+                    algorithm = new Scalex3x();
+                    break;
+                case IAlgorithm.AlgorithmId.Scalex4x:
+                    algorithm = new Scalex4x();
+                    break;
+                case IAlgorithm.AlgorithmId.Hqx2x:
+                    algorithm = new Hqx2x();
+                    break;
+                case IAlgorithm.AlgorithmId.Hqx3x:
+                    algorithm = new Hqx3x();
+                    break;
+                case IAlgorithm.AlgorithmId.Hqx4x:
+                    algorithm = new Hqx4x();
+                    break;
+            }
+
+            algorithm?.Process(srcBitmap, out dstBitmap, 1.0 - this.eqAccuracy, cboxScale.Checked);
+            pboxPreview.Image = dstBitmap;
+        }
+
+        private void cboxAlgo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GeneratePreview();
+        }
+
+        private void cboxScale_CheckedChanged(object sender, EventArgs e)
+        {
+            GeneratePreview();
         }
     }
 }

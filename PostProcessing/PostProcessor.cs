@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOnlineScalex.Scalex
+namespace FOnlineScalex.PostProcessing
 {
     public static class PostProcessor
     {
@@ -16,8 +16,8 @@ namespace FOnlineScalex.Scalex
         /// <param name="dst">result bitmap by post-processing</param>
         public static void Process(Bitmap src, out Bitmap dst)
         {
-            int w = (int)src.Width;
-            int h = (int)src.Height;
+            int w = src.Width;
+            int h = src.Height;
 
             dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -27,16 +27,16 @@ namespace FOnlineScalex.Scalex
             {
                 for (py = 0; py < h; py++)
                 {
-                    Color srcPixel = src.GetPixel(px, py);                    
-                    Color srcGauss = ColorSampler.GaussianBlurSample(src, px, py);                                  
+                    Color srcPixel = src.GetPixel(px, py);
+                    Color srcGauss = ColorSampler.GaussianBlurSample(src, px, py);
                     if (srcPixel.A == 0 && srcGauss.A >= ColorSampler.B * 255) // edge detected
-                    {                        
+                    {
                         dst.SetPixel(px, py, srcPixel);
-                    } 
+                    }
                     else if (srcPixel.A != 0 && srcGauss.A <= ColorSampler.A * 255) // artifact detected
                     {
                         dst.SetPixel(px, py, Color.Transparent);
-                    } 
+                    }
                     else if (srcPixel.A == 255 && srcGauss.A <= ColorSampler.C * 255) // opaque pixel but adjacent weak alpha
                     {
                         dst.SetPixel(px, py, Color.FromArgb(255, srcPixel.R, srcPixel.G, srcPixel.B));

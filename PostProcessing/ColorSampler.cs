@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOnlineScalex.Scalex
+namespace FOnlineScalex.PostProcessing
 {
     public static class ColorSampler
     {
         /// <summary>
         /// up-left-right-down factor
         /// </summary>
-        public const double A = 0.123317f; // up-left-right-down
+        public const double A = 0.123317; // up-left-right-down
         /// <summary>
         /// diagonal factor
         /// </summary>
-        public const double B = 0.077847f; // diagonal
+        public const double B = 0.077847; // diagonal
         /// <summary>
         /// center factor
         /// </summary>
-        public const double C = 0.195346f; // center  
+        public const double C = 0.195346; // center  
 
         /// <summary>
         /// Get Sample from all of adjacent pixels on given the offset
@@ -99,7 +99,7 @@ namespace FOnlineScalex.Scalex
                     + src.GetPixel(offX[0], offY[2]).R
                     + src.GetPixel(offX[2], offY[2]).R);
 
-            red += C * (src.GetPixel(offX[1], offY[1]).R);
+            red += C * src.GetPixel(offX[1], offY[1]).R;
 
             red += A * (src.GetPixel(offX[1], offY[0]).R + src.GetPixel(offX[0], offY[1]).R
                     + src.GetPixel(offX[1], offY[2]).R + src.GetPixel(offX[2], offY[1]).R);
@@ -109,7 +109,7 @@ namespace FOnlineScalex.Scalex
                     + src.GetPixel(offX[0], offY[2]).G
                     + src.GetPixel(offX[2], offY[2]).G);
 
-            green += C * (src.GetPixel(offX[1], offY[1]).G);
+            green += C * src.GetPixel(offX[1], offY[1]).G;
 
             green += A * (src.GetPixel(offX[1], offY[0]).G + src.GetPixel(offX[0], offY[1]).G
                     + src.GetPixel(offX[1], offY[2]).G + src.GetPixel(offX[2], offY[1]).G);
@@ -119,7 +119,7 @@ namespace FOnlineScalex.Scalex
                     + src.GetPixel(offX[0], offY[2]).B
                     + src.GetPixel(offX[2], offY[2]).B);
 
-            blue += C * (src.GetPixel(offX[1], offY[1]).B);
+            blue += C * src.GetPixel(offX[1], offY[1]).B;
 
             blue += A * (src.GetPixel(offX[1], offY[0]).B + src.GetPixel(offX[0], offY[1]).B
                     + src.GetPixel(offX[1], offY[2]).B + src.GetPixel(offX[2], offY[1]).B);
@@ -129,13 +129,13 @@ namespace FOnlineScalex.Scalex
                     + src.GetPixel(offX[0], offY[2]).A
                     + src.GetPixel(offX[2], offY[2]).A);
 
-            alpha += C * (src.GetPixel(offX[1], offY[1]).A);
+            alpha += C * src.GetPixel(offX[1], offY[1]).A;
 
             alpha += A * (src.GetPixel(offX[1], offY[0]).A + src.GetPixel(offX[0], offY[1]).A
                     + src.GetPixel(offX[1], offY[2]).A + src.GetPixel(offX[2], offY[1]).A);
             // FINALLY, OUTPUT LOGIC
             return Color.FromArgb((int)alpha, (int)red, (int)green, (int)blue);
         }
-       
+
     }
 }

@@ -80,6 +80,22 @@ namespace FOnlineScalex.FRMFile
         /// <param name="col">color</param>
         /// <param name="otherCol">other color</param>
         /// <returns>colorDeviation (color difference)</returns>
+        public static double RGBDeviation(uint colRGB, uint otherColRGB)
+        {
+            Color col = Color.FromArgb((int)colRGB);
+            Color otherCol = Color.FromArgb((int)otherColRGB);
+            double colorDeviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0
+                        + 0.587 * Math.Abs(otherCol.G - col.G) / 255.0
+                        + 0.114 * Math.Abs(otherCol.B - col.B) / 255.0;
+            return colorDeviation;
+        }
+
+        /// <summary>
+        /// RGBDeviation (difference) between two values (colors)
+        /// </summary>
+        /// <param name="col">color</param>
+        /// <param name="otherCol">other color</param>
+        /// <returns>colorDeviation (color difference)</returns>
         public static double RGBDeviation(Color col, Color otherCol)
         {
             double colorDeviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0

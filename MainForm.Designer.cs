@@ -49,7 +49,7 @@
             lblCurrProc = new Label();
             tboxCurrProc = new TextBox();
             pboxCurrentFrame = new PictureBox();
-            pictureBox1 = new PictureBox();
+            pboxPreview = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             cboxPostProc = new CheckBox();
             lblEqDiff = new Label();
@@ -57,14 +57,14 @@
             lblAlgo = new Label();
             numericAccuracy = new NumericUpDown();
             btnGo = new Button();
-            cboxAlpha = new CheckBox();
+            cboxScale = new CheckBox();
             progBar = new ProgressBar();
             menuStripMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             gboxMain.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pboxCurrentFrame).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pboxPreview).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericAccuracy).BeginInit();
             SuspendLayout();
@@ -256,7 +256,7 @@
             tableLayoutPanel3.Controls.Add(lblCurrProc, 0, 0);
             tableLayoutPanel3.Controls.Add(tboxCurrProc, 1, 0);
             tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 0, 1);
-            tableLayoutPanel3.Controls.Add(pictureBox1, 1, 1);
+            tableLayoutPanel3.Controls.Add(pboxPreview, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 230);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -297,16 +297,16 @@
             pboxCurrentFrame.TabStop = false;
             pboxCurrentFrame.Click += pboxCurrentFrame_Click;
             // 
-            // pictureBox1
+            // pboxPreview
             // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = Properties.Resources.gplv3_logo;
-            pictureBox1.Location = new Point(121, 32);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(450, 115);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
+            pboxPreview.Dock = DockStyle.Fill;
+            pboxPreview.Image = Properties.Resources.FOnlineScalex;
+            pboxPreview.Location = new Point(121, 32);
+            pboxPreview.Name = "pboxPreview";
+            pboxPreview.Size = new Size(450, 115);
+            pboxPreview.SizeMode = PictureBoxSizeMode.AutoSize;
+            pboxPreview.TabIndex = 4;
+            pboxPreview.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -322,7 +322,7 @@
             tableLayoutPanel2.Controls.Add(numericAccuracy, 1, 1);
             tableLayoutPanel2.Controls.Add(btnStop, 2, 2);
             tableLayoutPanel2.Controls.Add(btnGo, 2, 0);
-            tableLayoutPanel2.Controls.Add(cboxAlpha, 0, 2);
+            tableLayoutPanel2.Controls.Add(cboxScale, 0, 2);
             tableLayoutPanel2.Dock = DockStyle.Top;
             tableLayoutPanel2.Location = new Point(3, 122);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -361,11 +361,12 @@
             // 
             cboxAlgo.Dock = DockStyle.Fill;
             cboxAlgo.FormattingEnabled = true;
-            cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x" });
+            cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x", "Hqx2x", "Hqx3x", "Hqx4x" });
             cboxAlgo.Location = new Point(73, 3);
             cboxAlgo.Name = "cboxAlgo";
             cboxAlgo.Size = new Size(200, 23);
             cboxAlgo.TabIndex = 11;
+            cboxAlgo.SelectedIndexChanged += cboxAlgo_SelectedIndexChanged;
             // 
             // lblAlgo
             // 
@@ -405,17 +406,18 @@
             btnGo.UseVisualStyleBackColor = true;
             btnGo.Click += btnGo_Click;
             // 
-            // cboxAlpha
+            // cboxScale
             // 
-            cboxAlpha.AutoSize = true;
-            tableLayoutPanel2.SetColumnSpan(cboxAlpha, 2);
-            cboxAlpha.Dock = DockStyle.Fill;
-            cboxAlpha.Location = new Point(3, 61);
-            cboxAlpha.Name = "cboxAlpha";
-            cboxAlpha.Size = new Size(270, 19);
-            cboxAlpha.TabIndex = 17;
-            cboxAlpha.Text = "Include Alpha";
-            cboxAlpha.UseVisualStyleBackColor = true;
+            cboxScale.AutoSize = true;
+            tableLayoutPanel2.SetColumnSpan(cboxScale, 2);
+            cboxScale.Dock = DockStyle.Fill;
+            cboxScale.Location = new Point(3, 61);
+            cboxScale.Name = "cboxScale";
+            cboxScale.Size = new Size(270, 19);
+            cboxScale.TabIndex = 17;
+            cboxScale.Text = "Scale Image";
+            cboxScale.UseVisualStyleBackColor = true;
+            cboxScale.CheckedChanged += cboxScale_CheckedChanged;
             // 
             // progBar
             // 
@@ -449,7 +451,7 @@
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pboxCurrentFrame).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pboxPreview).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericAccuracy).EndInit();
@@ -483,10 +485,10 @@
         private Label lblInDir;
         private Label lblOutDir;
         private Label lblAlgo;
-        private PictureBox pictureBox1;
+        private PictureBox pboxPreview;
         private Label lblEqDiff;
         private NumericUpDown numericAccuracy;
-        private CheckBox cboxAlpha;
+        private CheckBox cboxScale;
         private CheckBox cboxPostProc;
     }
 }

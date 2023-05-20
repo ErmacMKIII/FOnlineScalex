@@ -190,6 +190,32 @@ namespace FOnlineScalex.FRMFile
         }
 
         /// <summary>
+        /// Get Pixel Color (ARGB) from the image from color (ARGB) array at index pos.
+        /// </summary>
+        /// <param name="pos">position in data array (index)</param>
+        /// <returns></returns>
+        public uint GetPixel(uint pos)
+        {
+            uint px = (uint)(pos % width);
+            uint py = (uint)(pos / width);
+
+            return (uint)Palette.Colors[GetPixel(px, py)].ToArgb();
+        }
+
+        /// <summary>
+        /// Set Pixel Color (ARGB) from the image from color (ARGB) array at index pos.
+        /// </summary>
+        /// <param name="pos">position in data array (index)</param>
+        /// <param name="col">color (as ARGB)</param>
+        public void SetPixel(uint pos, uint col)
+        {
+            uint px = (uint)(pos % width);
+            uint py = (uint)(pos / width);
+
+            SetPixel((uint)px, (uint)py, Palette.ToPaletteIndex(Color.FromArgb((int)col)));
+        }
+
+        /// <summary>
         /// Converts this frame to bitmap, used later to drawing on controls.
         /// </summary>
         /// <returns>.</returns>
