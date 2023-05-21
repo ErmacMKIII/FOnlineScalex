@@ -179,33 +179,31 @@ namespace FOnlineScalex
                             Bitmap inPic = (Bitmap)Bitmap.FromFile(srcFile);
                             Bitmap? outPic = null;
 
-                            if (scale)
+                            IAlgorithm algorithm;
+                            switch (algorithmId)
                             {
-                                IAlgorithm algorithm;
-                                switch (algorithmId)
-                                {
-                                    case IAlgorithm.AlgorithmId.Scalex2x:
-                                    default:
-                                        algorithm = new Scalex2x();
-                                        break;
-                                    case IAlgorithm.AlgorithmId.Scalex3x:
-                                        algorithm = new Scalex3x();
-                                        break;
-                                    case IAlgorithm.AlgorithmId.Scalex4x:
-                                        algorithm = new Scalex3x();
-                                        break;
-                                    case IAlgorithm.AlgorithmId.Hqx2x:                                    
-                                        algorithm = new Hqx2x();
-                                        break;
-                                    case IAlgorithm.AlgorithmId.Hqx3x:
-                                        algorithm = new Hqx3x();
-                                        break;
-                                    case IAlgorithm.AlgorithmId.Hqx4x:
-                                        algorithm = new Hqx4x();
-                                        break;
-                                }
-                                algorithm.Process(inPic, out outPic, eqDiff, scale);
+                                case IAlgorithm.AlgorithmId.Scalex2x:
+                                default:
+                                    algorithm = new Scalex2x();
+                                    break;
+                                case IAlgorithm.AlgorithmId.Scalex3x:
+                                    algorithm = new Scalex3x();
+                                    break;
+                                case IAlgorithm.AlgorithmId.Scalex4x:
+                                    algorithm = new Scalex3x();
+                                    break;
+                                case IAlgorithm.AlgorithmId.Hqx2x:                                    
+                                    algorithm = new Hqx2x();
+                                    break;
+                                case IAlgorithm.AlgorithmId.Hqx3x:
+                                    algorithm = new Hqx3x();
+                                    break;
+                                case IAlgorithm.AlgorithmId.Hqx4x:
+                                    algorithm = new Hqx4x();
+                                    break;
                             }
+                            algorithm.Process(inPic, out outPic, eqDiff, scale);
+                            
                             string extension = Path.GetExtension(srcFile).ToLower();
                             if (recursive)
                             {

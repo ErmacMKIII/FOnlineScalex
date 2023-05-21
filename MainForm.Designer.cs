@@ -349,6 +349,7 @@
             cboxPostProc.TabIndex = 18;
             cboxPostProc.Text = "Post Processing (.PNG, .BMP)";
             cboxPostProc.UseVisualStyleBackColor = true;
+            cboxPostProc.CheckedChanged += cboxPostProc_CheckedChanged;
             // 
             // lblEqDiff
             // 

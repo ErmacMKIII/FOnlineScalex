@@ -43,7 +43,7 @@ namespace FOnlineScalex.ScalexFamily
             Scalex4xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Frame(new Bitmap(src.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
+                dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
@@ -52,7 +52,7 @@ namespace FOnlineScalex.ScalexFamily
             Scalex4xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Bitmap(src, (int)src.Width, (int)src.Height);
+                dst = new Bitmap(dst, (int)src.Width, (int)src.Height);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             uint Xres, Yres;
             Xres = (uint)src.Width;
             Yres = (uint)src.Height;
-            dst = new Frame(Xres * 2, Yres * 2, src.OffsetY, src.OffsetY);
+            dst = new Frame(2 * Xres, 2 * Yres, 2 * src.OffsetY, 2 * src.OffsetY);
             uint spIdx = 0, dpIdx = 0;
             //Don't shift trA, as it uses shift right instead of a mask for comparisons.
             uint dpL = Xres * 2;
@@ -5510,7 +5510,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             Hqx2xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Frame(new Bitmap(src.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
+                dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
@@ -5519,7 +5519,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             Hqx2xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Bitmap(src, (int)src.Width, (int)src.Height);
+                dst = new Bitmap(dst, (int)src.Width, (int)src.Height);
             }
         }
     }

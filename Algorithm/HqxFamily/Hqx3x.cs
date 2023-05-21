@@ -35,7 +35,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             uint Xres, Yres;
             Xres = (uint)src.Width;
             Yres = (uint)src.Height;
-            dst = new Frame(Xres * 3, Yres * 3, src.OffsetY, src.OffsetY);
+            dst = new Frame(3 * Xres, 3 * Yres, 3 * src.OffsetY, 3 * src.OffsetY);
             uint spIdx = 0, dpIdx = 0;
             uint dpL = Xres * 3;
 
@@ -7458,7 +7458,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             Hqx3xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Frame(new Bitmap(src.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
+                dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
@@ -7467,7 +7467,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             Hqx3xMeth(src, out dst, eqDiff);
             if (!scale)
             {
-                dst = new Bitmap(src, (int)src.Width, (int)src.Height);                
+                dst = new Bitmap(dst, (int)src.Width, (int)src.Height);                
             }
         }
     }

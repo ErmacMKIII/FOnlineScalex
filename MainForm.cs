@@ -344,7 +344,25 @@ namespace FOnlineScalex
             }
 
             algorithm?.Process(srcBitmap, out dstBitmap, 1.0 - this.eqAccuracy, cboxScale.Checked);
-            pboxPreview.Image = dstBitmap;
+
+            if (this.cboxPostProc.Checked)
+            {
+                if (dstBitmap != null)
+                {
+                    Bitmap postDstBitmap;
+                    PostProcessing.PostProcessor.Process(dstBitmap, out postDstBitmap);
+                    pboxPreview.Image = postDstBitmap;
+                }
+                else
+                {
+                    pboxPreview.Image = dstBitmap;
+                }
+            }
+            else
+            {
+                pboxPreview.Image = dstBitmap;
+            }
+
         }
 
         private void cboxAlgo_SelectedIndexChanged(object sender, EventArgs e)
@@ -353,6 +371,11 @@ namespace FOnlineScalex
         }
 
         private void cboxScale_CheckedChanged(object sender, EventArgs e)
+        {
+            GeneratePreview();
+        }
+
+        private void cboxPostProc_CheckedChanged(object sender, EventArgs e)
         {
             GeneratePreview();
         }
