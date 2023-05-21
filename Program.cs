@@ -1,4 +1,8 @@
 using FOnlineScalex.FRMFile;
+using FOnlineScalex.Properties;
+using FOnlineScalex.ScalexFamily;
+using System.Drawing.Imaging;
+using System.Reflection;
 
 namespace FOnlineScalex
 {
@@ -16,7 +20,7 @@ namespace FOnlineScalex
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            Application.Run(new MainForm());            
         }
     }
 }

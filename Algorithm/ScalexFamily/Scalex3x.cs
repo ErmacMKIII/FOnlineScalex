@@ -11,6 +11,31 @@ namespace FOnlineScalex.ScalexFamily
 {
     public class Scalex3x : Scalex
     {
+        public struct ExpandorBitmap
+        {
+            public Color E0 { get; set; }
+            public Color E1 { get; set; }
+            public Color E2 { get; set; }
+            public Color E3 { get; set; }
+            public Color E4 { get; set; }
+            public Color E5 { get; set; }
+            public Color E6 { get; set; }
+            public Color E7 { get; set; }
+            public Color E8 { get; set; }
+        }
+        public struct ExpandorFrame
+        {
+            public byte E0 { get; set; }
+            public byte E1 { get; set; }
+            public byte E2 { get; set; }
+            public byte E3 { get; set; }
+            public byte E4 { get; set; }
+            public byte E5 { get; set; }
+            public byte E6 { get; set; }
+            public byte E7 { get; set; }
+            public byte E8 { get; set; }
+        }
+
         // --------------------------------
         // Algorithm provided from:
         // https://www.scale2x.it/algorithm
@@ -24,9 +49,11 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="eqDiff">difference when not equal</param>
-        private static void Scalex3xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff)
+        /// <param name="scale">scale image</param>
+        private static ExpandorFrame Scalex3xHelper(Frame src, uint px, uint py, double eqDiff)
         {
+            ExpandorFrame result = new ExpandorFrame();
+
             uint xL, xR; // x-Left, x-Right
             uint yB, yT; // y-Bottom, y-Top            
 
@@ -35,8 +62,8 @@ namespace FOnlineScalex.ScalexFamily
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
-            if (py > 0) { yB = py - 1; } else { yB = 0; }
-            if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
+            if (py > 0) { yT = py - 1; } else { yT = 0; }
+            if (py < h - 1) { yB = py + 1; } else { yB = h - 1; }
 
             // calculating near pixels => A, B, C, D, E, F, G, H, I
             uint Ax = xL;
@@ -91,16 +118,17 @@ namespace FOnlineScalex.ScalexFamily
             //      E0[xL,yT] E1[x,yT] E2[xR, yT]
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]
+
             if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yT, src, Dx, Dy);
-                } 
+                    result.E0 = src.GetPixel(Dx, Dy);
+                }
                 else
                 {
-                    PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+                    result.E0 = src.GetPixel(Ex, Ey);
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
@@ -108,21 +136,21 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
-                    PixelCopy(ref dst, px, yT, src, Bx, By);
+                    result.E1 = src.GetPixel(Bx, By);
                 }
                 else
                 {
-                    PixelCopy(ref dst, px, yT, src, Ex, Ey);
+                    result.E1 = src.GetPixel(Ex, Ey);
                 }
 
                 // E2 = B == F ? F : E;
                 if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yT, src, Fx, Fy);
+                    result.E2 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+                    result.E2 = src.GetPixel(Ex, Ey);
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
@@ -130,36 +158,36 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
-                    PixelCopy(ref dst, xL, py, src, Dx, Dy);
+                    result.E3 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, py, src, Ex, Ey);
+                    result.E3 = src.GetPixel(Ex, Ey);
                 }
 
                 // E4 = E;
-                PixelCopy(ref dst, px, py, src, Ex, Ey);
+                result.E4 = src.GetPixel(Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
                 if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
                     (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
-                    PixelCopy(ref dst, xR, py, src, Fx, Fy);
+                    result.E5 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, py, src, Ex, Ey);
+                    result.E5 = src.GetPixel(Ex, Ey);
                 }
 
                 // E6 = D == H ? D : E;
                 if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+                    result.E6 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+                    result.E6 = src.GetPixel(Ex, Ey);
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
@@ -167,38 +195,38 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
-                    PixelCopy(ref dst, px, yB, src, Hx, Hy);
+                    result.E7 = src.GetPixel(Hx, Hy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, px, yB, src, Ex, Ey);
+                    result.E7 = src.GetPixel(Ex, Ey);
                 }
 
                 // E8 = H == F ? F : E;
                 if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yB, src, Fx, Fy);
-                } 
+                    result.E8 = src.GetPixel(Fx, Fy);
+                }
                 else
                 {
-                    PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                    result.E8 = src.GetPixel(Fx, Fy);
                 }
 
-            } 
+            }
             else
             {
-                PixelCopy(ref dst, xL, yT, src, Ex, Ey);
-                PixelCopy(ref dst, px, yT, src, Ex, Ey);
-                PixelCopy(ref dst, px, yT, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yT, src, Ex, Ey);
-
-                PixelCopy(ref dst, px, py, src, Ex, Ey);
-
-                PixelCopy(ref dst, xL, yB, src, Ex, Ey);
-                PixelCopy(ref dst, px, yB, src, Ex, Ey);
-                PixelCopy(ref dst, px, yB, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                result.E0 = src.GetPixel(Ex, Ey);
+                result.E1 = src.GetPixel(Ex, Ey);
+                result.E2 = src.GetPixel(Ex, Ey);
+                result.E3 = src.GetPixel(Ex, Ey);
+                result.E4 = src.GetPixel(Ex, Ey);
+                result.E5 = src.GetPixel(Ex, Ey);
+                result.E6 = src.GetPixel(Ex, Ey);
+                result.E7 = src.GetPixel(Ex, Ey);
+                result.E8 = src.GetPixel(Ex, Ey);
             }
+
+            return result;
         }
 
 
@@ -206,13 +234,14 @@ namespace FOnlineScalex.ScalexFamily
         /// Return adjacent pixel values for given pixel
         /// </summary>
         /// <param name="src">Source Bitmap</param>
-        /// <param name="dst">Destination Bitmap</param>
         /// <param name="px">Pixel x</param>
         /// <param name="py">Pixel y</param>
         /// <param name="eqDiff">difference when equal</param>
-        /// <param name="eqDiff">difference when not equal</param>
-        private static void Scalex3xHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
+        /// <returns>expandor (9 pixels)</returns>
+        private static ExpandorBitmap Scalex3xHelper(Bitmap src, int px, int py, double eqDiff)
         {
+            ExpandorBitmap result = new ExpandorBitmap();
+
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
 
@@ -221,8 +250,8 @@ namespace FOnlineScalex.ScalexFamily
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
-            if (py > 0) { yB = py - 1; } else { yB = 0; }
-            if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
+            if (py > 0) { yT = py - 1; } else { yT = 0; }
+            if (py < h - 1) { yB = py + 1; } else { yB = h - 1; }
 
             // calculating near pixels => A, B, C, D, E, F, G, H, I
             int Ax = xL;
@@ -276,17 +305,18 @@ namespace FOnlineScalex.ScalexFamily
             */
             //      E0[xL,yT] E1[x,yT] E2[xR, yT]
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
-            //      E6[xL,yB] E7[x,yB] E8[xR, yB]
+            //      E6[xL,yB] E7[x,yB] E8[xR, yB]            
+
             if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yT, src, Dx, Dy);
+                    result.E0 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+                    result.E0 = src.GetPixel(Ex, Ey);
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
@@ -294,21 +324,21 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
-                    PixelCopy(ref dst, px, yT, src, Bx, By);
+                    result.E1 = src.GetPixel(Bx, By);
                 }
                 else
                 {
-                    PixelCopy(ref dst, px, yT, src, Ex, Ey);
+                    result.E1 = src.GetPixel(Ex, Ey);
                 }
 
                 // E2 = B == F ? F : E;
                 if (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yT, src, Fx, Fy);
+                    result.E2 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+                    result.E2 = src.GetPixel(Ex, Ey);
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
@@ -316,36 +346,36 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
-                    PixelCopy(ref dst, xL, py, src, Dx, Dy);
+                    result.E3 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, py, src, Ex, Ey);
+                    result.E3 = src.GetPixel(Ex, Ey);
                 }
 
                 // E4 = E;
-                PixelCopy(ref dst, px, py, src, Ex, Ey);
+                result.E4 = src.GetPixel(Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
                 if ((PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
                     (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
-                    PixelCopy(ref dst, xR, py, src, Fx, Fy);
+                    result.E5 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, py, src, Ex, Ey);
+                    result.E5 = src.GetPixel(Ex, Ey);
                 }
 
                 // E6 = D == H ? D : E;
                 if (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+                    result.E6 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+                    result.E6 = src.GetPixel(Ex, Ey);
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
@@ -353,38 +383,38 @@ namespace FOnlineScalex.ScalexFamily
                     ||
                     (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelRGBAEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
-                    PixelCopy(ref dst, px, yB, src, Hx, Hy);
+                    result.E7 = src.GetPixel(Hx, Hy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, px, yB, src, Ex, Ey);
+                    result.E7 = src.GetPixel(Ex, Ey);
                 }
 
                 // E8 = H == F ? F : E;
                 if (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yB, src, Fx, Fy);
+                    result.E8 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                    result.E8 = src.GetPixel(Fx, Fy);
                 }
 
             }
             else
             {
-                PixelCopy(ref dst, xL, yT, src, Ex, Ey);
-                PixelCopy(ref dst, px, yT, src, Ex, Ey);
-                PixelCopy(ref dst, px, yT, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yT, src, Ex, Ey);
-
-                PixelCopy(ref dst, px, py, src, Ex, Ey);
-
-                PixelCopy(ref dst, xL, yB, src, Ex, Ey);
-                PixelCopy(ref dst, px, yB, src, Ex, Ey);
-                PixelCopy(ref dst, px, yB, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                result.E0 = src.GetPixel(Ex, Ey);
+                result.E1 = src.GetPixel(Ex, Ey);
+                result.E2 = src.GetPixel(Ex, Ey);
+                result.E3 = src.GetPixel(Ex, Ey);
+                result.E4 = src.GetPixel(Ex, Ey);
+                result.E5 = src.GetPixel(Ex, Ey);
+                result.E6 = src.GetPixel(Ex, Ey);
+                result.E7 = src.GetPixel(Ex, Ey);
+                result.E8 = src.GetPixel(Ex, Ey);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -393,22 +423,35 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="src">Source Frame</param>
         /// <param name="dst">Destination Frame</param>
         /// <param name="scale">scale image</param>
-        /// <param name="eqDiff">difference when equal [0..1]</param>
         /// <param name="eqDiff">difference when not equal [0..1]</param>
-        public static void Scalex3xMeth(Frame src, out Frame dst, double eqDiff, bool scale)
+        public static void Scalex3xMeth(Frame src, out Frame dst, double eqDiff)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;
 
-            dst = new Frame(scale ? 3 * w : w, scale ? 3 * h : h, src.OffsetX, src.OffsetY);
+            w *= 3;
+            h *= 3;
+
+            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
 
             uint px, py;
-            
-            for (px = 0; px < w; px++)
+
+            for (px = 0; px < src.Width; px++)
             {
-                for (py = 0; py < h; py++)
+                for (py = 0; py < src.Height; py++)
                 {
-                    Scalex3xHelper(src, ref dst, px, py, eqDiff);
+                    ExpandorFrame e = Scalex3xHelper(src, px, py, eqDiff);
+
+                    dst.SetPixelSafe(3 * px, 3 * py, e.E0);
+                    dst.SetPixelSafe(3 * px + 1, 3 * py + 1, e.E1);
+                    dst.SetPixelSafe(3 * px + 2, 3 * py + 2, e.E2);
+                    dst.SetPixelSafe(3 * px + 3, 3 * py + 3, e.E3);
+                    dst.SetPixelSafe(3 * px + 4, 3 * py + 4, e.E4);
+                    dst.SetPixelSafe(3 * px + 5, 3 * py + 5, e.E5);
+                    dst.SetPixelSafe(3 * px + 6, 3 * py + 6, e.E6);
+                    dst.SetPixelSafe(3 * px + 7, 3 * py + 7, e.E7);
+                    dst.SetPixelSafe(3 * px + 8, 3 * py + 8, e.E8);
+
                 }
             }
         }
@@ -421,32 +464,53 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="scale">Scale image</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
         /// <param name="eqDiff">difference when not equal [0..1]</param>
-        public static void Scalex3xMeth(Bitmap src, out Bitmap dst, double eqDiff, bool scale)
+        public static void Scalex3xMeth(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
 
-            dst = new Bitmap(scale ? 3 * w : w, scale ? 3 * h : h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            w *= 3;
+            h *= 3;
 
-            int px, py;
+            dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            for (px = 0; px < w; px++)
+            int px, py; 
+
+            for (px = 0; px < src.Width; px++)
             {
-                for (py = 0; py < h; py++)
+                for (py = 0; py < src.Height; py++)
                 {
-                    Scalex3xHelper(src, ref dst, px, py, eqDiff);
+                    ExpandorBitmap e = Scalex3xHelper(src, px, py, eqDiff);
+
+                    SetPixelSafe(dst, 3 * px, 3 * py, e.E0);
+                    SetPixelSafe(dst, 3 * px + 1, 3 * py + 1, e.E1);
+                    SetPixelSafe(dst, 3 * px + 2, 3 * py + 2, e.E2);
+                    SetPixelSafe(dst, 3 * px + 3, 3 * py + 3, e.E3);
+                    SetPixelSafe(dst, 3 * px + 4, 3 * py + 4, e.E4);
+                    SetPixelSafe(dst, 3 * px + 5, 3 * py + 5, e.E5);
+                    SetPixelSafe(dst, 3 * px + 6, 3 * py + 6, e.E6);
+                    SetPixelSafe(dst, 3 * px + 7, 3 * py + 7, e.E7);
+                    SetPixelSafe(dst, 3 * px + 8, 3 * py + 8, e.E8);
                 }
             }
         }
 
         public override void Process(Frame src, out Frame dst, double eqDiff, bool scale = true)
         {
-            Scalex3xMeth(src, out dst, eqDiff, scale);
+            Scalex3xMeth(src, out dst, eqDiff);
+            if (!scale)
+            {
+                dst = new Frame(new Bitmap(src.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
+            }
         }
 
         public override void Process(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
         {
-            Scalex3xMeth(src, out dst, eqDiff, scale);
+            Scalex3xMeth(src, out dst, eqDiff);
+            if (!scale)
+            {
+                dst = new Bitmap(src, (int)src.Width, (int)src.Height);
+            }
         }
     }
 }

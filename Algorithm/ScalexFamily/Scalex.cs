@@ -60,6 +60,39 @@ namespace FOnlineScalex.ScalexFamily
         }
 
         /// <summary>
+        /// Set pixel Safe from to img
+        /// </summary>
+        /// <param name="src">Source Image</param>
+        /// <param name="px">Pixel px</param>
+        /// <param name="py">Pixel py</param>
+        /// <param name="col">Pixel Color</param>
+        protected static void SetPixelSafe(Bitmap src, int px, int py, Color col)
+        {
+            if (px >= 0 && px < src.Width && py >= 0 && py < src.Height)
+            {
+                src.SetPixel(px, py, col);
+            }
+        }
+
+        /// <summary>
+        /// Copy a pixel from src to dst (safely)
+        /// </summary>
+        /// <param name="dst">Destination Frame</param>
+        /// <param name="dx">Destination Pixel px</param>
+        /// <param name="dy">Destination Pixel py</param>
+        /// <param name="src">Source Frame</param>
+        /// <param name="sx">Source Pixel px</param>
+        /// <param name="sy">Source Pixel py</param>
+        protected static void PixelCopySafe(ref Bitmap dst, int dx, int dy, Bitmap src, int sx, int sy)
+        {
+            if ((dx >= 0 && dx < dst.Width && dy >= 0 && dy < dst.Height)
+                && (sx >= 0 && sx < src.Width && sy >= 0 && sy < src.Height))
+            {
+                dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
+            }
+        }
+
+        /// <summary>
         /// Check if two pixels are equal with some eqDiff [0..1]
         /// </summary>
         /// <param name="src">Source Frame (where comparison is being performed)</param>

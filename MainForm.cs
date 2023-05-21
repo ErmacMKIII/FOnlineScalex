@@ -140,6 +140,7 @@ namespace FOnlineScalex
 
             toolTip.SetToolTip(this.cboxAlgo, "Choose algorithm for pixel manipulation");
             toolTip.SetToolTip(this.cboxPostProc, "Post process alpha images (.BMP, .PNG). Remove artifacts etc.");
+            toolTip.SetToolTip(this.cboxScale, "Checked - scale image, Unchecked - original size.");
 
             toolTip.SetToolTip(this.btnGo, "Commence processing");
             toolTip.SetToolTip(this.btnStop, "Interrupt processing");
@@ -263,9 +264,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v0.1 - ARCTIC - ALPHA\n");
+            sb.Append("VERSION v1.0* - BALTIC - BETA\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-05-16 at 23:30).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-05-21 at 17:30).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -299,7 +300,7 @@ namespace FOnlineScalex
             sb.Append("\n");
             sb.Append("5) Choosing accuracy for algorithm. Values in range [0,1].\n");
             sb.Append("\n");
-            sb.Append("6) Include alpha in difference (optional).\n");
+            sb.Append("6) Scale Image (if unchecked output is equal to original).\n");
             sb.Append("\n");
             sb.Append("7) Post processing for .BMP & .PNG formats (optional).\n");
             sb.Append("\n");

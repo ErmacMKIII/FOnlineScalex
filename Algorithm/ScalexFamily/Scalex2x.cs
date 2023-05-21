@@ -11,13 +11,30 @@ namespace FOnlineScalex.ScalexFamily
 {
     public class Scalex2x : Scalex
     {
+        public struct ExpandorBitmap
+        {
+            public Color E0 { get; set; }
+            public Color E1 { get; set; }
+            public Color E2 { get; set; }
+            public Color E3 { get; set; }
+        }
+        public struct ExpandorFrame
+        {
+            public byte E0 { get; set; }
+            public byte E1 { get; set; }
+            public byte E2 { get; set; }
+            public byte E3 { get; set; }
+        }
+
         // --------------------------------
         // Algorithm provided from:
         // https://www.scale2x.it/algorithm
         // --------------------------------
-        
-        protected static void Scalex2xHelper(Frame src, ref Frame dst, uint px, uint py, double eqDiff)
+
+        protected static ExpandorFrame Scalex2xHelper(Frame src, uint px, uint py, double eqDiff)
         {
+            ExpandorFrame result = new ExpandorFrame();
+
             uint xL, xR; // x-Left, x-Right
             uint yB, yT; // y-Bottom, y-Top            
 
@@ -26,20 +43,20 @@ namespace FOnlineScalex.ScalexFamily
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
-            if (py > 0) { yB = py - 1; } else { yB = 0; }
-            if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
+            if (py > 0) { yT = py - 1; } else { yT = 0; }
+            if (py < h - 1) { yB = py + 1; } else { yB = h - 1; }
 
             uint Bx = px;
             uint By = yT;
 
-            uint Dx = xR;
+            uint Dx = xL;
             uint Dy = py;
 
-            uint Fx = xL;
+            uint Fx = xR;
             uint Fy = py;
 
             uint Hx = px;
-            uint Hy = yT;
+            uint Hy = yB;
 
             uint Ex = px;
             uint Ey = py;
@@ -62,57 +79,59 @@ namespace FOnlineScalex.ScalexFamily
                E0[xL,yT]  E1[xR,yT]
                E2[xL,yB]  E3[xR,yB]
             */
-
             if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
-               if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
-               {
-                   PixelCopy(ref dst, xL, yT, src, Dx, Dy);
-               }
-               else
-               {
-                   PixelCopy(ref dst, xL, yT, src, Ex, Ey);
-               }
+                if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
+                {
+                    result.E0 = src.GetPixel(Dx, Dy);
+                }
+                else
+                {
+                    result.E0 = src.GetPixel(Ex, Ey);
+                }
 
-               if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
-               {
-                   PixelCopy(ref dst, xR, yT, src, Fx, Fy);
-               }
-               else
-               {
-                   PixelCopy(ref dst, xR, yT, src, Ex, Ey);
-               }
+                if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
+                {
+                    result.E1 = src.GetPixel(Fx, Fy);
+                }
+                else
+                {
+                    result.E1 = src.GetPixel(Ex, Ey);
+                }
 
-               if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
-               {
-                   PixelCopy(ref dst, xL, yB, src, Dx, Dy);
-               }
-               else
-               {
-                   PixelCopy(ref dst, xL, yB, src, Ex, Ey);
-               }
+                if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
+                {
+                    result.E2 = src.GetPixel(Dx, Dy);
+                }
+                else
+                {
+                    result.E2 = src.GetPixel(Ex, Ey);
+                }
 
-               if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
-               {
-                   PixelCopy(ref dst, xR, yB, src, Fx, Fy);
-               }
-               else
-               {
-                   PixelCopy(ref dst, xR, yB, src, Ex, Ey);
-               }
-           }
-           else
-           {
-               PixelCopy(ref dst, xL, yT, src, Ex, Ey);
-               PixelCopy(ref dst, xR, yT, src, Ex, Ey);
-               PixelCopy(ref dst, xL, yB, src, Ex, Ey);
-               PixelCopy(ref dst, xR, yB, src, Ex, Ey);
-           }
+                if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
+                {
+                    result.E2 = src.GetPixel(Fx, Fy);
+                }
+                else
+                {
+                    result.E3 = src.GetPixel(Ex, Ey);
+                }
+            }
+            else
+            {
+                result.E0 = src.GetPixel(Ex, Ey);
+                result.E1 = src.GetPixel(Ex, Ey);
+                result.E2 = src.GetPixel(Ex, Ey);
+                result.E3 = src.GetPixel(Ex, Ey);
+            }
 
-       }
-       
-        protected static void Scalex2xHelper(Bitmap src, ref Bitmap dst, int px, int py, double eqDiff)
+            return result;
+        }
+
+        protected static ExpandorBitmap Scalex2xHelper(Bitmap src, int px, int py, double eqDiff)
         {
+            ExpandorBitmap result = new ExpandorBitmap();
+
             int xL, xR; // x-Left, x-Right
             int yB, yT; // y-Bottom, y-Top            
 
@@ -121,20 +140,20 @@ namespace FOnlineScalex.ScalexFamily
 
             if (px > 0) { xL = px - 1; } else { xL = 0; }
             if (px < w - 1) { xR = px + 1; } else { xR = w - 1; }
-            if (py > 0) { yB = py - 1; } else { yB = 0; }
-            if (py < h - 1) { yT = py + 1; } else { yT = h - 1; }
+            if (py > 0) { yT = py - 1; } else { yT = 0; }
+            if (py < h - 1) { yB = py + 1; } else { yB = h - 1; }
 
             int Bx = px;
             int By = yT;
 
-            int Dx = xR;
+            int Dx = xL;
             int Dy = py;
 
-            int Fx = xL;
+            int Fx = xR;
             int Fy = py;
 
             int Hx = px;
-            int Hy = yT;
+            int Hy = yB;
 
             int Ex = px;
             int Ey = py;
@@ -162,48 +181,49 @@ namespace FOnlineScalex.ScalexFamily
             {
                 if (PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yT, src, Dx, Dy);
+                    result.E0 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, yT, src, Ex, Ey);
+                    result.E0 = src.GetPixel(Ex, Ey);
                 }
 
                 if (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yT, src, Fx, Fy);
+                    result.E1 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, yT, src, Ex, Ey);
+                    result.E1 = src.GetPixel(Ex, Ey);
                 }
 
                 if (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                 {
-                    PixelCopy(ref dst, xL, yB, src, Dx, Dy);
+                    result.E2 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xL, yB, src, Ex, Ey);
+                    result.E2 = src.GetPixel(Ex, Ey);
                 }
 
                 if (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                 {
-                    PixelCopy(ref dst, xR, yB, src, Fx, Fy);
+                    result.E2 = src.GetPixel(Fx, Fy);
                 }
                 else
                 {
-                    PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                    result.E3 = src.GetPixel(Ex, Ey);
                 }
             }
             else
             {
-                PixelCopy(ref dst, xL, yT, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yT, src, Ex, Ey);
-                PixelCopy(ref dst, xL, yB, src, Ex, Ey);
-                PixelCopy(ref dst, xR, yB, src, Ex, Ey);
+                result.E0 = src.GetPixel(Ex, Ey);
+                result.E1 = src.GetPixel(Ex, Ey);
+                result.E2 = src.GetPixel(Ex, Ey);
+                result.E3 = src.GetPixel(Ex, Ey);
             }
 
+            return result;
         }
         /// <summary>
         /// Scales image with Scale2x
@@ -212,22 +232,29 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="dst">Destination Bitmap</param>
         /// <param name="scale">Scale image</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="eqDiff">difference when not equal [0..1</param>
         /// <param name="scale">scale</param>
-        public static void Scalex2xMeth(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
+        public static void Scalex2xMeth(Bitmap src, out Bitmap dst, double eqDiff)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
 
-            dst = new Bitmap(scale ? 2 * w : w, scale ? 2 * h : h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            w *= 2;
+            h *= 2;
 
+            dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+   
             int px, py;
 
-            for (px = 0; px < w; px++)
+            for (px = 0; px < src.Width; px++)
             {
-                for (py = 0; py < h; py++)
+                for (py = 0; py < src.Height; py++)
                 {
-                    Scalex2xHelper(src, ref dst, px, py, eqDiff);
+                    ExpandorBitmap e = Scalex2xHelper(src, px, py, eqDiff);                    
+
+                    SetPixelSafe(dst, 2 * px, 2 * py, e.E0);
+                    SetPixelSafe(dst, 2 * px + 1, 2 * py + 1, e.E1);
+                    SetPixelSafe(dst, 2 * px + 2, 2 * py + 2, e.E2);
+                    SetPixelSafe(dst, 2 * px + 3, 2 * py + 3, e.E3);
                 }
             }
         }
@@ -238,35 +265,50 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="dst">Destination Frame</param>
         /// <param name="scale">Scale image</param>
         /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="eqDiff">difference when not equal [0..1]</param>
         /// <param name="scale">scale</param>
-        public static void Scalex2xMeth(Frame src, out Frame dst, double eqDiff, bool scale = true)
+        public static void Scalex2xMeth(Frame src, out Frame dst, double eqDiff)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;
-            
-            dst = new Frame(scale ? 2 * w : w, scale ? 2 * h : h, src.OffsetX, src.OffsetY);
+
+            w *= 2;
+            h *= 2;
+
+            dst = new Frame(w, h, src.OffsetX, src.OffsetY);
 
             uint px, py;
 
-            for (px = 0; px < w; px++)               
+            for (px = 0; px < src.Width; px++)
             {
-                for (py = 0; py < h; py++) 
-                { 
-                    Scalex2xHelper(src, ref dst, px, py, eqDiff);                    
+                for (py = 0; py < src.Height; py++)
+                {
+                    ExpandorFrame e = Scalex2xHelper(src, px, py, eqDiff);
+
+                    dst.SetPixelSafe(2 * px, 2 * py, e.E0);
+                    dst.SetPixelSafe(2 * px + 1, 2 * py + 1, e.E1);
+                    dst.SetPixelSafe(2 * px + 2, 2 * py + 2, e.E2);
+                    dst.SetPixelSafe(2 * px + 3, 2 * py + 3, e.E3);
                 }
             }
         }
-        
+
 
         public override void Process(Frame src, out Frame dst, double eqDiff, bool scale = true)
         {
-            Scalex2xMeth(src, out dst, eqDiff, scale);
+            Scalex2xMeth(src, out dst, eqDiff);
+            if (!scale)
+            {
+                dst = new Frame(new Bitmap(src.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
+            }
         }
 
         public override void Process(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
         {
-            Scalex2xMeth(src, out dst, eqDiff, scale);
+            Scalex2xMeth(src, out dst, eqDiff);
+            if (!scale)
+            {
+                dst = new Bitmap(src, (int)src.Width, (int)src.Height);
+            }
         }
 
     }
