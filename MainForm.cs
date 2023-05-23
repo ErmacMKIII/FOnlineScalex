@@ -33,10 +33,20 @@ namespace FOnlineScalex
         protected double eqAccuracy = 0.95;
 
         protected DarkRenderer darkRenderer = new DarkRenderer();
+        protected readonly CustomProgressBar progBar;
 
         public MainForm()
         {
             InitializeComponent();
+
+            this.progBar = new CustomProgressBar()
+            {
+                VisualMode = CustomProgressBar.ProgressBarDisplayMode.Percentage,
+                TextFont = MainForm.DefaultFont,
+                TextColor = DarkForeground
+            };
+            this.progBar.Dock = DockStyle.Bottom;
+            this.Controls.Add(progBar);
 
             InitToolTip();
             InitDarkTheme(this);
@@ -85,9 +95,13 @@ namespace FOnlineScalex
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             // Display Error Message
-            if (e.Cancelled)
+            if (fOnlineScalex.Cancelled)
             {
                 MessageBox.Show("App work cancelled by user!", "FOnlineScalex", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (fOnlineScalex.Erroneous)
+            {
+                MessageBox.Show($"App work resulted in error {fOnlineScalex.ErrorMessage}!", "FOnlineScalex", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -209,7 +223,7 @@ namespace FOnlineScalex
                         IAlgorithm.AlgorithmId algorithm;
                         Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                         object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                        1.0 - this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
+                            this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
                         backgroundWorker.RunWorkerAsync(args);
                     }
                 }
@@ -220,7 +234,7 @@ namespace FOnlineScalex
                     IAlgorithm.AlgorithmId algorithm;
                     Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                     object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                        1.0 - this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
+                        this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
                     backgroundWorker.RunWorkerAsync(args);
                 }
             }
@@ -266,7 +280,7 @@ namespace FOnlineScalex
             StringBuilder sb = new StringBuilder();
             sb.Append("VERSION v1.0* - BALTIC - BETA\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-05-21 at 17:30).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-05-23 at 05:10).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -343,7 +357,7 @@ namespace FOnlineScalex
                     break;
             }
 
-            algorithm?.Process(srcBitmap, out dstBitmap, 1.0 - this.eqAccuracy, cboxScale.Checked);
+            algorithm?.Process(srcBitmap, out dstBitmap, this.eqAccuracy, cboxScale.Checked);
 
             if (this.cboxPostProc.Checked)
             {

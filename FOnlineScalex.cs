@@ -30,6 +30,8 @@ namespace FOnlineScalex
 
         public bool Cancelled { get; private set; }        
 
+        public bool Erroneous { get; private set; }
+
         /// <summary>
         /// The ProgressUpdate.
         /// </summary>
@@ -63,6 +65,7 @@ namespace FOnlineScalex
         public void DoWork(string inDir, string outDir, bool recursive, double eqDiff,  IAlgorithm.AlgorithmId? algorithmId, bool scale, bool postProcessing, IFOSLogger logger)
         {
             logger.Log($"App started work with parameters: ALGOID:{algorithmId}, DIFF:{eqDiff}, SCALE:{scale}, POSTPROC:{postProcessing}");
+            Erroneous = false;
             Cancelled = false;
             Progress = 0.0f;
             this.ErrorMessage = string.Empty;
@@ -87,7 +90,7 @@ namespace FOnlineScalex
                 logger.Log($"Progress: {Progress}");
                 if (Directory.Exists(inDir))
                 {
-                    string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
+                    string[] fileArray = recursive ? Directory.GetFileSystemEntries(inDir, "*.*", new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive }) : Directory.GetFiles(inDir);
                     string outFile = string.Empty;
                     foreach (string srcFile in fileArray)
                     {
@@ -160,7 +163,7 @@ namespace FOnlineScalex
                                 File.Delete(outFile);
                             }
 
-                            Directory.CreateDirectory(outDir);
+                            Directory.CreateDirectory(Directory.GetParent(outFile).FullName);
                             dstFRM.Export(outFile);
 
                             logger.Log(outFile);
@@ -220,7 +223,7 @@ namespace FOnlineScalex
                                 File.Delete(outFile);
                             }
 
-                            Directory.CreateDirectory(outDir);
+                            Directory.CreateDirectory(Directory.GetParent(outFile).FullName);
 
                             if (outPic != null && postProcessing)
                             {
@@ -272,13 +275,12 @@ namespace FOnlineScalex
 
                     }
 
-
                 }
-
                 
             } 
             catch (Exception ex) 
             {
+                Erroneous = true;
                 ErrorMessage = $"Internal error {ex.Message}!";
                 logger.Log(ErrorMessage, ex, IFOSLogger.LogLevel.ERR);
             }

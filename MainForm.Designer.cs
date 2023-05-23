@@ -58,7 +58,6 @@
             numericAccuracy = new NumericUpDown();
             btnGo = new Button();
             cboxScale = new CheckBox();
-            progBar = new ProgressBar();
             menuStripMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             gboxMain.SuspendLayout();
@@ -135,9 +134,9 @@
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.268734F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.09819F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.5038757F));
             tableLayoutPanel1.Controls.Add(btnSetOutDir, 2, 1);
             tableLayoutPanel1.Controls.Add(btnSetInDir, 2, 0);
             tableLayoutPanel1.Controls.Add(tboxInputDir, 1, 0);
@@ -160,9 +159,9 @@
             btnSetOutDir.Dock = DockStyle.Fill;
             btnSetOutDir.Image = Properties.Resources.dir_icon_opened2;
             btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetOutDir.Location = new Point(373, 42);
+            btnSetOutDir.Location = new Point(656, 42);
             btnSetOutDir.Name = "btnSetOutDir";
-            btnSetOutDir.Size = new Size(398, 33);
+            btnSetOutDir.Size = new Size(115, 33);
             btnSetOutDir.TabIndex = 3;
             btnSetOutDir.Text = "Open...";
             btnSetOutDir.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -174,9 +173,9 @@
             btnSetInDir.Dock = DockStyle.Fill;
             btnSetInDir.Image = Properties.Resources.dir_icon_opened;
             btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetInDir.Location = new Point(373, 3);
+            btnSetInDir.Location = new Point(656, 3);
             btnSetInDir.Name = "btnSetInDir";
-            btnSetInDir.Size = new Size(398, 33);
+            btnSetInDir.Size = new Size(115, 33);
             btnSetInDir.TabIndex = 1;
             btnSetInDir.Text = "Open...";
             btnSetInDir.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -186,20 +185,20 @@
             // tboxInputDir
             // 
             tboxInputDir.Dock = DockStyle.Fill;
-            tboxInputDir.Location = new Point(108, 3);
+            tboxInputDir.Location = new Point(67, 3);
             tboxInputDir.Name = "tboxInputDir";
             tboxInputDir.ReadOnly = true;
-            tboxInputDir.Size = new Size(259, 23);
+            tboxInputDir.Size = new Size(583, 23);
             tboxInputDir.TabIndex = 2;
             tboxInputDir.TextChanged += tboxInputDir_TextChanged;
             // 
             // tboxOutputDir
             // 
             tboxOutputDir.Dock = DockStyle.Fill;
-            tboxOutputDir.Location = new Point(108, 42);
+            tboxOutputDir.Location = new Point(67, 42);
             tboxOutputDir.Name = "tboxOutputDir";
             tboxOutputDir.ReadOnly = true;
-            tboxOutputDir.Size = new Size(259, 23);
+            tboxOutputDir.Size = new Size(583, 23);
             tboxOutputDir.TabIndex = 0;
             tboxOutputDir.TextChanged += tboxOutputDir_TextChanged;
             // 
@@ -209,7 +208,7 @@
             lblInDir.Dock = DockStyle.Fill;
             lblInDir.Location = new Point(3, 0);
             lblInDir.Name = "lblInDir";
-            lblInDir.Size = new Size(99, 39);
+            lblInDir.Size = new Size(58, 39);
             lblInDir.TabIndex = 4;
             lblInDir.Text = "Input Directory:";
             // 
@@ -219,7 +218,7 @@
             lblOutDir.Dock = DockStyle.Fill;
             lblOutDir.Location = new Point(3, 39);
             lblOutDir.Name = "lblOutDir";
-            lblOutDir.Size = new Size(99, 39);
+            lblOutDir.Size = new Size(58, 39);
             lblOutDir.TabIndex = 5;
             lblOutDir.Text = "Output Directory:";
             // 
@@ -227,9 +226,9 @@
             // 
             cboxRecursive.AutoSize = true;
             cboxRecursive.Dock = DockStyle.Fill;
-            cboxRecursive.Location = new Point(373, 81);
+            cboxRecursive.Location = new Point(656, 81);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(398, 19);
+            cboxRecursive.Size = new Size(115, 19);
             cboxRecursive.TabIndex = 4;
             cboxRecursive.Text = "Recurse Through";
             cboxRecursive.UseVisualStyleBackColor = true;
@@ -239,7 +238,6 @@
             gboxMain.AutoSize = true;
             gboxMain.Controls.Add(tableLayoutPanel3);
             gboxMain.Controls.Add(tableLayoutPanel2);
-            gboxMain.Controls.Add(progBar);
             gboxMain.Controls.Add(tableLayoutPanel1);
             gboxMain.Dock = DockStyle.Fill;
             gboxMain.Location = new Point(0, 24);
@@ -253,19 +251,21 @@
             tableLayoutPanel3.AutoScroll = true;
             tableLayoutPanel3.AutoSize = true;
             tableLayoutPanel3.ColumnCount = 2;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.6589165F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 64.34109F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tableLayoutPanel3.Controls.Add(lblCurrProc, 0, 0);
             tableLayoutPanel3.Controls.Add(tboxCurrProc, 1, 0);
-            tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 0, 1);
-            tableLayoutPanel3.Controls.Add(pboxPreview, 1, 1);
+            tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 1, 1);
+            tableLayoutPanel3.Controls.Add(pboxPreview, 0, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 230);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new RowStyle());
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(774, 270);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel3.Size = new Size(774, 300);
             tableLayoutPanel3.TabIndex = 15;
             // 
             // lblCurrProc
@@ -274,7 +274,7 @@
             lblCurrProc.Dock = DockStyle.Fill;
             lblCurrProc.Location = new Point(3, 0);
             lblCurrProc.Name = "lblCurrProc";
-            lblCurrProc.Size = new Size(112, 29);
+            lblCurrProc.Size = new Size(270, 29);
             lblCurrProc.TabIndex = 0;
             lblCurrProc.Text = "Processing:";
             lblCurrProc.TextAlign = ContentAlignment.MiddleRight;
@@ -283,9 +283,9 @@
             // tboxCurrProc
             // 
             tboxCurrProc.Dock = DockStyle.Fill;
-            tboxCurrProc.Location = new Point(121, 3);
+            tboxCurrProc.Location = new Point(279, 3);
             tboxCurrProc.Name = "tboxCurrProc";
-            tboxCurrProc.Size = new Size(650, 23);
+            tboxCurrProc.Size = new Size(492, 23);
             tboxCurrProc.TabIndex = 1;
             tboxCurrProc.TextChanged += tboxCurrProc_TextChanged;
             // 
@@ -293,9 +293,10 @@
             // 
             pboxCurrentFrame.BorderStyle = BorderStyle.Fixed3D;
             pboxCurrentFrame.Dock = DockStyle.Fill;
-            pboxCurrentFrame.Location = new Point(3, 32);
+            pboxCurrentFrame.Location = new Point(279, 32);
             pboxCurrentFrame.Name = "pboxCurrentFrame";
-            pboxCurrentFrame.Size = new Size(112, 235);
+            pboxCurrentFrame.Size = new Size(492, 265);
+            pboxCurrentFrame.SizeMode = PictureBoxSizeMode.AutoSize;
             pboxCurrentFrame.TabIndex = 3;
             pboxCurrentFrame.TabStop = false;
             pboxCurrentFrame.Click += pboxCurrentFrame_Click;
@@ -305,9 +306,9 @@
             pboxPreview.BorderStyle = BorderStyle.Fixed3D;
             pboxPreview.Dock = DockStyle.Fill;
             pboxPreview.Image = Properties.Resources.FOnlineScalex;
-            pboxPreview.Location = new Point(121, 32);
+            pboxPreview.Location = new Point(3, 32);
             pboxPreview.Name = "pboxPreview";
-            pboxPreview.Size = new Size(650, 235);
+            pboxPreview.Size = new Size(270, 265);
             pboxPreview.SizeMode = PictureBoxSizeMode.AutoSize;
             pboxPreview.TabIndex = 4;
             pboxPreview.TabStop = false;
@@ -424,26 +425,16 @@
             cboxScale.UseVisualStyleBackColor = true;
             cboxScale.CheckedChanged += cboxScale_CheckedChanged;
             // 
-            // progBar
-            // 
-            progBar.Dock = DockStyle.Bottom;
-            progBar.Location = new Point(3, 500);
-            progBar.Name = "progBar";
-            progBar.Size = new Size(774, 30);
-            progBar.TabIndex = 2;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
             ClientSize = new Size(780, 557);
             Controls.Add(gboxMain);
             Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStripMain;
-            MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FOnlineScalex";
@@ -485,7 +476,6 @@
         private TableLayoutPanel tableLayoutPanel3;
         private Label lblCurrProc;
         private TextBox tboxCurrProc;
-        private ProgressBar progBar;
         private PictureBox pboxCurrentFrame;
         private Label lblInDir;
         private Label lblOutDir;
