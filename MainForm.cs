@@ -278,9 +278,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v1.0* - BALTIC - BETA\n");
+            sb.Append("VERSION v1.0 - CHARLIE - STABLE\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-05-23 at 05:10).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-05-23 at 14:00).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
