@@ -171,7 +171,7 @@ namespace FOnlineScalex
             toolTip.SetToolTip(this.cboxScale, "Checked - scale image, Unchecked - original size.");
 
             toolTip.SetToolTip(this.btnGo, "Commence processing");
-            toolTip.SetToolTip(this.btnStop, "Interrupt processing");
+            toolTip.SetToolTip(this.btnStop, "Cancel processing");
 
             toolTip.SetToolTip(this.tboxCurrProc, "Currently processing file");
             toolTip.SetToolTip(this.progBar, "Progress of the processing");
@@ -335,7 +335,7 @@ namespace FOnlineScalex
             sb.Append("8) GO Let the app go.\n");
             sb.Append("\n");
             sb.Append("9) STOPS stops the app.\n");
-            sb.Append("(App can be interrupted anytime during it's processing)\n");
+            sb.Append("(App can be cancelled anytime during it's processing)\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

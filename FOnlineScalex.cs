@@ -108,6 +108,14 @@ namespace FOnlineScalex
                     string outFile = string.Empty;
                     foreach (string srcFile in fileArray)
                     {
+                        // can be cancelled externally
+                        if (Cancelled && OnCancel != null)
+                        {
+                            OnCancel();
+                            logger.Log("FOnlineScalex cancelled by user!");
+                            break;
+                        }
+
                         // if it's png or FRM file
                         // get extensionless filename
                         // string extLessFilename = Regex.Replace(srcFile, "[.][^.]+$", string.Empty);
@@ -277,15 +285,7 @@ namespace FOnlineScalex
                         //    ProcessingFile = outFile;
                         //    Frame = dstFrames?.FirstOrDefault();
                         //    OnProgressUpdate((int)Math.Floor(Progress), outFile, dstFrames?.FirstOrDefault());
-                        //}
-
-                        // can be cancelled externally
-                        if (Cancelled && OnCancel != null)
-                        {
-                            OnCancel();
-                            logger.Log("FOnlineScalex cancelled by user!");
-                            break;
-                        }
+                        //}                        
 
                     }
 
