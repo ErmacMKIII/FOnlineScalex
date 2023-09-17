@@ -13,6 +13,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/> */
 using FOnlineScalex.Algorithm;
+using FOnlineScalex.Examination;
 using FOnlineScalex.FRMFile;
 using System;
 using System.Collections.Generic;
@@ -123,106 +124,22 @@ namespace FOnlineScalex.ScalexFamily
                 return true;
             }
 
-            if (Palette.RGBDeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            if (ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
             {
                 return false;
             }
 
             return true;
         }
-
-        /// <summary>
-        /// Check if two pixels are equal
-        /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
-        /// <param name="px">first pixel px</param>
-        /// <param name="py">first pixel py</param>
-        /// <param name="tx">other (target) pixel px</param>
-        /// <param name="ty">other (target) pixel py</param>
-        /// <returns></returns>
-        protected static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty)
+        
+        protected static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
         {
             if (px == tx && py == ty)
             {
                 return true;
             }
 
-            if (src.GetPixel(px, py) != src.GetPixel(tx, ty))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Check if two pixels are equal (safely)
-        /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
-        /// <param name="px">first pixel px</param>
-        /// <param name="py">first pixel py</param>
-        /// <param name="tx">other (target) pixel px</param>
-        /// <param name="ty">other (target) pixel py</param>
-        /// <returns></returns>
-        protected static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty)
-        {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-            
-            if (src.GetPixelSafe(px, py) != src.GetPixelSafe(tx, ty))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Check if two pixels are equal (safely)
-        /// </summary>
-        /// <param name="src">Source Frame (where comparison is being performed)</param>
-        /// <param name="px">first pixel px</param>
-        /// <param name="py">first pixel py</param>
-        /// <param name="tx">other (target) pixel px</param>
-        /// <param name="ty">other (target) pixel py</param>
-        /// <returns></returns>
-        protected static bool PixelEqualSafe(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
-        {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-
-            if (Palette.RGBDeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Check if two pixels are equal (RGBA) with some eqDiff [0..1]
-        /// </summary>
-        /// <param name="src">Source Bitmap (where comparison is being performed)</param>
-        /// <param name="px">first pixel px</param>
-        /// <param name="py">first pixel py</param>
-        /// <param name="tx">other (target) pixel px</param>
-        /// <param name="ty">other (target) pixel py</param>        
-        /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
-        /// <returns></returns>
-        protected static bool PixelRGBAEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
-        {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-
-            if (Palette.RGBADeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            if (ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
             {
                 return false;
             }
@@ -247,7 +164,7 @@ namespace FOnlineScalex.ScalexFamily
                 return true;
             }
 
-            if (Palette.RGBDeviation(src.GetPixel(px, py), src.GetPixel(tx, ty)) > deviation)
+            if (ColorTest.PixelRGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
             {
                 return false;
             }

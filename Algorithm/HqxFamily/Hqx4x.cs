@@ -40,7 +40,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
     /// Maxim Stepin Hqx4x class
     /// </summary>
     public class Hqx4x : Hqx
-    {        
+    {
         public static void Hqx4xMeth(
              Frame src, out Frame dst, double eqDiff,
              bool wrapX = false, bool wrapY = false)
@@ -61,10 +61,10 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             for (int j = 0; j < Yres; j++)
             {
                 prevline = (uint)((j > 0)
-                        ? -Xres
-                        : wrapY
-                            ? Xres * (Yres - 1)
-                            : 0);
+                         ? -Xres
+                         : wrapY
+                             ? Xres * (Yres - 1)
+                             : 0);
                 nextline = (uint)((j < Yres - 1)
                         ? Xres
                         : wrapY
@@ -72,23 +72,23 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             : 0);
                 for (int i = 0; i < Xres; i++)
                 {
-                    w[1] =src.GetPixel(spIdx + prevline);
-                    w[4] =src.GetPixel(spIdx);
-                    w[7] =src.GetPixel(spIdx + nextline);
+                    w[1] = src.GetPixel(spIdx + prevline);
+                    w[4] = src.GetPixel(spIdx);
+                    w[7] = src.GetPixel(spIdx + nextline);
 
                     if (i > 0)
                     {
-                        w[0] =src.GetPixel(spIdx + prevline - 1);
-                        w[3] =src.GetPixel(spIdx - 1);
-                        w[6] =src.GetPixel(spIdx + nextline - 1);
+                        w[0] = src.GetPixel(spIdx + prevline - 1);
+                        w[3] = src.GetPixel(spIdx - 1);
+                        w[6] = src.GetPixel(spIdx + nextline - 1);
                     }
                     else
                     {
                         if (wrapX)
                         {
-                            w[0] =src.GetPixel(spIdx + prevline + Xres - 1);
-                            w[3] =src.GetPixel(spIdx + Xres - 1);
-                            w[6] =src.GetPixel(spIdx + nextline + Xres - 1);
+                            w[0] = src.GetPixel(spIdx + prevline + Xres - 1);
+                            w[3] = src.GetPixel(spIdx + Xres - 1);
+                            w[6] = src.GetPixel(spIdx + nextline + Xres - 1);
                         }
                         else
                         {
@@ -100,17 +100,17 @@ namespace FOnlineScalex.Algorithm.HqxFamily
 
                     if (i < Xres - 1)
                     {
-                        w[2] =src.GetPixel(spIdx + prevline + 1);
-                        w[5] =src.GetPixel(spIdx + 1);
-                        w[8] =src.GetPixel(spIdx + nextline + 1);
+                        w[2] = src.GetPixel(spIdx + prevline + 1);
+                        w[5] = src.GetPixel(spIdx + 1);
+                        w[8] = src.GetPixel(spIdx + nextline + 1);
                     }
                     else
                     {
                         if (wrapX)
                         {
-                            w[2] =src.GetPixel(spIdx + prevline - Xres + 1);
-                            w[5] =src.GetPixel(spIdx - Xres + 1);
-                            w[8] =src.GetPixel(spIdx + nextline - Xres + 1);
+                            w[2] = src.GetPixel(spIdx + prevline - Xres + 1);
+                            w[5] = src.GetPixel(spIdx - Xres + 1);
+                            w[8] = src.GetPixel(spIdx + nextline - Xres + 1);
                         }
                         else
                         {
@@ -129,7 +129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
 
                         if (w[k] != w[4])
                         {
-                            if (PixelRGBANotEqual(w[4], w[k], eqDiff))
+                            if (PixelNotEqual(w[4], w[k], eqDiff))
                                 pattern |= flag;
                         }
                         flag <<= 1;
@@ -256,125 +256,125 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 18:
                         case 50:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 80:
                         case 81:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 72:
                         case 76:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 10:
                         case 138:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 66:
@@ -418,385 +418,385 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 22:
                         case 54:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 208:
                         case 209:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 104:
                         case 108:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 11:
                         case 139:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 19:
                         case 51:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 146:
                         case 178:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 84:
                         case 85:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 112:
                         case 113:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 200:
                         case 204:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 73:
                         case 77:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 42:
                         case 170:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 14:
                         case 142:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 67:
@@ -842,3864 +842,3864 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 26:
                         case 31:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 82:
                         case 214:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 88:
                         case 248:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 74:
                         case 107:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 27:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 86:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 216:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 106:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 30:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 210:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 120:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 75:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 29:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 198:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 184:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 99:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 57:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 71:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 156:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 226:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 60:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 195:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 102:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 153:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 58:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 83:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 92:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 202:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 78:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 154:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 114:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 break;
                             }
                         case 89:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 90:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
+                                }
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 55:
                         case 23:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 182:
                         case 150:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 213:
                         case 212:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 241:
                         case 240:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 236:
                         case 232:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 109:
                         case 105:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 171:
                         case 43:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 143:
                         case 15:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 124:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 203:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 62:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 211:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 118:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 217:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 110:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 155:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 188:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 185:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 61:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 157:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 103:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 227:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 230:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 199:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 220:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 158:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 234:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 242:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 break;
                             }
                         case 59:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 121:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 87:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 79:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 122:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
+                                }
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 94:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                }
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
+                                }
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 218:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
+                                }
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 91:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
+                                }
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 229:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 167:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 173:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 181:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 186:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 115:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 break;
                             }
                         case 93:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 206:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 205:
                         case 201:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 174:
                         case 46:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 179:
                         case 147:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 117:
                         case 116:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 break;
                             }
                         case 189:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 231:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 126:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 219:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 125:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 221:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix2To1To1(w[7], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 207:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 238:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 190:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix2To1To1(w[1], w[4], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 187:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix2To1To1(w[1], w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 243:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 119:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix3To1(w[4], w[1]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix3To1(w[4], w[1])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[1])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 237:
                         case 233:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 175:
                         case 47:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 break;
                             }
                         case 183:
                         case 151:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 245:
                         case 244:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 250:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 123:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 95:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 222:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 252:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[0])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 249:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix4To2To1(w[4], w[1], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 break;
                             }
                         case 235:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 111:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 63:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 159:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 215:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 246:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 254:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[0]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
-                                }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
+                                }
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 253:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 251:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 break;
                             }
                         case 239:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                dst.SetPixel( dpIdx + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                dst.SetPixel(dpIdx + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 break;
                             }
                         case 127:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 2, w[4]);
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 2, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 2, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + 3, Interpolation.MixEven(w[1], w[5]));
-                                    dst.SetPixel( dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
+                                    dst.SetPixel(dpIdx + 2, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + 3, Interpolation.MixEven(w[1], w[5])); 
+                                    dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
+                                    dst.SetPixel(dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8])); 
                                 break;
                             }
                         case 191:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7])); 
                                 break;
                             }
                         case 223:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
-                                    dst.SetPixel( dpIdx + 1, w[4]);
-                                    dst.SetPixel( dpIdx + dpL, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx + 1, w[4]);
+                                    dst.SetPixel(dpIdx + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.MixEven(w[1], w[3]));
-                                    dst.SetPixel( dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
-                                    dst.SetPixel( dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
+                                    dst.SetPixel(dpIdx, Interpolation.MixEven(w[1], w[3])); 
+                                    dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6])); 
                                 break;
                             }
                         case 247:
                             {
-                                dst.SetPixel( dpIdx, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
                         case 255:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx, w[4]);
+                                    dst.SetPixel(dpIdx, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
+                                    dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
-                                dst.SetPixel( dpIdx + 1, w[4]);
-                                dst.SetPixel( dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                dst.SetPixel(dpIdx + 1, w[4]);
+                                dst.SetPixel(dpIdx + 2, w[4]);
+                                if (PixelNotEqual(w[1], w[5], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + 3, w[4]);
-                                }
-                                else
-                                {
-                                    dst.SetPixel( dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5]));
-                                }
-                                dst.SetPixel( dpIdx + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + 3, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 2, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
-                                {
-                                    dst.SetPixel( dpIdx + dpL + dpL, w[4]);
+                                    dst.SetPixel(dpIdx + 3, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    dst.SetPixel(dpIdx + 3, Interpolation.Mix2To1To1(w[4], w[1], w[5])); 
                                 }
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 1, w[4]);
-                                dst.SetPixel( dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                dst.SetPixel(dpIdx + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + 3, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
+                                if (PixelNotEqual(w[7], w[3], eqDiff))
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    dst.SetPixel( dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
+                                }
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
+                                dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
+                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
+                                }
+                                else
+                                {
+                                    dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5])); 
                                 }
                                 break;
                             }
@@ -4712,7 +4712,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         }
 
         public static void Hqx4xMeth(
-             Bitmap src, out Bitmap dst, double eqDiff,
+             Bitmap src, out Bitmap dst, double eqPixelNotEqual,
              bool wrapX = false, bool wrapY = false)
         {
             uint Xres, Yres;
@@ -4731,10 +4731,10 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             for (int j = 0; j < Yres; j++)
             {
                 prevline = (uint)((j > 0)
-                        ? -Xres
-                        : wrapY
-                            ? Xres * (Yres - 1)
-                            : 0);
+                         ? -Xres
+                         : wrapY
+                             ? Xres * (Yres - 1)
+                             : 0);
                 nextline = (uint)((j < Yres - 1)
                         ? Xres
                         : wrapY
@@ -4799,7 +4799,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
 
                         if (w[k] != w[4])
                         {
-                            if (PixelRGBANotEqual(w[4], w[k], eqDiff))
+                            if (PixelNotEqual(w[4], w[k], eqPixelNotEqual))
                                 pattern |= flag;
                         }
                         flag <<= 1;
@@ -4928,7 +4928,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -4948,7 +4948,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -4967,7 +4967,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -4981,7 +4981,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -4996,18 +4996,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
@@ -5019,7 +5019,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 10:
                         case 138:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -5041,7 +5041,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -5090,7 +5090,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5109,7 +5109,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5129,7 +5129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5141,7 +5141,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -5156,16 +5156,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -5178,7 +5178,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 11:
                         case 139:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5199,7 +5199,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -5208,7 +5208,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 19:
                         case 51:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -5232,7 +5232,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5243,7 +5243,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -5266,7 +5266,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 break;
@@ -5277,7 +5277,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -5300,7 +5300,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -5317,11 +5317,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5330,7 +5330,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
@@ -5348,11 +5348,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -5361,7 +5361,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
@@ -5373,13 +5373,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 73:
                         case 77:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
@@ -5388,7 +5388,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
@@ -5406,14 +5406,14 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 42:
                         case 170:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
                                     SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 }
                                 else
                                 {
@@ -5422,7 +5422,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -5439,7 +5439,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 14:
                         case 142:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -5463,7 +5463,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -5512,7 +5512,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 26:
                         case 31:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5524,7 +5524,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5542,7 +5542,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5553,7 +5553,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5571,7 +5571,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5583,7 +5583,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -5598,21 +5598,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5629,7 +5629,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 74:
                         case 107:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5646,16 +5646,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -5667,7 +5667,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 27:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5688,7 +5688,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5698,7 +5698,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5717,7 +5717,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5736,7 +5736,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5748,7 +5748,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -5762,16 +5762,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -5785,7 +5785,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5804,7 +5804,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5823,7 +5823,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5835,7 +5835,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -5849,16 +5849,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -5870,7 +5870,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 75:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5891,7 +5891,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5911,7 +5911,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5931,7 +5931,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -5951,7 +5951,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -5971,7 +5971,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -5991,7 +5991,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6011,7 +6011,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6031,7 +6031,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -6051,7 +6051,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -6071,7 +6071,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6091,7 +6091,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -6111,7 +6111,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6131,7 +6131,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -6139,7 +6139,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 58:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6153,7 +6153,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6171,7 +6171,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6181,7 +6181,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6199,7 +6199,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6213,7 +6213,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -6227,21 +6227,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6259,7 +6259,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 202:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6277,18 +6277,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -6299,7 +6299,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 78:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6317,18 +6317,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
@@ -6339,7 +6339,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 154:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6353,7 +6353,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6371,7 +6371,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -6381,7 +6381,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6399,7 +6399,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6413,7 +6413,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 break;
                             }
@@ -6427,21 +6427,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6459,7 +6459,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 90:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6473,7 +6473,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6487,21 +6487,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6520,7 +6520,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 55:
                         case 23:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -6544,7 +6544,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6555,7 +6555,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6578,7 +6578,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 break;
@@ -6589,7 +6589,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -6612,7 +6612,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -6629,11 +6629,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
@@ -6642,7 +6642,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
@@ -6660,11 +6660,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -6673,7 +6673,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
@@ -6685,13 +6685,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 109:
                         case 105:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
@@ -6700,7 +6700,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
@@ -6718,14 +6718,14 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 171:
                         case 43:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 }
                                 else
                                 {
@@ -6734,7 +6734,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6751,7 +6751,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 143:
                         case 15:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6775,7 +6775,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -6791,16 +6791,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -6812,7 +6812,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 203:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6833,7 +6833,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -6843,7 +6843,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6862,7 +6862,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6881,7 +6881,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -6893,7 +6893,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -6901,7 +6901,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6920,7 +6920,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -6939,7 +6939,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -6951,7 +6951,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -6965,16 +6965,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -6986,7 +6986,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 155:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7007,7 +7007,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7027,7 +7027,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7047,7 +7047,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7067,7 +7067,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -7087,7 +7087,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7107,7 +7107,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -7127,7 +7127,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -7147,7 +7147,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -7167,7 +7167,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -7183,22 +7183,22 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7214,7 +7214,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 158:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7228,7 +7228,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7245,7 +7245,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7253,7 +7253,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 234:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7271,16 +7271,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -7294,7 +7294,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7313,7 +7313,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7325,13 +7325,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 break;
                             }
                         case 59:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7343,7 +7343,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7362,7 +7362,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -7378,20 +7378,20 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7411,7 +7411,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7428,7 +7428,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7442,13 +7442,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
                         case 79:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7465,18 +7465,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
@@ -7487,7 +7487,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 122:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7501,7 +7501,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7515,20 +7515,20 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7546,7 +7546,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 94:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7560,7 +7560,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7573,21 +7573,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7605,7 +7605,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 218:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7619,7 +7619,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7633,22 +7633,22 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7664,7 +7664,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 91:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7676,7 +7676,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7691,21 +7691,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7735,7 +7735,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -7755,7 +7755,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -7775,7 +7775,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -7795,7 +7795,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7803,7 +7803,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 186:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7817,7 +7817,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7835,7 +7835,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -7845,7 +7845,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7863,7 +7863,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7877,7 +7877,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 break;
                             }
@@ -7891,21 +7891,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7923,7 +7923,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 206:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7941,18 +7941,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -7972,18 +7972,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -7995,7 +7995,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 174:
                         case 46:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -8017,7 +8017,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -8028,7 +8028,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -8048,7 +8048,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -8067,7 +8067,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -8081,7 +8081,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 break;
                             }
@@ -8099,7 +8099,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -8119,7 +8119,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -8129,7 +8129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8144,16 +8144,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -8165,7 +8165,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 219:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8185,7 +8185,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8197,19 +8197,19 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
                         case 125:
                             {
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
@@ -8218,7 +8218,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[3], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[3], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix2To1To1(w[7], w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
@@ -8238,7 +8238,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -8261,13 +8261,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
                         case 207:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8291,7 +8291,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -8307,11 +8307,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
@@ -8320,7 +8320,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[3], w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[7]));
@@ -8333,7 +8333,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8356,21 +8356,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 break;
                             }
                         case 187:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix7To1(w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 }
                                 else
                                 {
@@ -8379,7 +8379,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix5To3(w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[1]));
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -8405,11 +8405,11 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
@@ -8418,7 +8418,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix2To1To1(w[5], w[4], w[7]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix3To1(w[4], w[7]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[7], w[5]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
@@ -8427,7 +8427,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 119:
                             {
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -8451,7 +8451,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -8472,13 +8472,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -8488,7 +8488,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 175:
                         case 47:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8507,7 +8507,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix2To1To1(w[4], w[7], w[5]));
@@ -8519,7 +8519,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8535,7 +8535,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix6To1To1(w[4], w[3], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -8556,10 +8556,10 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -8579,21 +8579,21 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8609,7 +8609,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 123:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8626,16 +8626,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -8647,7 +8647,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 95:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8659,7 +8659,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8677,7 +8677,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix3To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -8687,7 +8687,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8705,7 +8705,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8717,7 +8717,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -8731,23 +8731,23 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -8770,7 +8770,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8782,20 +8782,20 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 break;
                             }
                         case 235:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8816,13 +8816,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -8831,7 +8831,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 111:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8846,16 +8846,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -8867,7 +8867,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 63:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8876,7 +8876,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8895,7 +8895,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix4To2To1(w[4], w[7], w[8]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[8]));
@@ -8903,7 +8903,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 159:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8916,7 +8916,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8931,7 +8931,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix4To2To1(w[4], w[7], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -8942,7 +8942,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8957,7 +8957,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8969,7 +8969,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -8977,7 +8977,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8996,10 +8996,10 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9013,7 +9013,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -9028,23 +9028,23 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9068,17 +9068,17 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9090,7 +9090,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 251:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -9110,7 +9110,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -9122,20 +9122,20 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 break;
                             }
                         case 239:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9154,13 +9154,13 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
@@ -9169,7 +9169,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 127:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9178,7 +9178,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -9193,16 +9193,16 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 }
                                 else
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[3], w[4]));
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.MixEven(w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -9214,7 +9214,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 191:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9224,7 +9224,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9240,7 +9240,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix7To1(w[4], w[7]));
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.Mix5To3(w[4], w[7]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[7]));
@@ -9248,7 +9248,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 223:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -9261,7 +9261,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9275,7 +9275,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -9287,7 +9287,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[6]));
                                 break;
                             }
@@ -9296,7 +9296,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9312,10 +9312,10 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
+                                SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9327,7 +9327,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 255:
                             {
-                                if (PixelRGBANotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9337,7 +9337,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelRGBANotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9353,17 +9353,17 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelRGBANotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, w[4]);
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
                                 else
                                 {
-                                    SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
+                                    SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelRGBANotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9390,9 +9390,9 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             }
         }
 
-        public override void Process(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
+        public override void Process(Bitmap src, out Bitmap dst, double eqPixelNotEqual, bool scale = true)
         {
-            Hqx4xMeth(src, out dst, eqDiff);
+            Hqx4xMeth(src, out dst, eqPixelNotEqual);
             if (!scale)
             {
                 dst = new Bitmap(dst, (int)src.Width, (int)src.Height);

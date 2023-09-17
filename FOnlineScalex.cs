@@ -234,11 +234,11 @@ namespace FOnlineScalex
                             {
                                 var srcFileName = Path.GetFileName(srcFile);
                                 var relative = Path.GetRelativePath(inDir, srcFile).Replace(srcFileName, string.Empty);
-                                outFile = Path.Combine(outDir, relative, Regex.Replace(srcFileName, "[.][^.]+$", extension.ToUpper()));
+                                outFile = Path.Combine(outDir, relative, Regex.Replace(srcFileName, "[.][^.]+$", extension));
                             }
                             else
                             {
-                                outFile = Path.Combine(outDir, Regex.Replace(Path.GetFileName(srcFile), "[.][^.]+$", extension.ToUpper()));
+                                outFile = Path.Combine(outDir, Regex.Replace(Path.GetFileName(srcFile), "[.][^.]+$", extension));
                             }
                             if (File.Exists(outFile))
                             {

@@ -61,6 +61,19 @@ namespace FOnlineScalex.PostProcessing
                     }
                 }
             }
+
+            // Remove blue color
+            for (px = 0; px < w; px++)
+            {
+                for (py = 0; py < h; py++)
+                {
+                    Color srcPixel = src.GetPixel(px, py);
+                    if (srcPixel.Equals(Color.Blue))
+                    {
+                        dst.SetPixel(px, py, Color.Transparent);
+                    }
+                }
+            }
         }
     }
 }

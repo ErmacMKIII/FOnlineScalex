@@ -65,6 +65,7 @@ namespace FOnlineScalex.FRMFile
         /// <param name="value">palette entry (indexed color)</param>
         /// <param name="otherValue">other pallete (indexed color) entry</param>
         /// <returns>colorDeviation (color difference)</returns>
+        [Obsolete]
         public static double RGBDeviation(byte value, byte otherValue)
         {
             Color col = Colors[value];
@@ -82,6 +83,7 @@ namespace FOnlineScalex.FRMFile
         /// <param name="col">color</param>
         /// <param name="otherCol">other color</param>
         /// <returns>colorDeviation (color difference)</returns>
+        [Obsolete]
         public static double RGBDeviation(uint colRGB, uint otherColRGB)
         {
             Color col = Color.FromArgb((int)colRGB);
@@ -98,6 +100,7 @@ namespace FOnlineScalex.FRMFile
         /// <param name="col">color</param>
         /// <param name="otherCol">other color</param>
         /// <returns>colorDeviation (color difference)</returns>
+        [Obsolete]
         public static double RGBDeviation(Color col, Color otherCol)
         {
             double colorDeviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0
@@ -112,6 +115,7 @@ namespace FOnlineScalex.FRMFile
         /// <param name="col">color</param>
         /// <param name="otherCol">other color</param>
         /// <returns>colorDeviation (color difference)</returns>
+        [Obsolete]
         public static double RGBADeviation(Color col, Color otherCol)
         {            
             double colorDeviation = 0.299 * Math.Abs(otherCol.R - col.R) / 255.0

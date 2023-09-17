@@ -68,7 +68,9 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             uint g = (uint)(y - 0.395 * u - 0.581 * v);
             uint b = (uint)(y + 2.033 * v);
 
-            return (uint)Color.FromArgb((int)r, (int)g, (int)b).ToArgb();
+            uint argb = (uint)((0xFF << 24) | (r << 16) | (g << 8) | b);
+
+            return argb;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/> */
+using FOnlineScalex.Examination;
 using FOnlineScalex.FRMFile;
 using System;
 using System.Collections.Generic;
@@ -48,74 +49,27 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         public const uint Vmask = 0x000000FF;
 
         /// <summary>
-        /// Compares two ARGB colors according to the provided Y, U, V and A thresholds.
+        /// Compares two ARGB colors according, are they equal against corresponding difference.
         /// </summary>
-        /// <param name="c1">ARGB Color</param>
-        /// <param name="c2">ARGB Color</param>
-        /// <param name="trY">U (chrominance) threshold</param>
-        /// <param name="trU"></param>
-        /// <param name="trV">V (chrominance) threshold</param>
-        /// <param name="trA">A (transparency) threshold</param>
-        /// <returns></returns>
-        public static bool Diff(uint c1, uint c2, uint trY, uint trU, uint trV, uint trA)
-        {
-            uint YUV1 = RgbYuv.RGBToYuv(c1);
-            uint YUV2 = RgbYuv.RGBToYuv(c2);
-
-            return (
-                (Math.Abs((YUV1 & Ymask) - (YUV2 & Ymask)) > trY) ||
-                (Math.Abs((YUV1 & Umask) - (YUV2 & Umask)) > trU) ||
-                (Math.Abs((YUV1 & Vmask) - (YUV2 & Vmask)) > trV) ||
-                (Math.Abs(((c1 >> 24) - (c2 >> 24))) > trA)
-            );
-        }
-
-        /// <summary>
-        /// Compares two ARGB colors according to the provided Y, U, V and A thresholds.
-        /// </summary>
-        /// <param name="c1">ARGB Color</param>
-        /// <param name="c2">ARGB Color</param>        
-        /// <returns>nequal test</returns>
-        public static bool PixelRGBNotEqual(uint c1, uint c2, double eqDiff)
-        {
-            return !PixelRGBEqual(c1, c2, eqDiff);
-        }
-
-        /// <summary>
-        /// Compares two ARGB colors according to the provided Y, U, V and A thresholds.
-        /// </summary>
-        /// <param name="c1">ARGB Color</param>
-        /// <param name="c2">ARGB Color</param>        
-        /// <returns>nequal test</returns>
-        public static bool PixelRGBANotEqual(uint c1, uint c2, double eqDiff)
-        {
-            return !PixelRGBAEqual(c1, c2, eqDiff);
-        }
-
-        /// <summary>
-        /// Comparing if two pixel colors satisfy RGB color equality against eqDiff.
-        /// </summary>
-        /// <param name="c1">color</param>
-        /// <param name="c2">other color</param>
-        /// <param name="eqDiff">equal difference</param>
+        /// <param name="c1">ARGB Color 1</param>
+        /// <param name="c2">ARGB Color 2</param>        
         /// <returns>equal test</returns>
-        public static bool PixelRGBEqual(uint c1, uint c2, double eqDiff)
-        {
-            return Palette.RGBDeviation(Color.FromArgb((int)c1), Color.FromArgb((int)c2)) <= eqDiff;
+        public static bool PixelEqual(uint c1, uint c2, double eqDiff)
+        {           
+            return ColorTest.PixelRGBEqual(c1, c2, eqDiff);
         }
 
         /// <summary>
-        /// Comparing if two pixel colors satisfy RGBA color equality against eqDiff.
+        /// Compares two ARGB colors according, are they equal against corresponding difference.
         /// </summary>
-        /// <param name="c1">color</param>
-        /// <param name="c2">other color</param>
-        /// <param name="eqDiff">equal difference</param>
-        /// <returns>equal test</returns>
-        public static bool PixelRGBAEqual(uint c1, uint c2, double eqDiff)
+        /// <param name="c1">ARGB Color 1</param>
+        /// <param name="c2">ARGB Color 2</param> 
+        /// <returns>nequal test</returns>
+        public static bool PixelNotEqual(uint c1, uint c2, double eqDiff)
         {
-            return Palette.RGBADeviation(Color.FromArgb((int)c1), Color.FromArgb((int)c2)) <= eqDiff;
+            return ColorTest.PixelRGBNotEqual(c1, c2, eqDiff);
         }
-
+        
         /// <summary>
         /// Get Pixel Color (ARGB) from the image from color (ARGB) array at index pos.
         /// </summary>

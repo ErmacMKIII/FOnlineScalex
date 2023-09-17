@@ -191,9 +191,9 @@ namespace FOnlineScalex.ScalexFamily
                 E2[xL,yB]  E3[xR,yB]
             */
 
-            if (!PixelRGBAEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelRGBAEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
-                if (PixelRGBAEqual(src, Dx, Dy, Bx, By, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
                     result.E0 = src.GetPixel(Dx, Dy);
                 }
@@ -202,7 +202,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E0 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelRGBAEqual(src, Bx, By, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
                 {
                     result.E1 = src.GetPixel(Fx, Fy);
                 }
@@ -211,7 +211,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E1 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelRGBAEqual(src, Dx, Dy, Hx, Hy, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
                 {
                     result.E2 = src.GetPixel(Dx, Dy);
                 }
@@ -220,7 +220,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E2 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelRGBAEqual(src, Hx, Hy, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
                 {
                     result.E2 = src.GetPixel(Fx, Fy);
                 }
