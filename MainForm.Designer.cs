@@ -65,6 +65,10 @@ namespace FOnlineScalex
             pboxCurrentFrame = new PictureBox();
             pboxPreview = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            lblMulThres = new Label();
+            numericAlphaMulThres = new NumericUpDown();
+            lblDropThres = new Label();
+            numericAlphaDropThres = new NumericUpDown();
             cboxPostProc = new CheckBox();
             lblEqDiff = new Label();
             cboxAlgo = new ComboBox();
@@ -79,6 +83,8 @@ namespace FOnlineScalex
             ((System.ComponentModel.ISupportInitialize)pboxCurrentFrame).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pboxPreview).BeginInit();
             tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericAlphaMulThres).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericAlphaDropThres).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericAccuracy).BeginInit();
             SuspendLayout();
             // 
@@ -87,7 +93,7 @@ namespace FOnlineScalex
             menuStripMain.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, infoToolStripMenuItem });
             menuStripMain.Location = new Point(0, 0);
             menuStripMain.Name = "menuStripMain";
-            menuStripMain.Size = new Size(780, 24);
+            menuStripMain.Size = new Size(1004, 24);
             menuStripMain.TabIndex = 11;
             menuStripMain.Text = "menuStrip1";
             // 
@@ -132,10 +138,10 @@ namespace FOnlineScalex
             btnStop.Enabled = false;
             btnStop.Image = Properties.Resources.stop;
             btnStop.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStop.Location = new Point(279, 61);
+            btnStop.Location = new Point(323, 61);
             btnStop.Name = "btnStop";
             tableLayoutPanel2.SetRowSpan(btnStop, 2);
-            btnStop.Size = new Size(492, 44);
+            btnStop.Size = new Size(682, 44);
             btnStop.TabIndex = 9;
             btnStop.Text = "Stop";
             btnStop.TextAlign = ContentAlignment.MiddleRight;
@@ -165,7 +171,7 @@ namespace FOnlineScalex
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(774, 103);
+            tableLayoutPanel1.Size = new Size(998, 103);
             tableLayoutPanel1.TabIndex = 13;
             // 
             // btnSetOutDir
@@ -173,9 +179,9 @@ namespace FOnlineScalex
             btnSetOutDir.Dock = DockStyle.Fill;
             btnSetOutDir.Image = Properties.Resources.dir_icon_opened2;
             btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetOutDir.Location = new Point(656, 42);
+            btnSetOutDir.Location = new Point(845, 42);
             btnSetOutDir.Name = "btnSetOutDir";
-            btnSetOutDir.Size = new Size(115, 33);
+            btnSetOutDir.Size = new Size(150, 33);
             btnSetOutDir.TabIndex = 3;
             btnSetOutDir.Text = "Open...";
             btnSetOutDir.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -187,9 +193,9 @@ namespace FOnlineScalex
             btnSetInDir.Dock = DockStyle.Fill;
             btnSetInDir.Image = Properties.Resources.dir_icon_opened;
             btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSetInDir.Location = new Point(656, 3);
+            btnSetInDir.Location = new Point(845, 3);
             btnSetInDir.Name = "btnSetInDir";
-            btnSetInDir.Size = new Size(115, 33);
+            btnSetInDir.Size = new Size(150, 33);
             btnSetInDir.TabIndex = 1;
             btnSetInDir.Text = "Open...";
             btnSetInDir.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -199,20 +205,20 @@ namespace FOnlineScalex
             // tboxInputDir
             // 
             tboxInputDir.Dock = DockStyle.Fill;
-            tboxInputDir.Location = new Point(67, 3);
+            tboxInputDir.Location = new Point(85, 3);
             tboxInputDir.Name = "tboxInputDir";
             tboxInputDir.ReadOnly = true;
-            tboxInputDir.Size = new Size(583, 23);
+            tboxInputDir.Size = new Size(754, 23);
             tboxInputDir.TabIndex = 2;
             tboxInputDir.TextChanged += tboxInputDir_TextChanged;
             // 
             // tboxOutputDir
             // 
             tboxOutputDir.Dock = DockStyle.Fill;
-            tboxOutputDir.Location = new Point(67, 42);
+            tboxOutputDir.Location = new Point(85, 42);
             tboxOutputDir.Name = "tboxOutputDir";
             tboxOutputDir.ReadOnly = true;
-            tboxOutputDir.Size = new Size(583, 23);
+            tboxOutputDir.Size = new Size(754, 23);
             tboxOutputDir.TabIndex = 0;
             tboxOutputDir.TextChanged += tboxOutputDir_TextChanged;
             // 
@@ -222,7 +228,7 @@ namespace FOnlineScalex
             lblInDir.Dock = DockStyle.Fill;
             lblInDir.Location = new Point(3, 0);
             lblInDir.Name = "lblInDir";
-            lblInDir.Size = new Size(58, 39);
+            lblInDir.Size = new Size(76, 39);
             lblInDir.TabIndex = 4;
             lblInDir.Text = "Input Directory:";
             // 
@@ -232,7 +238,7 @@ namespace FOnlineScalex
             lblOutDir.Dock = DockStyle.Fill;
             lblOutDir.Location = new Point(3, 39);
             lblOutDir.Name = "lblOutDir";
-            lblOutDir.Size = new Size(58, 39);
+            lblOutDir.Size = new Size(76, 39);
             lblOutDir.TabIndex = 5;
             lblOutDir.Text = "Output Directory:";
             // 
@@ -240,9 +246,9 @@ namespace FOnlineScalex
             // 
             cboxRecursive.AutoSize = true;
             cboxRecursive.Dock = DockStyle.Fill;
-            cboxRecursive.Location = new Point(656, 81);
+            cboxRecursive.Location = new Point(845, 81);
             cboxRecursive.Name = "cboxRecursive";
-            cboxRecursive.Size = new Size(115, 19);
+            cboxRecursive.Size = new Size(150, 19);
             cboxRecursive.TabIndex = 4;
             cboxRecursive.Text = "Recurse Through";
             cboxRecursive.UseVisualStyleBackColor = true;
@@ -256,7 +262,7 @@ namespace FOnlineScalex
             gboxMain.Dock = DockStyle.Fill;
             gboxMain.Location = new Point(0, 24);
             gboxMain.Name = "gboxMain";
-            gboxMain.Size = new Size(780, 533);
+            gboxMain.Size = new Size(1004, 701);
             gboxMain.TabIndex = 13;
             gboxMain.TabStop = false;
             // 
@@ -265,21 +271,19 @@ namespace FOnlineScalex
             tableLayoutPanel3.AutoScroll = true;
             tableLayoutPanel3.AutoSize = true;
             tableLayoutPanel3.ColumnCount = 2;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.6589165F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 64.34109F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel3.Controls.Add(lblCurrProc, 0, 0);
             tableLayoutPanel3.Controls.Add(tboxCurrProc, 1, 0);
             tableLayoutPanel3.Controls.Add(pboxCurrentFrame, 1, 1);
             tableLayoutPanel3.Controls.Add(pboxPreview, 0, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 230);
+            tableLayoutPanel3.Location = new Point(3, 288);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new RowStyle());
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(774, 300);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle());
+            tableLayoutPanel3.Size = new Size(998, 410);
             tableLayoutPanel3.TabIndex = 15;
             // 
             // lblCurrProc
@@ -288,7 +292,7 @@ namespace FOnlineScalex
             lblCurrProc.Dock = DockStyle.Fill;
             lblCurrProc.Location = new Point(3, 0);
             lblCurrProc.Name = "lblCurrProc";
-            lblCurrProc.Size = new Size(270, 29);
+            lblCurrProc.Size = new Size(67, 29);
             lblCurrProc.TabIndex = 0;
             lblCurrProc.Text = "Processing:";
             lblCurrProc.TextAlign = ContentAlignment.MiddleRight;
@@ -297,10 +301,10 @@ namespace FOnlineScalex
             // tboxCurrProc
             // 
             tboxCurrProc.Dock = DockStyle.Fill;
-            tboxCurrProc.Location = new Point(279, 3);
+            tboxCurrProc.Location = new Point(76, 3);
             tboxCurrProc.Name = "tboxCurrProc";
             tboxCurrProc.ReadOnly = true;
-            tboxCurrProc.Size = new Size(492, 23);
+            tboxCurrProc.Size = new Size(919, 23);
             tboxCurrProc.TabIndex = 1;
             tboxCurrProc.TextChanged += tboxCurrProc_TextChanged;
             // 
@@ -308,9 +312,9 @@ namespace FOnlineScalex
             // 
             pboxCurrentFrame.BorderStyle = BorderStyle.Fixed3D;
             pboxCurrentFrame.Dock = DockStyle.Fill;
-            pboxCurrentFrame.Location = new Point(279, 32);
+            pboxCurrentFrame.Location = new Point(76, 32);
             pboxCurrentFrame.Name = "pboxCurrentFrame";
-            pboxCurrentFrame.Size = new Size(492, 265);
+            pboxCurrentFrame.Size = new Size(919, 404);
             pboxCurrentFrame.SizeMode = PictureBoxSizeMode.AutoSize;
             pboxCurrentFrame.TabIndex = 3;
             pboxCurrentFrame.TabStop = false;
@@ -323,7 +327,7 @@ namespace FOnlineScalex
             pboxPreview.Image = Properties.Resources.FOnlineScalex;
             pboxPreview.Location = new Point(3, 32);
             pboxPreview.Name = "pboxPreview";
-            pboxPreview.Size = new Size(270, 265);
+            pboxPreview.Size = new Size(67, 404);
             pboxPreview.SizeMode = PictureBoxSizeMode.AutoSize;
             pboxPreview.TabIndex = 4;
             pboxPreview.TabStop = false;
@@ -335,6 +339,10 @@ namespace FOnlineScalex
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.Controls.Add(lblMulThres, 0, 5);
+            tableLayoutPanel2.Controls.Add(numericAlphaMulThres, 0, 5);
+            tableLayoutPanel2.Controls.Add(lblDropThres, 0, 4);
+            tableLayoutPanel2.Controls.Add(numericAlphaDropThres, 0, 4);
             tableLayoutPanel2.Controls.Add(cboxPostProc, 0, 3);
             tableLayoutPanel2.Controls.Add(lblEqDiff, 0, 1);
             tableLayoutPanel2.Controls.Add(cboxAlgo, 1, 0);
@@ -346,13 +354,63 @@ namespace FOnlineScalex
             tableLayoutPanel2.Dock = DockStyle.Top;
             tableLayoutPanel2.Location = new Point(3, 122);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 4;
+            tableLayoutPanel2.RowCount = 6;
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.Size = new Size(774, 108);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(998, 166);
             tableLayoutPanel2.TabIndex = 14;
+            // 
+            // lblMulThres
+            // 
+            lblMulThres.AutoSize = true;
+            lblMulThres.Dock = DockStyle.Fill;
+            lblMulThres.Enabled = false;
+            lblMulThres.Location = new Point(3, 137);
+            lblMulThres.Name = "lblMulThres";
+            lblMulThres.Size = new Size(108, 29);
+            lblMulThres.TabIndex = 23;
+            lblMulThres.Text = "Multiply-Threshold";
+            lblMulThres.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // numericAlphaMulThres
+            // 
+            numericAlphaMulThres.Dock = DockStyle.Fill;
+            numericAlphaMulThres.Enabled = false;
+            numericAlphaMulThres.Location = new Point(117, 140);
+            numericAlphaMulThres.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            numericAlphaMulThres.Name = "numericAlphaMulThres";
+            numericAlphaMulThres.Size = new Size(200, 23);
+            numericAlphaMulThres.TabIndex = 22;
+            numericAlphaMulThres.Value = new decimal(new int[] { 128, 0, 0, 0 });
+            numericAlphaMulThres.ValueChanged += numericAlpaMulThres_ValueChanged;
+            // 
+            // lblDropThres
+            // 
+            lblDropThres.AutoSize = true;
+            lblDropThres.Dock = DockStyle.Fill;
+            lblDropThres.Enabled = false;
+            lblDropThres.Location = new Point(3, 108);
+            lblDropThres.Name = "lblDropThres";
+            lblDropThres.Size = new Size(108, 29);
+            lblDropThres.TabIndex = 21;
+            lblDropThres.Text = "Drop-Threshold:";
+            lblDropThres.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // numericAlphaDropThres
+            // 
+            numericAlphaDropThres.Dock = DockStyle.Fill;
+            numericAlphaDropThres.Enabled = false;
+            numericAlphaDropThres.Location = new Point(117, 111);
+            numericAlphaDropThres.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            numericAlphaDropThres.Name = "numericAlphaDropThres";
+            numericAlphaDropThres.Size = new Size(200, 23);
+            numericAlphaDropThres.TabIndex = 20;
+            numericAlphaDropThres.Value = new decimal(new int[] { 64, 0, 0, 0 });
+            numericAlphaDropThres.ValueChanged += numericAlphaDropThres_ValueChanged;
             // 
             // cboxPostProc
             // 
@@ -361,7 +419,7 @@ namespace FOnlineScalex
             cboxPostProc.Dock = DockStyle.Fill;
             cboxPostProc.Location = new Point(3, 86);
             cboxPostProc.Name = "cboxPostProc";
-            cboxPostProc.Size = new Size(270, 19);
+            cboxPostProc.Size = new Size(314, 19);
             cboxPostProc.TabIndex = 18;
             cboxPostProc.Text = "Post Processing (.PNG, .BMP)";
             cboxPostProc.UseVisualStyleBackColor = true;
@@ -373,7 +431,7 @@ namespace FOnlineScalex
             lblEqDiff.Dock = DockStyle.Fill;
             lblEqDiff.Location = new Point(3, 29);
             lblEqDiff.Name = "lblEqDiff";
-            lblEqDiff.Size = new Size(64, 29);
+            lblEqDiff.Size = new Size(108, 29);
             lblEqDiff.TabIndex = 14;
             lblEqDiff.Text = "Accuracy:";
             lblEqDiff.TextAlign = ContentAlignment.MiddleRight;
@@ -383,7 +441,7 @@ namespace FOnlineScalex
             cboxAlgo.Dock = DockStyle.Fill;
             cboxAlgo.FormattingEnabled = true;
             cboxAlgo.Items.AddRange(new object[] { "Scalex2x", "Scalex3x", "Scalex4x", "Hqx2x", "Hqx3x", "Hqx4x" });
-            cboxAlgo.Location = new Point(73, 3);
+            cboxAlgo.Location = new Point(117, 3);
             cboxAlgo.Name = "cboxAlgo";
             cboxAlgo.Size = new Size(200, 23);
             cboxAlgo.TabIndex = 11;
@@ -395,7 +453,7 @@ namespace FOnlineScalex
             lblAlgo.Dock = DockStyle.Fill;
             lblAlgo.Location = new Point(3, 0);
             lblAlgo.Name = "lblAlgo";
-            lblAlgo.Size = new Size(64, 29);
+            lblAlgo.Size = new Size(108, 29);
             lblAlgo.TabIndex = 12;
             lblAlgo.Text = "Algorithm:";
             lblAlgo.TextAlign = ContentAlignment.MiddleRight;
@@ -405,7 +463,7 @@ namespace FOnlineScalex
             numericAccuracy.DecimalPlaces = 2;
             numericAccuracy.Dock = DockStyle.Fill;
             numericAccuracy.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-            numericAccuracy.Location = new Point(73, 32);
+            numericAccuracy.Location = new Point(117, 32);
             numericAccuracy.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             numericAccuracy.Name = "numericAccuracy";
             numericAccuracy.Size = new Size(200, 23);
@@ -417,10 +475,10 @@ namespace FOnlineScalex
             // 
             btnGo.Dock = DockStyle.Fill;
             btnGo.Image = Properties.Resources.gatling;
-            btnGo.Location = new Point(279, 3);
+            btnGo.Location = new Point(323, 3);
             btnGo.Name = "btnGo";
             tableLayoutPanel2.SetRowSpan(btnGo, 2);
-            btnGo.Size = new Size(492, 52);
+            btnGo.Size = new Size(682, 52);
             btnGo.TabIndex = 10;
             btnGo.Text = "GO";
             btnGo.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -434,7 +492,7 @@ namespace FOnlineScalex
             cboxScale.Dock = DockStyle.Fill;
             cboxScale.Location = new Point(3, 61);
             cboxScale.Name = "cboxScale";
-            cboxScale.Size = new Size(270, 19);
+            cboxScale.Size = new Size(314, 19);
             cboxScale.TabIndex = 17;
             cboxScale.Text = "Scale Image";
             cboxScale.UseVisualStyleBackColor = true;
@@ -444,7 +502,7 @@ namespace FOnlineScalex
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(780, 557);
+            ClientSize = new Size(1004, 725);
             Controls.Add(gboxMain);
             Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -465,6 +523,8 @@ namespace FOnlineScalex
             ((System.ComponentModel.ISupportInitialize)pboxPreview).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericAlphaMulThres).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericAlphaDropThres).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericAccuracy).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -500,5 +560,9 @@ namespace FOnlineScalex
         private NumericUpDown numericAccuracy;
         private CheckBox cboxScale;
         private CheckBox cboxPostProc;
+        private Label lblDropThres;
+        private NumericUpDown numericAlphaDropThres;
+        private Label lblMulThres;
+        private NumericUpDown numericAlphaMulThres;
     }
 }

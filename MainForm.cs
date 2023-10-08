@@ -22,6 +22,7 @@ using System.Text;
 using FOnlineScalex.ScalexFamily;
 using FOnlineScalex.Algorithm;
 using FOnlineScalex.Algorithm.HqxFamily;
+using FOnlineScalex.PostProcessing;
 
 namespace FOnlineScalex
 {
@@ -45,6 +46,7 @@ namespace FOnlineScalex
         protected string outDirPath = string.Empty;
 
         protected double eqAccuracy = 0.95;
+        protected AlphaRange alphaRange = new AlphaRange() { DropThreshold = 64, MultiplyThreshold = 128 };
 
         protected DarkRenderer darkRenderer = new DarkRenderer();
         protected readonly CustomProgressBar progBar;
@@ -129,10 +131,10 @@ namespace FOnlineScalex
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             object[] args = (object[])e.Argument;
-            if (args != null && args.Length == 8)
+            if (args != null && args.Length == 9)
             {
                 fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
-                    (double)args[3], (IAlgorithm.AlgorithmId)args[4], (bool)args[5], (bool)args[6], (IFOSLogger)args[7]);
+                    (double)args[3], (IAlgorithm.AlgorithmId)args[4], (bool)args[5], (bool)args[6], (AlphaRange)args[7], (IFOSLogger)args[8]);
             }
         }
 
@@ -175,6 +177,8 @@ namespace FOnlineScalex
 
             toolTip.SetToolTip(this.tboxCurrProc, "Currently processing file");
             toolTip.SetToolTip(this.progBar, "Progress of the processing");
+            toolTip.SetToolTip(this.numericAlphaDropThres, "Threshold of alpha drop lequal. No effect if set to zero.");
+            toolTip.SetToolTip(this.numericAlphaMulThres, "Threshold of alpha pre-multiply lequal. No effect if set to zero.");
         }
 
         private void SetInDirPath()
@@ -237,7 +241,8 @@ namespace FOnlineScalex
                         IAlgorithm.AlgorithmId algorithm;
                         Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                         object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                            this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
+                            this.eqAccuracy, algorithm, cboxScale.Checked,
+                            cboxPostProc.Checked, this.alphaRange, fOSLogger };
                         backgroundWorker.RunWorkerAsync(args);
                     }
                 }
@@ -248,7 +253,8 @@ namespace FOnlineScalex
                     IAlgorithm.AlgorithmId algorithm;
                     Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                     object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
-                        this.eqAccuracy, algorithm, cboxScale.Checked, cboxPostProc.Checked,fOSLogger };
+                        this.eqAccuracy, algorithm, cboxScale.Checked,
+                        cboxPostProc.Checked, this.alphaRange, this.fOSLogger };
                     backgroundWorker.RunWorkerAsync(args);
                 }
             }
@@ -292,9 +298,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v1.0 - CHARLIE - STABLE\n");
+            sb.Append("VERSION v1.2 - OXYGEN - STABLE\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-05-23 at 14:00).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-10-08 at 12:40).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -330,7 +336,7 @@ namespace FOnlineScalex
             sb.Append("\n");
             sb.Append("6) Scale Image (if unchecked output is equal to original).\n");
             sb.Append("\n");
-            sb.Append("7) Post processing for .BMP & .PNG formats (optional).\n");
+            sb.Append("7) Post processing for .BMP & .PNG formats with alpha drop threshold & alpha premultiply threshold (optional).\n");
             sb.Append("\n");
             sb.Append("8) GO Let the app go.\n");
             sb.Append("\n");
@@ -378,7 +384,7 @@ namespace FOnlineScalex
                 if (dstBitmap != null)
                 {
                     Bitmap postDstBitmap;
-                    PostProcessing.PostProcessor.Process(dstBitmap, out postDstBitmap);
+                    PostProcessing.PostProcessor.Process(dstBitmap, out postDstBitmap, alphaRange);
                     pboxPreview.Image = postDstBitmap;
                 }
                 else
@@ -405,6 +411,22 @@ namespace FOnlineScalex
 
         private void cboxPostProc_CheckedChanged(object sender, EventArgs e)
         {
+            this.lblDropThres.Enabled = this.cboxPostProc.Checked;
+            this.lblMulThres.Enabled = this.cboxPostProc.Checked;
+            this.numericAlphaDropThres.Enabled = this.cboxPostProc.Checked;
+            this.numericAlphaMulThres.Enabled = this.cboxPostProc.Checked;
+            GeneratePreview();
+        }
+
+        private void numericAlphaDropThres_ValueChanged(object sender, EventArgs e)
+        {
+            this.alphaRange.DropThreshold = (int)this.numericAlphaDropThres.Value;
+            GeneratePreview();
+        }
+
+        private void numericAlpaMulThres_ValueChanged(object sender, EventArgs e)
+        {
+            this.alphaRange.MultiplyThreshold = (int)this.numericAlphaMulThres.Value;
             GeneratePreview();
         }
     }

@@ -21,6 +21,12 @@ using System.Threading.Tasks;
 
 namespace FOnlineScalex.PostProcessing
 {
+    public struct AlphaRange
+    {
+        public int DropThreshold { get; set; }
+        public int MultiplyThreshold {  get; set; } 
+    }
+
     public static class PostProcessor
     {
         /// <summary>
@@ -28,7 +34,7 @@ namespace FOnlineScalex.PostProcessing
         /// </summary>
         /// <param name="src">original source image</param>
         /// <param name="dst">result bitmap by post-processing</param>
-        public static void Process(Bitmap src, out Bitmap dst)
+        public static void Process(Bitmap src, out Bitmap dst, AlphaRange alphaRange)
         {
             int w = src.Width;
             int h = src.Height;
@@ -62,7 +68,33 @@ namespace FOnlineScalex.PostProcessing
                 }
             }
 
-            // Remove blue color
+            // alpha drop & premultiply
+            if (alphaRange.DropThreshold != 0 && alphaRange.MultiplyThreshold != 0) {
+                for (px = 0; px < w; px++)
+                {
+                    for (py = 0; py < h; py++)
+                    {
+                        // less or equal than drop
+                        Color srcPixel = src.GetPixel(px, py);
+                        if (srcPixel.A <= alphaRange.DropThreshold)
+                        {
+                            dst.SetPixel(px, py, Color.Transparent);
+                        }
+
+                        // less or equal multiply
+                        if (srcPixel.A > 0 && srcPixel.A <= alphaRange.MultiplyThreshold)
+                        {
+                            float alpha = srcPixel.A / 255.0f;
+                            int red = Math.Min((int)Math.Round(alpha * srcPixel.R), 255);
+                            int green = Math.Min((int)Math.Round(alpha * srcPixel.G), 255);
+                            int blue = Math.Min((int)Math.Round(alpha * srcPixel.B), 255);
+                            dst.SetPixel(px, py, Color.FromArgb(255, red, green, blue));
+                        }
+                    }
+                }
+            }
+
+            // Remove blue color (always)
             for (px = 0; px < w; px++)
             {
                 for (py = 0; py < h; py++)
