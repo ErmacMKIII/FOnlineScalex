@@ -119,57 +119,32 @@ namespace FOnlineScalex.ScalexFamily
         /// <returns></returns>
         protected static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
         {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-
-            if (ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
-            {
-                return false;
-            }
-
-            return true;
-        }
-        
-        protected static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
-        {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
-
-            if (ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
-            {
-                return false;
-            }
-
-            return true;
+            return (px == tx && py == ty) || ColorTest.PixelARGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
         }
 
         /// <summary>
-        /// Check if two pixels are equal (RGB) with some eqDiff [0..1]
+        /// Check if two pixels are equal with some eqDiff [0..1]
         /// </summary>
-        /// <param name="src">Source Bitmap (where comparison is being performed)</param>
+        /// <param name="src">Source Frame (where comparison is being performed)</param>
         /// <param name="px">first pixel px</param>
         /// <param name="py">first pixel py</param>
         /// <param name="tx">other (target) pixel px</param>
         /// <param name="ty">other (target) pixel py</param>        
         /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
         /// <returns></returns>
-        protected static bool PixelRGBEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
+        protected static bool PixelNotEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
         {
-            if (px == tx && py == ty)
-            {
-                return true;
-            }
+            return ColorTest.PixelARGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+        }
 
-            if (ColorTest.PixelRGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation))
-            {
-                return false;
-            }
+        protected static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
+        {
+            return (px == tx && py == ty) || ColorTest.PixelRGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+        }
 
-            return true;
+        protected static bool PixelNotEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
+        {
+            return ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
         }
 
         public abstract void Process(

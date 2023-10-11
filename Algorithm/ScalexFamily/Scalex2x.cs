@@ -93,7 +93,7 @@ namespace FOnlineScalex.ScalexFamily
                E0[xL,yT]  E1[xR,yT]
                E2[xL,yB]  E3[xR,yB]
             */
-            if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {
@@ -191,7 +191,7 @@ namespace FOnlineScalex.ScalexFamily
                 E2[xL,yB]  E3[xR,yB]
             */
 
-            if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
                 {

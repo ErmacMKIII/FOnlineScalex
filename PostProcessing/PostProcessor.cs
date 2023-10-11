@@ -43,53 +43,37 @@ namespace FOnlineScalex.PostProcessing
 
             int px, py;
 
+            // remove artifacts
             for (px = 0; px < w; px++)
             {
                 for (py = 0; py < h; py++)
                 {
                     Color srcPixel = src.GetPixel(px, py);
+                    dst.SetPixel(px, py, srcPixel);
+
                     Color srcGauss = ColorSampler.GaussianBlurSample(src, px, py);
-                    if (srcPixel.A == 0 && srcGauss.A >= ColorSampler.B * 255) // edge detected
-                    {
-                        dst.SetPixel(px, py, srcPixel);
-                    }
-                    else if (srcPixel.A != 0 && srcGauss.A <= ColorSampler.A * 255) // artifact detected
+
+                    if (srcPixel.A != 0 && srcGauss.A < alphaRange.DropThreshold) // artifact detected
                     {
                         dst.SetPixel(px, py, Color.Transparent);
                     }
-                    else if (srcPixel.A == 255 && srcGauss.A <= ColorSampler.C * 255) // opaque pixel but adjacent weak alpha
-                    {
-                        dst.SetPixel(px, py, Color.FromArgb(255, srcPixel.R, srcPixel.G, srcPixel.B));
-                    }
-                    else // in all other cases copy the pixel
-                    {
-                        dst.SetPixel(px, py, srcPixel);
-                    }
-                }
-            }
 
-            // alpha drop & premultiply
-            if (alphaRange.DropThreshold != 0 && alphaRange.MultiplyThreshold != 0) {
-                for (px = 0; px < w; px++)
-                {
-                    for (py = 0; py < h; py++)
+                    if (srcPixel.A == 0 && srcGauss.A != 0 && srcGauss.A >= alphaRange.DropThreshold) // edge detected
                     {
-                        // less or equal than drop
-                        Color srcPixel = src.GetPixel(px, py);
-                        if (srcPixel.A <= alphaRange.DropThreshold)
-                        {
-                            dst.SetPixel(px, py, Color.Transparent);
-                        }
+                        float alphaf = srcGauss.A / 255.0f;
+                        int red = Math.Min((int)Math.Round(alphaf * 2.0 * srcGauss.R), 255);
+                        int green = Math.Min((int)Math.Round(alphaf * 2.0 * srcGauss.G), 255);
+                        int blue = Math.Min((int)Math.Round(alphaf * 2.0 * srcGauss.B), 255);
+                        dst.SetPixel(px, py, Color.FromArgb(alphaRange.DropThreshold, red, green, blue));
+                    }
 
-                        // less or equal multiply
-                        if (srcPixel.A > 0 && srcPixel.A <= alphaRange.MultiplyThreshold)
-                        {
-                            float alpha = srcPixel.A / 255.0f;
-                            int red = Math.Min((int)Math.Round(alpha * srcPixel.R), 255);
-                            int green = Math.Min((int)Math.Round(alpha * srcPixel.G), 255);
-                            int blue = Math.Min((int)Math.Round(alpha * srcPixel.B), 255);
-                            dst.SetPixel(px, py, Color.FromArgb(255, red, green, blue));
-                        }
+                    if (srcPixel.A != 0 && srcGauss.A != 0 && srcGauss.A <= alphaRange.MultiplyThreshold) // opaque pixel but adjacent weak alpha
+                    {
+                        float alphaf = srcPixel.A / 255.0f;
+                        int red = Math.Min((int)Math.Round(alphaf * (srcGauss.R + srcPixel.R)), 255);
+                        int green = Math.Min((int)Math.Round(alphaf * (srcGauss.G + srcPixel.G)), 255);
+                        int blue = Math.Min((int)Math.Round(alphaf * (srcGauss.B + srcPixel.B)), 255);
+                        dst.SetPixel(px, py, Color.FromArgb(255, red, green, blue));
                     }
                 }
             }

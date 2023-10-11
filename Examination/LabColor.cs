@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace FOnlineScalex.Examination
 {
-    public class LabColor
+    public class LabColor : IEquatable<LabColor?>
     {
         public double L { get; set; }
         public double a { get; set; }
         public double b { get; set; }
+
+
 
         public LabColor()
         {
@@ -25,12 +27,13 @@ namespace FOnlineScalex.Examination
             this.b = b;
         }
 
-        public LabColor ConvertRGBToLab(Color col)
+        public static LabColor ConvertARGBToLab(Color col)
         {
             // Convert RGB to XYZ
-            double r = col.R / 255.0;
-            double g = col.G / 255.0;
-            double b = col.B / 255.0;
+            double a = col.A / 255.0; // premultiply with alpha
+            double r = a * col.R / 255.0;
+            double g = a * col.G / 255.0;
+            double b = a * col.B / 255.0;
 
             r = (r > 0.04045) ? Math.Pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
             g = (g > 0.04045) ? Math.Pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
@@ -61,12 +64,13 @@ namespace FOnlineScalex.Examination
             };
         }
 
-        public LabColor ConvertRGBToLab(uint col)
-        {            
+        public static LabColor ConvertARGBToLab(uint col)
+        {
             // Convert RGB to XYZ
-            double r = (col & 0x00FF0000) / 255.0;
-            double g = (col & 0x0000FF00) / 255.0;
-            double b = (col & 0x000000FF) / 255.0;
+            double a = (col & 0xFF000000) / 255.0; // premultiply with alpha
+            double r = a * (col & 0x00FF0000) / 255.0;
+            double g = a * (col & 0x0000FF00) / 255.0;
+            double b = a * (col & 0x000000FF) / 255.0;
 
             r = (r > 0.04045) ? Math.Pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
             g = (g > 0.04045) ? Math.Pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
@@ -106,22 +110,6 @@ namespace FOnlineScalex.Examination
             return Math.Sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
         }
 
-        public static LabColor FromRGB(Color argbColor)
-        {
-            LabColor labColResult = new LabColor();
-            labColResult.ConvertRGBToLab(argbColor);
-
-            return labColResult;
-        }
-
-        public static LabColor FromRGB(uint argbColor)
-        {
-            LabColor labColResult = new LabColor();
-            labColResult.ConvertRGBToLab(argbColor);
-
-            return labColResult;
-        }
-
         public static double CalculateDeltaE(LabColor first, LabColor second)
         {
             double deltaL = first.L - second.L;
@@ -129,6 +117,34 @@ namespace FOnlineScalex.Examination
             double deltaB = first.b - second.b;
 
             return Math.Sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as LabColor);
+        }
+
+        public bool Equals(LabColor? other)
+        {
+            return other is not null &&
+                   L == other.L &&
+                   a == other.a &&
+                   b == other.b;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(L, a, b);
+        }
+
+        public static bool operator ==(LabColor? left, LabColor? right)
+        {
+            return EqualityComparer<LabColor>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(LabColor? left, LabColor? right)
+        {
+            return !(left == right);
         }
     }
 }

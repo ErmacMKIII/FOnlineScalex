@@ -300,7 +300,7 @@ namespace FOnlineScalex
             StringBuilder sb = new StringBuilder();
             sb.Append("VERSION v1.2 - OXYGEN - STABLE\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-10-08 at 12:40).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2023-10-11 at 14:10).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");

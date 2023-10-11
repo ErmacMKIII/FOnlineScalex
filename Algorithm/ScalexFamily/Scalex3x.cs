@@ -133,7 +133,7 @@ namespace FOnlineScalex.ScalexFamily
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]
 
-            if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
@@ -146,9 +146,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && PixelNotEqual(src, Ex, Ey, Cx, Cy, eqDiff))
                     ||
-                    (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
+                    (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     result.E1 = src.GetPixel(Bx, By);
                 }
@@ -168,9 +168,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && PixelNotEqual(src, Ex, Ey, Gx, Gy, eqDiff))
                     ||
-                    (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
+                    (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     result.E3 = src.GetPixel(Dx, Dy);
                 }
@@ -183,9 +183,9 @@ namespace FOnlineScalex.ScalexFamily
                 result.E4 = src.GetPixel(Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-                if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, eqDiff))
+                if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
                     result.E5 = src.GetPixel(Fx, Fy);
                 }
@@ -205,9 +205,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-                if ((PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
                     result.E7 = src.GetPixel(Hx, Hy);
                 }
@@ -321,7 +321,7 @@ namespace FOnlineScalex.ScalexFamily
             //      E3[xL,y ] E4[x,y ] E5[xR, y ]
             //      E6[xL,yB] E7[x,yB] E8[xR, yB]            
 
-            if (!PixelEqual(src, Bx, By, Hx, Hy, eqDiff) && !PixelEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
             {
                 // E0 = D == B ? D : E;
                 if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
@@ -334,9 +334,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E1 = (D == B && E != C) || (B == F && E != A) ? B : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && PixelNotEqual(src, Ex, Ey, Cx, Cy, eqDiff))
                     ||
-                    (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
+                    (PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     result.E1 = src.GetPixel(Bx, By);
                 }
@@ -356,9 +356,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E3 = (D == B && E != G) || (D == H && E != A) ? D : E;
-                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Bx, By, eqDiff) && PixelNotEqual(src, Ex, Ey, Gx, Gy, eqDiff))
                     ||
-                    (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
+                    (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ax, Ay, eqDiff)))
                 {
                     result.E3 = src.GetPixel(Dx, Dy);
                 }
@@ -371,9 +371,9 @@ namespace FOnlineScalex.ScalexFamily
                 result.E4 = src.GetPixel(Ex, Ey);
 
                 // E5 = (B == F && E != I) || (H == F && E != C) ? F : E;
-                if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, eqDiff))
+                if ((PixelEqual(src, Bx, By, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Cx, Cy, eqDiff)))
                 {
                     result.E5 = src.GetPixel(Fx, Fy);
                 }
@@ -393,9 +393,9 @@ namespace FOnlineScalex.ScalexFamily
                 }
 
                 // E7 = (D == H && E != I) || (H == F && E != G) ? H : E;
-                if ((PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && !PixelEqual(src, Ex, Ey, Ix, Iy, eqDiff))
+                if ((PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff) && PixelNotEqual(src, Ex, Ey, Ix, Iy, eqDiff))
                     ||
-                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && !PixelEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
+                    (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff) && PixelNotEqual(src, Ex, Ey, Gx, Gy, eqDiff)))
                 {
                     result.E7 = src.GetPixel(Hx, Hy);
                 }

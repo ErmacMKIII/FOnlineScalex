@@ -56,7 +56,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         /// <returns>equal test</returns>
         public static bool PixelEqual(uint c1, uint c2, double eqDiff)
         {           
-            return ColorTest.PixelRGBEqual(c1, c2, eqDiff);
+            return ColorTest.PixelARGBEqual(c1, c2, eqDiff);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         /// <returns>nequal test</returns>
         public static bool PixelNotEqual(uint c1, uint c2, double eqDiff)
         {
-            return ColorTest.PixelRGBNotEqual(c1, c2, eqDiff);
+            return ColorTest.PixelARGBNotEqual(c1, c2, eqDiff);
         }
         
         /// <summary>
