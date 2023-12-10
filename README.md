@@ -4,6 +4,9 @@ FOnline Pixel Art Scalex adapted to FRM formats
 Adapted to processing standard image formats (.BMP, .PNG).
 ![alt text](/Misc/Demo1.png?raw=false "FOnline Pixel Art Scalex processing standard image formats")
 
+Or processing (.FRM files).
+![alt text](/Misc/Demo2.png?raw=false "FOnline Pixel Art Scalex processing FOnline FRM formats")
+
 Mainly targeted are FOnline FRM formats (.FRM).
 
 FOnlineScalex performs pixel algorithm to FRM files or PNG files with selected files and chosen algorithm by end user.
