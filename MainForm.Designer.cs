@@ -133,7 +133,7 @@ namespace FOnlineScalex
             // 
             btnStop.Dock = DockStyle.Fill;
             btnStop.Enabled = false;
-            btnStop.Image = FOnlineScalex.Properties.Resources.stop;
+            btnStop.Image = Properties.Resources.stop;
             btnStop.ImageAlign = ContentAlignment.MiddleLeft;
             btnStop.Location = new Point(324, 61);
             btnStop.Name = "btnStop";
@@ -174,7 +174,7 @@ namespace FOnlineScalex
             // btnSetOutDir
             // 
             btnSetOutDir.Dock = DockStyle.Fill;
-            btnSetOutDir.Image = FOnlineScalex.Properties.Resources.dir_icon_opened2;
+            btnSetOutDir.Image = Properties.Resources.dir_icon_opened2;
             btnSetOutDir.ImageAlign = ContentAlignment.MiddleLeft;
             btnSetOutDir.Location = new Point(845, 42);
             btnSetOutDir.Name = "btnSetOutDir";
@@ -188,7 +188,7 @@ namespace FOnlineScalex
             // btnSetInDir
             // 
             btnSetInDir.Dock = DockStyle.Fill;
-            btnSetInDir.Image = FOnlineScalex.Properties.Resources.dir_icon_opened;
+            btnSetInDir.Image = Properties.Resources.dir_icon_opened;
             btnSetInDir.ImageAlign = ContentAlignment.MiddleLeft;
             btnSetInDir.Location = new Point(845, 3);
             btnSetInDir.Name = "btnSetInDir";
@@ -321,7 +321,7 @@ namespace FOnlineScalex
             // 
             pboxPreview.BorderStyle = BorderStyle.Fixed3D;
             pboxPreview.Dock = DockStyle.Fill;
-            pboxPreview.Image = FOnlineScalex.Properties.Resources.FOnlineScalex;
+            pboxPreview.Image = Properties.Resources.FOnlineScalex;
             pboxPreview.Location = new Point(3, 32);
             pboxPreview.Name = "pboxPreview";
             pboxPreview.Size = new Size(67, 404);
@@ -445,7 +445,7 @@ namespace FOnlineScalex
             // btnGo
             // 
             btnGo.Dock = DockStyle.Fill;
-            btnGo.Image = FOnlineScalex.Properties.Resources.gatling;
+            btnGo.Image = Properties.Resources.gatling;
             btnGo.Location = new Point(324, 3);
             btnGo.Name = "btnGo";
             tableLayoutPanel2.SetRowSpan(btnGo, 2);
