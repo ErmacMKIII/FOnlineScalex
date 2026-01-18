@@ -33,21 +33,108 @@ namespace FOnlineScalex.ScalexFamily
         // --------------------------------
 
         /// <summary>
-        /// Copy a pixel from src to dst
+        /// Converts sRGB color component to linear RGB.
+        /// Applies inverse gamma correction (gamma expansion).
         /// </summary>
-        /// <param name="dst">Destination Frame</param>
-        /// <param name="dx">Destination Pixel px</param>
-        /// <param name="dy">Destination Pixel py</param>
-        /// <param name="src">Source Frame</param>
-        /// <param name="sx">Source Pixel px</param>
-        /// <param name="sy">Source Pixel py</param>
-        protected static void PixelCopy(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
-        {            
-            dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
+        /// <param name="value">sRGB component value in [0, 1] range.</param>
+        /// <returns>Linear RGB value in [0, 1] range.</returns>
+        private static double SrgbToLinear(double value)
+        {
+            return (value > 0.04045) ? Math.Pow((value + 0.055) / 1.055, 2.4) : value / 12.92;
         }
 
         /// <summary>
-        /// Copy a pixel from src to dst
+        /// Converts linear RGB color component to sRGB.
+        /// Applies gamma correction (gamma compression).
+        /// </summary>
+        /// <param name="value">Linear RGB component value in [0, 1] range.</param>
+        /// <returns>sRGB value in [0, 1] range.</returns>
+        private static double LinearToSrgb(double value)
+        {
+            return (value > 0.0031308) ? 1.055 * Math.Pow(value, 1.0 / 2.4) - 0.055 : 12.92 * value;
+        }
+
+        /// <summary>
+        /// Apply a specific gamma correction to a color.
+        /// </summary>
+        /// <param name="gamma">Gamma value (e.g., 2.2 for typical gamma correction)</param>
+        protected static Color ApplyGamma(Color col, double gamma = 2.2)
+        {
+            // Convert sRGB to linear
+            double r = SrgbToLinear(col.R / 255.0);
+            double g = SrgbToLinear(col.G / 255.0);
+            double b = SrgbToLinear(col.B / 255.0);
+
+            // Apply gamma in linear space
+            r = Math.Pow(r, 1.0 / gamma);
+            g = Math.Pow(g, 1.0 / gamma);
+            b = Math.Pow(b, 1.0 / gamma);
+
+            // Convert back to sRGB
+            return Color.FromArgb(
+                col.A,
+                (int)Math.Round(LinearToSrgb(r) * 255),
+                (int)Math.Round(LinearToSrgb(g) * 255),
+                (int)Math.Round(LinearToSrgb(b) * 255)
+            );
+        }
+
+        /// <summary>
+        /// Apply contrast adjustment to a color.
+        /// </summary>
+        /// <param name="col">input color</param>
+        /// <param name="contrastValue">contrast value to apply</param>
+        /// <returns>adjusted (output) color</returns>
+        protected static Color ApplyContrast(Color col, double contrastValue)
+        {
+            return Color.FromArgb(
+                col.A,
+                (int)Math.Clamp(((col.R - 128) * contrastValue + 128), 0, 255),
+                (int)Math.Clamp(((col.G - 128) * contrastValue + 128), 0, 255),
+                (int)Math.Clamp(((col.B - 128) * contrastValue + 128), 0, 255)
+            );
+        }
+
+        /// <summary>
+        /// Apply brightness adjustment to a color.
+        /// </summary>
+        /// <param name="col">input color</param>
+        /// <param name="brightnessValue">brightness value to apply</param>
+        /// <returns>adjusted (output) color</returns>
+        protected static Color ApplyBrightness(Color col, double brightnessValue)
+        {
+            return Color.FromArgb(
+                col.A,
+                (int)Math.Clamp((col.R + brightnessValue), 0, 255),
+                (int)Math.Clamp((col.G + brightnessValue), 0, 255),
+                (int)Math.Clamp((col.B + brightnessValue), 0, 255)
+            );
+        }
+
+        /// <summary>
+        /// Apply contrast doubling to a color (legacy method)
+        /// </summary>
+        /// <param name="col">Input color</param>
+        /// <returns>Color with doubled contrast</returns>
+        protected static Color DoubleContrast(Color col)
+        {
+            return IAlgorithm.FixColor(col);
+        }
+
+        /// <summary>
+        /// Apply contrast and brightness adjustments to a palette index
+        /// </summary>
+        /// <param name="val">Palette index</param>
+        /// <returns>Palette index with adjusted contrast and brightness</returns>
+        protected static byte FixColor(byte val)
+        {
+            Color col = Palette.Colors[val];
+            Color adjustedCol = IAlgorithm.FixColor(col);
+            return Palette.ToPaletteIndex(adjustedCol);
+        }
+
+        /// <summary>
+        /// Copy a pixel from src to dst with contrast/brightness adjustment
         /// </summary>
         /// <param name="dst">Destination Frame</param>
         /// <param name="dx">Destination Pixel px</param>
@@ -57,11 +144,11 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="sy">Source Pixel py</param>
         protected static void PixelCopy(ref Bitmap dst, int dx, int dy, Bitmap src, int sx, int sy)
         {
-            dst.SetPixel((int)dx, (int)dy, src.GetPixel((int)sx, (int)sy));
+            dst.SetPixel((int)dx, (int)dy, IAlgorithm.FixColor(src.GetPixel((int)sx, (int)sy)));
         }
 
         /// <summary>
-        /// Copy a pixel from src to dst (safely)
+        /// Copy a pixel from src to dst (safely) with contrast/brightness adjustment
         /// </summary>
         /// <param name="dst">Destination Frame</param>
         /// <param name="dx">Destination Pixel px</param>
@@ -71,11 +158,11 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="sy">Source Pixel py</param>
         protected static void PixelCopySafe(ref Frame dst, uint dx, uint dy, Frame src, uint sx, uint sy)
         {
-            dst.SetPixelSafe(dx, dy, src.GetPixelSafe(sx, sy));
+            dst.SetPixelSafe(dx, dy, FixColor(src.GetPixelSafe(sx, sy)));
         }
 
         /// <summary>
-        /// Set pixel Safe from to img
+        /// Set pixel Safe from to img with contrast/brightness adjustment
         /// </summary>
         /// <param name="src">Source Image</param>
         /// <param name="px">Pixel px</param>
@@ -85,12 +172,12 @@ namespace FOnlineScalex.ScalexFamily
         {
             if (px >= 0 && px < src.Width && py >= 0 && py < src.Height)
             {
-                src.SetPixel(px, py, col);
+                src.SetPixel(px, py, IAlgorithm.FixColor(col));
             }
         }
 
         /// <summary>
-        /// Copy a pixel from src to dst (safely)
+        /// Copy a pixel from src to dst (safely) with contrast/brightness adjustment
         /// </summary>
         /// <param name="dst">Destination Frame</param>
         /// <param name="dx">Destination Pixel px</param>
@@ -103,7 +190,7 @@ namespace FOnlineScalex.ScalexFamily
             if ((dx >= 0 && dx < dst.Width && dy >= 0 && dy < dst.Height)
                 && (sx >= 0 && sx < src.Width && sy >= 0 && sy < src.Height))
             {
-                dst.SetPixel(dx, dy, src.GetPixel(sx, sy));
+                dst.SetPixel(dx, dy, IAlgorithm.FixColor(src.GetPixel(sx, sy)));
             }
         }
 
@@ -117,9 +204,9 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="ty">other (target) pixel py</param>        
         /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
         /// <returns></returns>
-        protected static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        protected static bool PixelEqual(Frame src, uint px, uint py, uint tx, uint ty)
         {
-            return (px == tx && py == ty) || ColorTest.PixelARGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+            return (px == tx && py == ty) || ColorTest.PixelARGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty));
         }
 
         /// <summary>
@@ -132,27 +219,27 @@ namespace FOnlineScalex.ScalexFamily
         /// <param name="ty">other (target) pixel py</param>        
         /// <param name="deviation">eqDiff tolerance (pixel difference), in range [0,1]</param>
         /// <returns></returns>
-        protected static bool PixelNotEqual(Frame src, uint px, uint py, uint tx, uint ty, double deviation)
+        protected static bool PixelNotEqual(Frame src, uint px, uint py, uint tx, uint ty)
         {
-            return ColorTest.PixelARGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+            return ColorTest.PixelARGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty));
         }
 
-        protected static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
+        protected static bool PixelEqual(Bitmap src, int px, int py, int tx, int ty)
         {
-            return (px == tx && py == ty) || ColorTest.PixelRGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+            return (px == tx && py == ty) || ColorTest.PixelRGBEqual(src.GetPixel(px, py), src.GetPixel(tx, ty));
         }
 
-        protected static bool PixelNotEqual(Bitmap src, int px, int py, int tx, int ty, double deviation)
+        protected static bool PixelNotEqual(Bitmap src, int px, int py, int tx, int ty)
         {
-            return ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty), deviation);            
+            return ColorTest.PixelRGBNotEqual(src.GetPixel(px, py), src.GetPixel(tx, ty));
         }
 
         public abstract void Process(
-                Frame src, out Frame dst, double eqDiff, bool scale = true
+                Frame src, out Frame dst, bool scale = true
         );
 
         public abstract void Process(
-                Bitmap src, out Bitmap dst, double eqDiff, bool scale = true
+                Bitmap src, out Bitmap dst, bool scale = true
         );
     }
 }

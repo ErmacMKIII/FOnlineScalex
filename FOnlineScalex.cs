@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2023 Aleksandar Stojanovic <coas91@rocketmail.com>
+﻿/* Copyright (C) 2026 Aleksandar Stojanovic <coas91@rocketmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ namespace FOnlineScalex
                                         algorithm = new Hqx4x();
                                         break;
                                 }
-                                algorithm.Process(srcFrame, out dstFrame, eqDiff, scale);
+                                algorithm.Process(srcFrame, out dstFrame, scale);
                                 dstFrames.Add(dstFrame);
                             }
 
@@ -216,7 +216,7 @@ namespace FOnlineScalex
                                     algorithm = new Scalex3x();
                                     break;
                                 case IAlgorithm.AlgorithmId.Scalex4x:
-                                    algorithm = new Scalex3x();
+                                    algorithm = new Scalex4x();
                                     break;
                                 case IAlgorithm.AlgorithmId.Hqx2x:                                    
                                     algorithm = new Hqx2x();
@@ -228,7 +228,7 @@ namespace FOnlineScalex
                                     algorithm = new Hqx4x();
                                     break;
                             }
-                            algorithm.Process(inPic, out outPic, eqDiff, scale);
+                            algorithm.Process(inPic, out outPic, scale);
                             
                             string extension = Path.GetExtension(srcFile).ToLower();
                             if (recursive)

@@ -42,7 +42,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
     public class Hqx4x : Hqx
     {
         public static void Hqx4xMeth(
-             Frame src, out Frame dst, double eqDiff,
+             Frame src, out Frame dst,
              bool wrapX = false, bool wrapY = false)
         {
             uint Xres, Yres;
@@ -129,7 +129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
 
                         if (w[k] != w[4])
                         {
-                            if (PixelNotEqual(w[4], w[k], eqDiff))
+                            if (PixelNotEqual(w[4], w[k]))
                                 pattern |= flag;
                         }
                         flag <<= 1;
@@ -258,7 +258,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -297,7 +297,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -326,7 +326,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -349,7 +349,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 10:
                         case 138:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -420,7 +420,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -459,7 +459,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -486,7 +486,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -508,7 +508,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 11:
                         case 139:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -538,7 +538,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 19:
                         case 51:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
@@ -573,7 +573,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -607,7 +607,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
                                 dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
@@ -647,7 +647,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -678,7 +678,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -703,7 +703,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 73:
                         case 77:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
@@ -736,7 +736,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 42:
                         case 170:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -769,7 +769,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 14:
                         case 142:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -842,7 +842,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 26:
                         case 31:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -854,7 +854,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -883,7 +883,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -901,7 +901,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -928,7 +928,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -942,7 +942,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -959,7 +959,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 74:
                         case 107:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -976,7 +976,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -997,7 +997,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 27:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -1028,7 +1028,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -1066,7 +1066,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -1092,7 +1092,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -1115,7 +1115,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -1153,7 +1153,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -1179,7 +1179,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -1200,7 +1200,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 75:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -1469,7 +1469,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 58:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -1483,7 +1483,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -1511,7 +1511,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -1529,7 +1529,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -1557,7 +1557,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -1571,7 +1571,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -1589,7 +1589,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 202:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -1607,7 +1607,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -1629,7 +1629,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 78:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -1647,7 +1647,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -1669,7 +1669,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 154:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -1683,7 +1683,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -1711,7 +1711,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -1729,7 +1729,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -1757,7 +1757,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -1771,7 +1771,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -1789,7 +1789,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 90:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -1803,7 +1803,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -1817,7 +1817,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + 2, w[4]);
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -1831,7 +1831,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -1850,7 +1850,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 55:
                         case 23:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
@@ -1885,7 +1885,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -1919,7 +1919,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3])); 
                                 dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
@@ -1959,7 +1959,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
@@ -1990,7 +1990,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
@@ -2015,7 +2015,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 109:
                         case 105:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
@@ -2048,7 +2048,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 171:
                         case 43:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2081,7 +2081,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 143:
                         case 15:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2121,7 +2121,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -2142,7 +2142,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 203:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2173,7 +2173,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -2211,7 +2211,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -2231,7 +2231,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -2269,7 +2269,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -2295,7 +2295,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -2316,7 +2316,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 155:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2513,7 +2513,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -2528,7 +2528,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -2544,7 +2544,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 158:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -2558,7 +2558,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -2583,7 +2583,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 234:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -2601,7 +2601,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -2624,7 +2624,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -2643,7 +2643,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -2661,7 +2661,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 59:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2673,7 +2673,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -2708,7 +2708,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -2721,7 +2721,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -2741,7 +2741,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -2758,7 +2758,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 2, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -2778,7 +2778,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 79:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -2795,7 +2795,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -2817,7 +2817,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 122:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -2831,7 +2831,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -2845,7 +2845,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + 2, w[4]);
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -2858,7 +2858,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -2876,7 +2876,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 94:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -2890,7 +2890,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -2903,7 +2903,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -2917,7 +2917,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -2935,7 +2935,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 218:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -2949,7 +2949,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -2963,7 +2963,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + 2, w[4]);
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -2978,7 +2978,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -2994,7 +2994,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 91:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3006,7 +3006,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -3021,7 +3021,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5])); 
                                 }
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -3035,7 +3035,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -3133,7 +3133,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 186:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -3147,7 +3147,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -3175,7 +3175,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -3193,7 +3193,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -3221,7 +3221,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -3235,7 +3235,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7])); 
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -3253,7 +3253,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 206:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -3271,7 +3271,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -3302,7 +3302,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
@@ -3325,7 +3325,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 174:
                         case 46:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
@@ -3358,7 +3358,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, Interpolation.Mix3To1(w[4], w[2])); 
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[2])); 
@@ -3397,7 +3397,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8])); 
@@ -3459,7 +3459,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -3474,7 +3474,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -3495,7 +3495,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 219:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3515,7 +3515,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -3533,7 +3533,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 125:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1])); 
@@ -3568,7 +3568,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix5To3(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + 2, Interpolation.Mix5To3(w[4], w[1])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + 3, Interpolation.Mix5To3(w[4], w[1])); 
                                     dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
@@ -3597,7 +3597,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 207:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3637,7 +3637,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
@@ -3663,7 +3663,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -3693,7 +3693,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 187:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3735,7 +3735,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
@@ -3757,7 +3757,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 119:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                     dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
@@ -3802,7 +3802,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -3818,7 +3818,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 175:
                         case 47:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -3849,7 +3849,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -3889,7 +3889,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -3909,7 +3909,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -3923,7 +3923,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -3939,7 +3939,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 123:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3956,7 +3956,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -3977,7 +3977,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 95:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -3989,7 +3989,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + 1, Interpolation.MixEven(w[1], w[4])); 
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4017,7 +4017,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4035,7 +4035,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -4061,7 +4061,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -4077,7 +4077,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4100,7 +4100,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -4112,7 +4112,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4125,7 +4125,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 235:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -4146,7 +4146,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4161,7 +4161,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 111:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4176,7 +4176,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -4197,7 +4197,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 63:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4206,7 +4206,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
                                 dst.SetPixel(dpIdx + 1, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4233,7 +4233,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 159:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -4246,7 +4246,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4272,7 +4272,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4287,7 +4287,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -4307,7 +4307,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4329,7 +4329,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4343,7 +4343,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix3To1(w[4], w[0])); 
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4358,7 +4358,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0])); 
                                 dst.SetPixel(dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -4374,7 +4374,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4398,7 +4398,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4408,7 +4408,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4420,7 +4420,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 251:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -4440,7 +4440,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -4452,7 +4452,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4])); 
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5])); 
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4465,7 +4465,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 239:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4484,7 +4484,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5])); 
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4499,7 +4499,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 127:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4508,7 +4508,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3])); 
                                 }
                                 dst.SetPixel(dpIdx + 1, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 2, w[4]);
                                     dst.SetPixel(dpIdx + 3, w[4]);
@@ -4523,7 +4523,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
@@ -4544,7 +4544,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 191:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4554,7 +4554,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + 1, w[4]);
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4578,7 +4578,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 223:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                     dst.SetPixel(dpIdx + 1, w[4]);
@@ -4591,7 +4591,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     dst.SetPixel(dpIdx + dpL, Interpolation.MixEven(w[3], w[4])); 
                                 }
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4605,7 +4605,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -4626,7 +4626,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4645,7 +4645,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3])); 
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4657,7 +4657,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 255:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqDiff))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     dst.SetPixel(dpIdx, w[4]);
                                 }
@@ -4667,7 +4667,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + 1, w[4]);
                                 dst.SetPixel(dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqDiff))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     dst.SetPixel(dpIdx + 3, w[4]);
                                 }
@@ -4683,7 +4683,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 dst.SetPixel(dpIdx + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 2, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqDiff))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -4693,7 +4693,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 dst.SetPixel(dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqDiff))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     dst.SetPixel(dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -4712,7 +4712,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         }
 
         public static void Hqx4xMeth(
-             Bitmap src, out Bitmap dst, double eqPixelNotEqual,
+             Bitmap src, out Bitmap dst,
              bool wrapX = false, bool wrapY = false)
         {
             uint Xres, Yres;
@@ -4799,7 +4799,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
 
                         if (w[k] != w[4])
                         {
-                            if (PixelNotEqual(w[4], w[k], eqPixelNotEqual))
+                            if (PixelNotEqual(w[4], w[k]))
                                 pattern |= flag;
                         }
                         flag <<= 1;
@@ -4928,7 +4928,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -4967,7 +4967,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -4996,7 +4996,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -5019,7 +5019,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 10:
                         case 138:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -5090,7 +5090,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5129,7 +5129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5156,7 +5156,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -5178,7 +5178,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 11:
                         case 139:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5208,7 +5208,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 19:
                         case 51:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -5243,7 +5243,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -5277,7 +5277,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -5317,7 +5317,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -5348,7 +5348,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -5373,7 +5373,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 73:
                         case 77:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
@@ -5406,7 +5406,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 42:
                         case 170:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -5439,7 +5439,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 14:
                         case 142:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -5512,7 +5512,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 26:
                         case 31:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5524,7 +5524,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5553,7 +5553,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5571,7 +5571,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5598,7 +5598,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -5612,7 +5612,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5629,7 +5629,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 74:
                         case 107:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5646,7 +5646,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -5667,7 +5667,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 27:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -5698,7 +5698,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5736,7 +5736,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5762,7 +5762,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -5785,7 +5785,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -5823,7 +5823,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -5849,7 +5849,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -5870,7 +5870,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 75:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6139,7 +6139,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 58:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6153,7 +6153,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6181,7 +6181,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6199,7 +6199,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6227,7 +6227,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -6241,7 +6241,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6259,7 +6259,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 202:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6277,7 +6277,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -6299,7 +6299,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 78:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6317,7 +6317,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -6339,7 +6339,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 154:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6353,7 +6353,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6381,7 +6381,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6399,7 +6399,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6427,7 +6427,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -6441,7 +6441,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6459,7 +6459,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 90:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -6473,7 +6473,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -6487,7 +6487,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -6501,7 +6501,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -6520,7 +6520,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 55:
                         case 23:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -6555,7 +6555,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6589,7 +6589,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix4To2To1(w[4], w[1], w[3]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -6629,7 +6629,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
@@ -6660,7 +6660,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -6685,7 +6685,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 109:
                         case 105:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
@@ -6718,7 +6718,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 171:
                         case 43:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6751,7 +6751,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 143:
                         case 15:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6791,7 +6791,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -6812,7 +6812,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 203:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -6843,7 +6843,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6881,7 +6881,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -6901,7 +6901,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -6939,7 +6939,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -6965,7 +6965,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -6986,7 +6986,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 155:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7183,7 +7183,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7198,7 +7198,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7214,7 +7214,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 158:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7228,7 +7228,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7253,7 +7253,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 234:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7271,7 +7271,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -7294,7 +7294,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7313,7 +7313,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7331,7 +7331,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 59:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7343,7 +7343,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7378,7 +7378,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -7391,7 +7391,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7411,7 +7411,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7428,7 +7428,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7448,7 +7448,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 79:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7465,7 +7465,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7487,7 +7487,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 122:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7501,7 +7501,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7515,7 +7515,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -7528,7 +7528,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.MixEven(w[7], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7546,7 +7546,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 94:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7560,7 +7560,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -7573,7 +7573,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.MixEven(w[5], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7587,7 +7587,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7605,7 +7605,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 218:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7619,7 +7619,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7633,7 +7633,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7648,7 +7648,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -7664,7 +7664,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 91:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -7676,7 +7676,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7691,7 +7691,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[5]));
                                 }
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7705,7 +7705,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7803,7 +7803,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 186:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7817,7 +7817,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[3]));
                                     SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7845,7 +7845,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -7863,7 +7863,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7891,7 +7891,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7905,7 +7905,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix2To1To1(w[4], w[7], w[3]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix3To1(w[4], w[7]));
                                 }
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -7923,7 +7923,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 206:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -7941,7 +7941,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7972,7 +7972,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix6To1To1(w[4], w[5], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix4To2To1(w[4], w[5], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
@@ -7995,7 +7995,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 174:
                         case 46:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
@@ -8028,7 +8028,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, Interpolation.Mix3To1(w[4], w[2]));
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[2]));
@@ -8067,7 +8067,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[8]));
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix3To1(w[4], w[8]));
@@ -8129,7 +8129,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8144,7 +8144,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -8165,7 +8165,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 219:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8185,7 +8185,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8203,7 +8203,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 125:
                             {
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.Mix7To1(w[4], w[1]));
@@ -8238,7 +8238,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[1]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix5To3(w[4], w[1]));
                                 SetPixel(dst, dpIdx + 2, Interpolation.Mix5To3(w[4], w[1]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + 3, Interpolation.Mix5To3(w[4], w[1]));
                                     SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
@@ -8267,7 +8267,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 207:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8307,7 +8307,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
@@ -8333,7 +8333,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8363,7 +8363,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 187:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8405,7 +8405,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
@@ -8427,7 +8427,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 119:
                             {
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                     SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
@@ -8472,7 +8472,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -8488,7 +8488,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                         case 175:
                         case 47:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8519,7 +8519,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8559,7 +8559,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -8579,7 +8579,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -8593,7 +8593,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8609,7 +8609,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 123:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8626,7 +8626,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[2]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix3To1(w[4], w[2]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -8647,7 +8647,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 95:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8659,7 +8659,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + 1, Interpolation.MixEven(w[1], w[4]));
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8687,7 +8687,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8705,7 +8705,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8731,7 +8731,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[1]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix7To1(w[4], w[1]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -8747,7 +8747,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -8770,7 +8770,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8782,7 +8782,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -8795,7 +8795,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 235:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8816,7 +8816,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -8831,7 +8831,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 111:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8846,7 +8846,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -8867,7 +8867,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 63:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -8876,7 +8876,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8903,7 +8903,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 159:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -8916,7 +8916,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8942,7 +8942,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -8957,7 +8957,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix4To2To1(w[4], w[3], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -8977,7 +8977,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -8999,7 +8999,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9013,7 +9013,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             {
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[0]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix3To1(w[4], w[0]));
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -9028,7 +9028,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, Interpolation.Mix3To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 1, Interpolation.Mix7To1(w[4], w[0]));
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -9044,7 +9044,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9068,7 +9068,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -9078,7 +9078,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9090,7 +9090,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 251:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -9110,7 +9110,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -9122,7 +9122,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, Interpolation.MixEven(w[7], w[4]));
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, Interpolation.MixEven(w[7], w[5]));
                                 }
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -9135,7 +9135,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 239:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9154,7 +9154,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, Interpolation.Mix7To1(w[4], w[5]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, Interpolation.Mix5To3(w[4], w[5]));
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -9169,7 +9169,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 127:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9178,7 +9178,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx, Interpolation.Mix2To1To1(w[4], w[1], w[3]));
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 2, w[4]);
                                     SetPixel(dst, dpIdx + 3, w[4]);
@@ -9193,7 +9193,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
@@ -9214,7 +9214,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 191:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9224,7 +9224,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9248,7 +9248,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 223:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                     SetPixel(dst, dpIdx + 1, w[4]);
@@ -9261,7 +9261,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                     SetPixel(dst, dpIdx + dpL, Interpolation.MixEven(w[3], w[4]));
                                 }
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9275,7 +9275,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL, Interpolation.Mix3To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[6]));
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
@@ -9296,7 +9296,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9315,7 +9315,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL, Interpolation.Mix5To3(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, Interpolation.Mix7To1(w[4], w[3]));
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9327,7 +9327,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                             }
                         case 255:
                             {
-                                if (PixelNotEqual(w[3], w[1], eqPixelNotEqual))
+                                if (PixelNotEqual(w[3], w[1]))
                                 {
                                     SetPixel(dst, dpIdx, w[4]);
                                 }
@@ -9337,7 +9337,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + 1, w[4]);
                                 SetPixel(dst, dpIdx + 2, w[4]);
-                                if (PixelNotEqual(w[1], w[5], eqPixelNotEqual))
+                                if (PixelNotEqual(w[1], w[5]))
                                 {
                                     SetPixel(dst, dpIdx + 3, w[4]);
                                 }
@@ -9353,7 +9353,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 SetPixel(dst, dpIdx + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 2, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + 3, w[4]);
-                                if (PixelNotEqual(w[7], w[3], eqPixelNotEqual))
+                                if (PixelNotEqual(w[7], w[3]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL, w[4]);
                                 }
@@ -9363,7 +9363,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
                                 }
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 1, w[4]);
                                 SetPixel(dst, dpIdx + dpL + dpL + dpL + 2, w[4]);
-                                if (PixelNotEqual(w[5], w[7], eqPixelNotEqual))
+                                if (PixelNotEqual(w[5], w[7]))
                                 {
                                     SetPixel(dst, dpIdx + dpL + dpL + dpL + 3, w[4]);
                                 }
@@ -9381,18 +9381,18 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             }
         }
 
-        public override void Process(Frame src, out Frame dst, double eqDiff, bool scale = true)
+        public override void Process(Frame src, out Frame dst, bool scale = true)
         {
-            Hqx4xMeth(src, out dst, eqDiff);
+            Hqx4xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
-        public override void Process(Bitmap src, out Bitmap dst, double eqPixelNotEqual, bool scale = true)
+        public override void Process(Bitmap src, out Bitmap dst, bool scale = true)
         {
-            Hqx4xMeth(src, out dst, eqPixelNotEqual);
+            Hqx4xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Bitmap(dst, (int)src.Width, (int)src.Height);

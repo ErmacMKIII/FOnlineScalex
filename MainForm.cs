@@ -1,4 +1,4 @@
-/* Copyright (C) 2023 Aleksandar Stojanovic <coas91@rocketmail.com>
+/* Copyright (C) 2026 Aleksandar Stojanovic <coas91@rocketmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -279,11 +279,11 @@ namespace FOnlineScalex
             Application.Exit();
         }
 
-        private void numericAccuracy_ValueChanged(object sender, EventArgs e)
-        {
-            this.eqAccuracy = (double)this.numericAccuracy.Value;
-            GeneratePreview();
-        }
+        //private void numericAccuracy_ValueChanged(object sender, EventArgs e)
+        //{
+        //    this.eqAccuracy = (double)this.numericAccuracy.Value;
+        //    GeneratePreview();
+        //}
 
         private void tboxInputDir_TextChanged(object sender, EventArgs e)
         {
@@ -298,9 +298,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v1.2 - OXYGEN - STABLE\n");
+            sb.Append("VERSION v2.0 - OZONE - STABLE\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2023-10-11 at 14:10).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2026-01-18 at 04:19).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -309,8 +309,8 @@ namespace FOnlineScalex
             sb.Append("FOnline Pixel Art Scalex adapted to FRM formats.\n");
             sb.Append("\n");
             sb.Append("\n");
-            sb.Append("Copyright © 2023\n");
-            sb.Append("Alexander \"Ermac\" Stojanovich\n");
+            sb.Append("Copyright © 2026\n");
+            sb.Append("Aleksandar \"Ermac\" Stojanovic\n");
             sb.Append("\n");
 
             MessageBox.Show(sb.ToString(), "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -377,7 +377,7 @@ namespace FOnlineScalex
                     break;
             }
 
-            algorithm?.Process(srcBitmap, out dstBitmap, this.eqAccuracy, cboxScale.Checked);
+            algorithm?.Process(srcBitmap, out dstBitmap, cboxScale.Checked);
 
             if (this.cboxPostProc.Checked)
             {

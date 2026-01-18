@@ -54,9 +54,9 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         /// <param name="c1">ARGB Color 1</param>
         /// <param name="c2">ARGB Color 2</param>        
         /// <returns>equal test</returns>
-        public static bool PixelEqual(uint c1, uint c2, double eqDiff)
+        public static bool PixelEqual(uint c1, uint c2)
         {           
-            return ColorTest.PixelARGBEqual(c1, c2, eqDiff);
+            return ColorTest.PixelARGBEqual(c1, c2);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace FOnlineScalex.Algorithm.HqxFamily
         /// <param name="c1">ARGB Color 1</param>
         /// <param name="c2">ARGB Color 2</param> 
         /// <returns>nequal test</returns>
-        public static bool PixelNotEqual(uint c1, uint c2, double eqDiff)
+        public static bool PixelNotEqual(uint c1, uint c2)
         {
-            return ColorTest.PixelARGBNotEqual(c1, c2, eqDiff);
+            return ColorTest.PixelARGBNotEqual(c1, c2);
         }
         
         /// <summary>
@@ -95,15 +95,15 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             uint px = (uint)(pos % img.Width);
             uint py = (uint)(pos / img.Width);
 
-            img.SetPixel((int)px, (int)py, Color.FromArgb((int)col));
+            img.SetPixel((int)px, (int)py, IAlgorithm.FixColor(Color.FromArgb((int)col)));
         }
 
         public abstract void Process(
-                Frame src, out Frame dst, double eqDiff, bool scale = true
+                Frame src, out Frame dst, bool scale = true
         );
 
         public abstract void Process(
-                Bitmap src, out Bitmap dst, double eqDiff, bool scale = true
+                Bitmap src, out Bitmap dst, bool scale = true
         );
     }
 

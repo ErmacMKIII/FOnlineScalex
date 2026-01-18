@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2023 Aleksandar Stojanovic <coas91@rocketmail.com>
+﻿/* Copyright (C) 2026 Aleksandar Stojanovic <coas91@rocketmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,40 +30,40 @@ namespace FOnlineScalex.ScalexFamily
         // https://www.scale2x.it/algorithm
         // --------------------------------
        
-        public static void Scalex4xMeth(Frame src, out Frame dst, double eqDiff)
+        public static void Scalex4xMeth(Frame src, out Frame dst)
         {
             Frame dst1;
-            Scalex2xMeth(src, out dst1, eqDiff);
+            Scalex2xMeth(src, out dst1);
 
             Frame dst2;
-            Scalex2xMeth(dst1, out dst2, eqDiff);
+            Scalex2xMeth(dst1, out dst2);
 
             dst = dst2;
         }
 
-        public static void Scalex4xMeth(Bitmap src, out Bitmap dst, double eqDiff)
+        public static void Scalex4xMeth(Bitmap src, out Bitmap dst)
         {
             Bitmap dst1;
-            Scalex2xMeth(src, out dst1, eqDiff);
+            Scalex2xMeth(src, out dst1);
 
             Bitmap dst2;
-            Scalex2xMeth(dst1, out dst2, eqDiff);
+            Scalex2xMeth(dst1, out dst2);
 
             dst = dst2;
         }
 
-        public override void Process(Frame src, out Frame dst, double eqDiff, bool scale = true)
+        public override void Process(Frame src, out Frame dst, bool scale = true)
         {
-            Scalex4xMeth(src, out dst, eqDiff);
+            Scalex4xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
-        public override void Process(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
+        public override void Process(Bitmap src, out Bitmap dst, bool scale = true)
         {
-            Scalex4xMeth(src, out dst, eqDiff);
+            Scalex4xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Bitmap(dst, (int)src.Width, (int)src.Height);

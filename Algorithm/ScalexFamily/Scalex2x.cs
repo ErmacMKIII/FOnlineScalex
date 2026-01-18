@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2023 Aleksandar Stojanovic <coas91@rocketmail.com>
+﻿/* Copyright (C) 2026 Aleksandar Stojanovic <coas91@rocketmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ namespace FOnlineScalex.ScalexFamily
         // https://www.scale2x.it/algorithm
         // --------------------------------
 
-        protected static ExpandorFrame Scalex2xHelper(Frame src, uint px, uint py, double eqDiff)
+        protected static ExpandorFrame Scalex2xHelper(Frame src, uint px, uint py)
         {
             ExpandorFrame result = new ExpandorFrame();
 
@@ -93,9 +93,9 @@ namespace FOnlineScalex.ScalexFamily
                E0[xL,yT]  E1[xR,yT]
                E2[xL,yB]  E3[xR,yB]
             */
-            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy) && PixelNotEqual(src, Dx, Dy, Fx, Fy))
             {
-                if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Bx, By))
                 {
                     result.E0 = src.GetPixel(Dx, Dy);
                 }
@@ -104,7 +104,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E0 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Bx, By, Fx, Fy))
                 {
                     result.E1 = src.GetPixel(Fx, Fy);
                 }
@@ -113,16 +113,16 @@ namespace FOnlineScalex.ScalexFamily
                     result.E1 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Hx, Hy))
                 {
                     result.E2 = src.GetPixel(Dx, Dy);
                 }
                 else
                 {
-                    result.E2 = src.GetPixel(Ex, Ey);
+                    result.E3 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Hx, Hy, Fx, Fy))
                 {
                     result.E2 = src.GetPixel(Fx, Fy);
                 }
@@ -142,7 +142,7 @@ namespace FOnlineScalex.ScalexFamily
             return result;
         }
 
-        protected static ExpandorBitmap Scalex2xHelper(Bitmap src, int px, int py, double eqDiff)
+        protected static ExpandorBitmap Scalex2xHelper(Bitmap src, int px, int py)
         {
             ExpandorBitmap result = new ExpandorBitmap();
 
@@ -159,16 +159,16 @@ namespace FOnlineScalex.ScalexFamily
 
             int Bx = px;
             int By = yT;
-
+            
             int Dx = xL;
             int Dy = py;
-
+            
             int Fx = xR;
             int Fy = py;
-
+            
             int Hx = px;
             int Hy = yB;
-
+            
             int Ex = px;
             int Ey = py;
 
@@ -191,9 +191,9 @@ namespace FOnlineScalex.ScalexFamily
                 E2[xL,yB]  E3[xR,yB]
             */
 
-            if (PixelNotEqual(src, Bx, By, Hx, Hy, eqDiff) && PixelNotEqual(src, Dx, Dy, Fx, Fy, eqDiff))
+            if (PixelNotEqual(src, Bx, By, Hx, Hy) && PixelNotEqual(src, Dx, Dy, Fx, Fy))
             {
-                if (PixelEqual(src, Dx, Dy, Bx, By, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Bx, By))
                 {
                     result.E0 = src.GetPixel(Dx, Dy);
                 }
@@ -202,7 +202,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E0 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Bx, By, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Bx, By, Fx, Fy))
                 {
                     result.E1 = src.GetPixel(Fx, Fy);
                 }
@@ -211,7 +211,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E1 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Dx, Dy, Hx, Hy, eqDiff))
+                if (PixelEqual(src, Dx, Dy, Hx, Hy))
                 {
                     result.E2 = src.GetPixel(Dx, Dy);
                 }
@@ -220,7 +220,7 @@ namespace FOnlineScalex.ScalexFamily
                     result.E2 = src.GetPixel(Ex, Ey);
                 }
 
-                if (PixelEqual(src, Hx, Hy, Fx, Fy, eqDiff))
+                if (PixelEqual(src, Hx, Hy, Fx, Fy))
                 {
                     result.E2 = src.GetPixel(Fx, Fy);
                 }
@@ -239,15 +239,7 @@ namespace FOnlineScalex.ScalexFamily
 
             return result;
         }
-        /// <summary>
-        /// Scales image with Scale2x
-        /// </summary>
-        /// <param name="src">Source Bitmap</param>
-        /// <param name="dst">Destination Bitmap</param>
-        /// <param name="scale">Scale image</param>
-        /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="scale">scale</param>
-        public static void Scalex2xMeth(Bitmap src, out Bitmap dst, double eqDiff)
+        public static void Scalex2xMeth(Bitmap src, out Bitmap dst)
         {
             int w = (int)src.Width;
             int h = (int)src.Height;
@@ -256,31 +248,25 @@ namespace FOnlineScalex.ScalexFamily
             h *= 2;
 
             dst = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-   
+
             int px, py;
 
             for (px = 0; px < src.Width; px++)
             {
                 for (py = 0; py < src.Height; py++)
                 {
-                    ExpandorBitmap e = Scalex2xHelper(src, px, py, eqDiff);                    
+                    ExpandorBitmap e = Scalex2xHelper(src, px, py);
 
-                    SetPixelSafe(dst, 2 * px, 2 * py, e.E0);
-                    SetPixelSafe(dst, 2 * px + 1, 2 * py + 1, e.E1);
-                    SetPixelSafe(dst, 2 * px + 2, 2 * py + 2, e.E2);
-                    SetPixelSafe(dst, 2 * px + 3, 2 * py + 3, e.E3);
+                    // FIXED: Proper 2x2 grid placement
+                    SetPixelSafe(dst, 2 * px + 0, 2 * py + 0, e.E0);  // Top-left
+                    SetPixelSafe(dst, 2 * px + 1, 2 * py + 0, e.E1);  // Top-right
+                    SetPixelSafe(dst, 2 * px + 0, 2 * py + 1, e.E2);  // Bottom-left
+                    SetPixelSafe(dst, 2 * px + 1, 2 * py + 1, e.E3);  // Bottom-right
                 }
             }
         }
-        /// <summary>
-        /// Scales image with Scale2x
-        /// </summary>
-        /// <param name="src">Source Frame</param>
-        /// <param name="dst">Destination Frame</param>
-        /// <param name="scale">Scale image</param>
-        /// <param name="eqDiff">difference when equal [0..1]</param>
-        /// <param name="scale">scale</param>
-        public static void Scalex2xMeth(Frame src, out Frame dst, double eqDiff)
+
+        public static void Scalex2xMeth(Frame src, out Frame dst)
         {
             uint w = (uint)src.Width;
             uint h = (uint)src.Height;
@@ -296,29 +282,30 @@ namespace FOnlineScalex.ScalexFamily
             {
                 for (py = 0; py < src.Height; py++)
                 {
-                    ExpandorFrame e = Scalex2xHelper(src, px, py, eqDiff);
+                    ExpandorFrame e = Scalex2xHelper(src, px, py);
 
-                    dst.SetPixelSafe(2 * px, 2 * py, e.E0);
-                    dst.SetPixelSafe(2 * px + 1, 2 * py + 1, e.E1);
-                    dst.SetPixelSafe(2 * px + 2, 2 * py + 2, e.E2);
-                    dst.SetPixelSafe(2 * px + 3, 2 * py + 3, e.E3);
+                    // FIXED: Proper 2x2 grid placement
+                    dst.SetPixelSafe(2 * px + 0, 2 * py + 0, e.E0);  // Top-left
+                    dst.SetPixelSafe(2 * px + 1, 2 * py + 0, e.E1);  // Top-right
+                    dst.SetPixelSafe(2 * px + 0, 2 * py + 1, e.E2);  // Bottom-left
+                    dst.SetPixelSafe(2 * px + 1, 2 * py + 1, e.E3);  // Bottom-right
                 }
             }
         }
 
 
-        public override void Process(Frame src, out Frame dst, double eqDiff, bool scale = true)
+        public override void Process(Frame src, out Frame dst, bool scale = true)
         {
-            Scalex2xMeth(src, out dst, eqDiff);
+            Scalex2xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Frame(new Bitmap(dst.ToBitmap(), (int)src.Width, (int)src.Height), src.OffsetX, src.OffsetY);
             }
         }
 
-        public override void Process(Bitmap src, out Bitmap dst, double eqDiff, bool scale = true)
+        public override void Process(Bitmap src, out Bitmap dst, bool scale = true)
         {
-            Scalex2xMeth(src, out dst, eqDiff);
+            Scalex2xMeth(src, out dst);
             if (!scale)
             {
                 dst = new Bitmap(dst, (int)src.Width, (int)src.Height);
