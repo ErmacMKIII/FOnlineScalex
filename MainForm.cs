@@ -298,9 +298,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v2.0 - OZONE - STABLE\n");
+            sb.Append("VERSION v2K26.1 - Ozone - Stable (fixed) release\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2026-01-18 at 04:19).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2026-01-18 at 06:47).\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -332,15 +332,14 @@ namespace FOnlineScalex
             sb.Append("\n");
             sb.Append("4) Choosing algorithm from preset. Scalex 2x default.");
             sb.Append("\n");
-            sb.Append("5) Choosing accuracy for algorithm. Values in range [0,1].\n");
             sb.Append("\n");
-            sb.Append("6) Scale Image (if unchecked output is equal to original).\n");
+            sb.Append("5) Scale Image (if unchecked output is equal to original).\n");
             sb.Append("\n");
-            sb.Append("7) Post processing for .BMP & .PNG formats with alpha drop threshold & alpha premultiply threshold (optional).\n");
+            sb.Append("6) Post processing for .BMP & .PNG formats with alpha drop threshold & alpha premultiply threshold (optional).\n");
             sb.Append("\n");
-            sb.Append("8) GO Let the app go.\n");
+            sb.Append("7) GO Let the app go.\n");
             sb.Append("\n");
-            sb.Append("9) STOPS stops the app.\n");
+            sb.Append("8) STOPS stops the app.\n");
             sb.Append("(App can be cancelled anytime during it's processing)\n");
             MessageBox.Show(sb.ToString(), "How To Use", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
