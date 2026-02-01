@@ -121,14 +121,14 @@ namespace FOnlineScalex
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Size = new Size(137, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // howToUseToolStripMenuItem
             // 
             howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            howToUseToolStripMenuItem.Size = new Size(180, 22);
+            howToUseToolStripMenuItem.Size = new Size(137, 22);
             howToUseToolStripMenuItem.Text = "How To Use";
             howToUseToolStripMenuItem.Click += howToUseToolStripMenuItem_Click;
             // 
@@ -498,7 +498,7 @@ namespace FOnlineScalex
             lblFixCol.Name = "lblFixCol";
             lblFixCol.Size = new Size(109, 30);
             lblFixCol.TabIndex = 24;
-            lblFixCol.Text = "Fix Color";
+            lblFixCol.Text = "Fix Color:";
             lblFixCol.TextAlign = ContentAlignment.MiddleRight;
             // 
             // MainForm

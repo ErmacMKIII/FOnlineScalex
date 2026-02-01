@@ -127,11 +127,13 @@ namespace FOnlineScalex
 
             this.cboxScale.Enabled = true;
             this.cboxPostProc.Enabled = true;
-            this.lblDropThres.Enabled = true;
-            this.lblMulThres.Enabled = true;
-            this.numericAlphaDropThres.Enabled = true;
-            this.numericAlphaMulThres.Enabled = true;
-            this.trackBarFixColVal.Enabled = true;
+            
+            this.lblDropThres.Enabled = this.cboxPostProc.Checked;
+            this.lblMulThres.Enabled = this.cboxPostProc.Checked;
+            this.lblFixCol.Enabled = this.cboxPostProc.Checked;
+            this.numericAlphaDropThres.Enabled = this.cboxPostProc.Checked;
+            this.numericAlphaMulThres.Enabled = this.cboxPostProc.Checked;
+            this.trackBarFixColVal.Enabled = this.cboxPostProc.Checked;
 
             progBar.Value = 0;
         }
