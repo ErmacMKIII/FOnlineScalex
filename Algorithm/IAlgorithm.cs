@@ -33,24 +33,5 @@ namespace FOnlineScalex.Algorithm
                 Bitmap src, out Bitmap dst, bool scale = true
         );
 
-        /// <summary>
-        /// Apply some fixes to color to improve contrast/brightness and white point
-        /// based on luma value
-        /// </summary>
-        protected static Color FixColor(Color col)
-        {
-            double luma = 0.299 * col.R + 0.587 * col.G + 0.114 * col.B;
-            double blend = Math.Clamp(luma / 255.0, 0.0, 1.0);
-            double r = col.R * (1 - blend) + Math.Sqrt(col.R * 255.0) * blend;
-            double g = col.G * (1 - blend) + Math.Sqrt(col.G * 255.0) * blend;
-            double b = col.B * (1 - blend) + Math.Sqrt(col.B * 255.0) * blend;
-
-            return Color.FromArgb(
-                col.A,
-                (int)Math.Clamp(r, 0, 255),
-                (int)Math.Clamp(g, 0, 255),
-                (int)Math.Clamp(b, 0, 255)
-            );
-        }
     }
 }

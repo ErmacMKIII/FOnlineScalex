@@ -12,17 +12,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/> */
-using FOnlineScalex.Logger;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Linq;
-using FOnlineScalex.FRMFile;
-using FOnlineScalex.Properties;
-using System.Text;
-using FOnlineScalex.ScalexFamily;
 using FOnlineScalex.Algorithm;
 using FOnlineScalex.Algorithm.HqxFamily;
+using FOnlineScalex.FRMFile;
+using FOnlineScalex.Logger;
 using FOnlineScalex.PostProcessing;
+using FOnlineScalex.Properties;
+using FOnlineScalex.ScalexFamily;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
 
 namespace FOnlineScalex
 {
@@ -125,16 +124,25 @@ namespace FOnlineScalex
             }
             btnGo.Enabled = true;
             btnStop.Enabled = false;
+
+            this.cboxScale.Enabled = true;
+            this.cboxPostProc.Enabled = true;
+            this.lblDropThres.Enabled = true;
+            this.lblMulThres.Enabled = true;
+            this.numericAlphaDropThres.Enabled = true;
+            this.numericAlphaMulThres.Enabled = true;
+            this.trackBarFixColVal.Enabled = true;
+
             progBar.Value = 0;
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
             object[] args = (object[])e.Argument;
-            if (args != null && args.Length == 9)
+            if (args != null && args.Length == 10)
             {
                 fOnlineScalex.DoWork((string)args[0], (string)args[1], (bool)args[2],
-                    (double)args[3], (IAlgorithm.AlgorithmId)args[4], (bool)args[5], (bool)args[6], (AlphaRange)args[7], (IFOSLogger)args[8]);
+                    (double)args[3], (IAlgorithm.AlgorithmId)args[4], (bool)args[5], (bool)args[6], (AlphaRange)args[7], (double)args[8], (IFOSLogger)args[9]);
             }
         }
 
@@ -179,6 +187,7 @@ namespace FOnlineScalex
             toolTip.SetToolTip(this.progBar, "Progress of the processing");
             toolTip.SetToolTip(this.numericAlphaDropThres, "Threshold of alpha drop lequal. No effect if set to zero.");
             toolTip.SetToolTip(this.numericAlphaMulThres, "Threshold of alpha pre-multiply lequal. No effect if set to zero.");
+            toolTip.SetToolTip(this.trackBarFixColVal, $"Color correction darker/brighter value ({this.trackBarFixColVal.Value / 100.0})");
         }
 
         private void SetInDirPath()
@@ -250,11 +259,20 @@ namespace FOnlineScalex
                 {
                     btnGo.Enabled = false;
                     btnStop.Enabled = true;
+
+                    this.cboxScale.Enabled = false;
+                    this.cboxPostProc.Enabled = false;
+                    this.lblDropThres.Enabled = false;
+                    this.lblMulThres.Enabled = false;
+                    this.numericAlphaDropThres.Enabled = false;
+                    this.numericAlphaMulThres.Enabled = false;
+                    this.trackBarFixColVal.Enabled = false;
+
                     IAlgorithm.AlgorithmId algorithm;
                     Enum.TryParse<IAlgorithm.AlgorithmId>((string?)this.cboxAlgo.SelectedItem, false, out algorithm);
                     object[] args = { inDirPath, outDirPath, cboxRecursive.Checked,
                         this.eqAccuracy, algorithm, cboxScale.Checked,
-                        cboxPostProc.Checked, this.alphaRange, this.fOSLogger };
+                        cboxPostProc.Checked, this.alphaRange, this.trackBarFixColVal.Value / 100.0, this.fOSLogger };
                     backgroundWorker.RunWorkerAsync(args);
                 }
             }
@@ -298,9 +316,9 @@ namespace FOnlineScalex
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("VERSION v2K26.1 - Ozone - Stable (fixed) release\n");
+            sb.Append("VERSION v2K26.2 - Ozone - Stable (fixed) release\n");
             sb.Append("\n");
-            sb.Append("PUBLIC BUILD reviewed on 2026-01-18 at 06:47).\n");
+            sb.Append("PUBLIC BUILD reviewed on 2026-02-01 at 01:00.\n");
             sb.Append("This software is free software.\n");
             sb.Append("Licensed under GNU General Public License (GPL).\n");
             sb.Append("\n");
@@ -383,7 +401,7 @@ namespace FOnlineScalex
                 if (dstBitmap != null)
                 {
                     Bitmap postDstBitmap;
-                    PostProcessing.PostProcessor.Process(dstBitmap, out postDstBitmap, alphaRange);
+                    PostProcessing.PostProcessor.Process(dstBitmap, out postDstBitmap, alphaRange, this.trackBarFixColVal.Value / 100.0);
                     pboxPreview.Image = postDstBitmap;
                 }
                 else
@@ -412,8 +430,10 @@ namespace FOnlineScalex
         {
             this.lblDropThres.Enabled = this.cboxPostProc.Checked;
             this.lblMulThres.Enabled = this.cboxPostProc.Checked;
+            this.lblFixCol.Enabled = this.cboxPostProc.Checked;
             this.numericAlphaDropThres.Enabled = this.cboxPostProc.Checked;
             this.numericAlphaMulThres.Enabled = this.cboxPostProc.Checked;
+            this.trackBarFixColVal.Enabled = this.cboxPostProc.Checked;
             GeneratePreview();
         }
 
@@ -426,6 +446,12 @@ namespace FOnlineScalex
         private void numericAlpaMulThres_ValueChanged(object sender, EventArgs e)
         {
             this.alphaRange.MultiplyThreshold = (int)this.numericAlphaMulThres.Value;
+            GeneratePreview();
+        }
+
+        private void trackBarFixColVal_ValueChanged(object sender, EventArgs e)
+        {
+            this.lblFixCol.Text = $"Fix Color ({this.trackBarFixColVal.Value / 100.0})";
             GeneratePreview();
         }
     }

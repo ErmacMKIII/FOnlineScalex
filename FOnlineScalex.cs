@@ -77,7 +77,7 @@ namespace FOnlineScalex
         /// <param name="postProcessing">post processing</param>
         /// <param name="alphaRange">alpha threshold</param>
         /// <param name="logger">output logger to console (or file)</param>
-        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff,  IAlgorithm.AlgorithmId? algorithmId, bool scale, bool postProcessing, AlphaRange alphaRange, IFOSLogger logger)
+        public void DoWork(string inDir, string outDir, bool recursive, double eqDiff,  IAlgorithm.AlgorithmId? algorithmId, bool scale, bool postProcessing, AlphaRange alphaRange, double correctionValue, IFOSLogger logger)
         {
             logger.Log($"App started work with parameters: ALGOID:{algorithmId}, DIFF:{eqDiff}, SCALE:{scale}, POSTPROC:{postProcessing}");
             Erroneous = false;
@@ -251,7 +251,7 @@ namespace FOnlineScalex
                             if (outPic != null && postProcessing)
                             {
                                 Bitmap finalOutPic;
-                                PostProcessor.Process(outPic, out finalOutPic, alphaRange);
+                                PostProcessor.Process(outPic, out finalOutPic, alphaRange, correctionValue);
                                 outPic = finalOutPic;
                             }
 

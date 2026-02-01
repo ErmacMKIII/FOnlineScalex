@@ -95,7 +95,7 @@ namespace FOnlineScalex.Algorithm.HqxFamily
             uint px = (uint)(pos % img.Width);
             uint py = (uint)(pos / img.Width);
 
-            img.SetPixel((int)px, (int)py, IAlgorithm.FixColor(Color.FromArgb((int)col)));
+            img.SetPixel((int)px, (int)py, Color.FromArgb((int)col));
         }
 
         public abstract void Process(
